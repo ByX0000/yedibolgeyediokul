@@ -810,7 +810,6 @@
         });
 
         async function loadSchoolData() {
-            const activities = JSON.parse(localStorage.getItem('activities')) || [];
             const gallery = JSON.parse(localStorage.getItem('gallery')) || [];
 
             // Sunucudan içerikleri yükle
@@ -825,10 +824,17 @@
                 console.error('İçerikler yüklenirken hata:', error);
             }
 
-            // Filter school activities
-            const schoolActivities = activities.filter(activity =>
-                activity.school === SCHOOL_NAME
-            );
+            // Etkinlikleri veritabanından yükle
+            let schoolActivities = [];
+            try {
+                const actResponse = await fetch('../activities_handler.php?school=' + encodeURIComponent(SCHOOL_NAME));
+                const actResult = await actResponse.json();
+                if (actResult.success) {
+                    schoolActivities = actResult.data;
+                }
+            } catch (error) {
+                console.error('Etkinlikler yüklenirken hata:', error);
+            }
 
             // Update stats
             document.getElementById('total-activities').textContent = schoolActivities.length;
