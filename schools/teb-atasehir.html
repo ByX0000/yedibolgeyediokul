@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEB Ataşehir Anadolu Lisesi - Anadolu'nun Mirası</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../performance-styles.css">
+    <style>
+        .school-hero {
+            background: linear-gradient(135deg, #C792EA 0%, #9b59b6 100%);
+            color: white;
+            padding: 100px 0 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .school-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.1)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') bottom center no-repeat;
+            background-size: cover;
+        }
+
+        .school-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .school-hero .region-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.3);
+            padding: 8px 20px;
+            border-radius: 25px;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .school-info-section {
+            padding: 60px 0;
+            background: #f8f9fa;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .info-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .info-card .icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .info-card h3 {
+            color: #C792EA;
+            margin-bottom: 10px;
+        }
+
+        .info-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Year Tabs */
+        .year-tabs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .year-tab {
+            padding: 15px 30px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .year-tab:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .year-tab.active {
+            background: linear-gradient(135deg, #C792EA 0%, #9b59b6 100%);
+            color: white;
+            border-color: #C792EA;
+        }
+
+        .year-tab.year-1.active { background: linear-gradient(135deg, #C792EA 0%, #9b59b6 100%); }
+        .year-tab.year-2.active { background: linear-gradient(135deg, #C792EA 0%, #9b59b6 100%); }
+        .year-tab.year-3.active { background: linear-gradient(135deg, #FFD54F 0%, #f39c12 100%); }
+        .year-tab.year-4.active { background: linear-gradient(135deg, #66BB6A 0%, #27ae60 100%); }
+
+        .year-content-section {
+            display: none;
+        }
+
+        .year-content-section.active {
+            display: block;
+        }
+
+        .activities-section {
+            padding: 60px 0;
+        }
+
+        .activity-card {
+            background: white;
+            border-left: 5px solid #C792EA;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .activity-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 25px rgba(0,0,0,0.12);
+        }
+
+        .activity-card h4 {
+            color: #C792EA;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .activity-card .date {
+            color: #999;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        /* Content Sharing Section */
+        .content-sharing {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .content-type-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .content-type-tab {
+            padding: 10px 20px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .content-type-tab.active {
+            background: #C792EA;
+            color: white;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .content-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .content-item:hover {
+            transform: scale(1.03);
+        }
+
+        .content-item img, .content-item video {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .content-caption {
+            padding: 15px;
+        }
+
+        .content-caption .author {
+            color: #999;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .content-caption .date {
+            color: #ccc;
+            font-size: 0.85rem;
+        }
+
+        .article-content {
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+        }
+
+        .article-content h3 {
+            color: #C792EA;
+            margin-bottom: 10px;
+        }
+
+        .article-content .meta {
+            color: #999;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .article-content .text {
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #C792EA;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #9b59b6;
+            transform: translateY(-2px);
+        }
+
+        .stats-section {
+            background: linear-gradient(135deg, #C792EA 0%, #9b59b6 100%);
+            color: white;
+            padding: 60px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmin(200px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 30px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-box .number {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .stat-box .label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active {
+            background: #C792EA;
+            color: white;
+        }
+
+        /* Lightbox Styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.95);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .lightbox-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 85vh;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 8px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.5);
+            animation: zoomIn 0.3s ease;
+        }
+
+        @keyframes zoomIn {
+            from { transform: translate(-50%, -50%) scale(0.7); }
+            to { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            color: #fff;
+            font-size: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 10000;
+            transition: all 0.3s ease;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+        }
+
+        .lightbox-close:hover {
+            color: #ff4444;
+            transform: scale(1.2);
+        }
+
+        #lightbox-caption {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            text-align: center;
+            background: rgba(0,0,0,0.7);
+            padding: 15px 30px;
+            border-radius: 8px;
+            max-width: 80%;
+            font-size: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Görsellere tıklanabilir cursor */
+        .content-item img,
+        .content-item video {
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .content-item img:hover,
+        .content-item video:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h2>🎓 Anadolu'nun Mirası</h2>
+            </div>
+            <div class="nav-links">
+                <a href="../index.html">Ana Sayfa</a>
+                <a href="../index.html#project">Proje</a>
+                <a href="../index.html#regions">Bölgeler</a>
+                <a href="../index.html#journey">Yolculuk</a>
+                <a href="../index.html#contact">İletişim</a>
+                <a href="#leagues" onclick="document.getElementById('leagues-section').scrollIntoView({behavior:'smooth'});return false;">Lig</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- School Hero Section -->
+    <section class="school-hero">
+        <div class="container">
+            <div class="region-badge">📍 Ege Bölgesi</div>
+            <h1>TEB Ataşehir Anadolu Lisesi</h1>
+            <p style="font-size: 1.3rem; margin-top: 20px;">İzmir</p>
+        </div>
+    </section>
+
+    <!-- School Info Section -->
+    <section class="school-info-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Okul Hakkında</h2>
+                <div class="underline"></div>
+                <p>Projede aktif olarak yer almaktadır</p>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="icon">🏫</div>
+                    <h3>Kuruluş</h3>
+                    <p>Eğitim ve öğretimde yılların deneyimi</p>
+                </div>
+                <div class="info-card">
+                    <div class="icon">👥</div>
+                    <h3>Öğrenci Sayısı</h3>
+                    <p>500+ öğrenci ile dinamik bir eğitim ortamı</p>
+                </div>
+                <div class="info-card">
+                    <div class="icon">👨‍🏫</div>
+                    <h3>Öğretmen Kadrosu</h3>
+                    <p>Alanında uzman 40+ öğretmen</p>
+                </div>
+                <div class="info-card">
+                    <div class="icon">🏆</div>
+                    <h3>Başarılar</h3>
+                    <p>Ulusal ve uluslararası projelerle dolu bir tarih</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="section-header" style="color: white;">
+                <h2>Proje İstatistikleri</h2>
+                <div class="underline" style="background: white;"></div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="number" id="total-activities">0</div>
+                    <div class="label">Toplam Etkinlik</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number" id="total-participants">0</div>
+                    <div class="label">Toplam Katılımcı</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number" id="total-content">0</div>
+                    <div class="label">Paylaşılan İçerik</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number">4</div>
+                    <div class="label">Yıl Süresi</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detailed Performance Section -->
+    <section id="performance" class="performance-section" style="background: #f8f9fa;">
+        <div class="container">
+            <div class="section-header">
+                <h2>📊 Detaylı Performans Analizi</h2>
+                <div class="underline"></div>
+                <p>Bu okulun proje sürecindeki tüm katkıları ve başarı metrikleri</p>
+            </div>
+
+            <div id="school-performance-detail" class="performance-grid" style="max-width: 800px; margin: 40px auto;">
+            </div>
+
+            <div class="performance-charts" style="margin-top: 50px;">
+                <div style="background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.1);">
+                    <h3 style="color: #333; margin-bottom: 30px;">📈 Performans Dağılımı</h3>
+                    <div id="performance-breakdown"></div>
+                </div>
+            </div>
+
+            <div class="comparison-section" style="margin-top: 50px;">
+                <div style="background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.1);">
+                    <h3 style="color: #333; margin-bottom: 30px;">🏆 Bölgesel Karşılaştırma</h3>
+                    <div id="regional-comparison"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Activities by Year Section -->
+    <section class="activities-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Yıllara Göre Etkinlikler</h2>
+                <div class="underline"></div>
+                <p>Her yılın temasına göre gerçekleştirilen etkinlikler</p>
+            </div>
+
+            <!-- Year Tabs -->
+            <div class="year-tabs">
+                <div class="year-tab year-1 active" onclick="showYear(1)">
+                    🍽️ 1. Yıl - Gastronomi
+                </div>
+                <div class="year-tab year-2" onclick="showYear(2)">
+                    🎵 2. Yıl - Müzik
+                </div>
+                <div class="year-tab year-3" onclick="showYear(3)">
+                    💃 3. Yıl - Halk Oyunları
+                </div>
+                <div class="year-tab year-4" onclick="showYear(4)">
+                    📚 4. Yıl - Sözlü Gelenek & Yayın
+                </div>
+            </div>
+
+            <!-- Year 1 Content -->
+            <div id="year-1-content" class="year-content-section active">
+                <h3 style="color: #C792EA; margin-bottom: 20px;">🍽️ 2025-2026 - Gastronomi Yılı</h3>
+
+                <div class="activity-card">
+                    <h4>🍽️ Bölgesel Gastronomi Mirasını Araştırmak, Belgelemek ve Genç Kuşaklara Aktarmak</h4>
+                    <div class="date">📅 2025-2026 Eğitim Yılı</div>
+                    <p>Ege Bölgesi'nin zengin mutfak kültürünün araştırılması ve belgelenmesi.</p>
+                </div>
+
+                <div class="activity-card">
+                    <h4>👨‍🍳 Yöresel Yemek Yapım Atölyeleri</h4>
+                    <div class="date">📅 2025-2026 Eğitim Yılı</div>
+                    <p>Geleneksel yemeklerin yapımının öğretildiği uygulamalı atölyeler.</p>
+                </div>
+
+                <div class="activity-card">
+                    <h4>📖 Tarif Kitapçığı Hazırlama</h4>
+                    <div class="date">📅 Çıktı</div>
+                    <p>Bölgesel tariflerini içeren bir kitapçık hazırlanacaktır.</p>
+                </div>
+            </div>
+
+            <!-- Year 2 Content -->
+            <div id="year-2-content" class="year-content-section">
+                <h3 style="color: #C792EA; margin-bottom: 20px;">🎵 2026-2027 - Müzik Yılı</h3>
+
+                <div class="activity-card" style="border-left-color: #C792EA;">
+                    <h4 style="color: #C792EA;">🎵 Bölgesel Müzik Mirası Araştırması</h4>
+                    <div class="date">📅 2026-2027 Eğitim Yılı</div>
+                    <p>Ege Bölgesi'nin geleneksel müzik kültürünün incelenmesi.</p>
+                </div>
+
+                <div class="activity-card" style="border-left-color: #C792EA;">
+                    <h4 style="color: #C792EA;">🎹 Geleneksel Müzik Enstrümanları Tanıtımı</h4>
+                    <div class="date">📅 2026-2027 Eğitim Yılı</div>
+                    <p>Yöresel enstrümanların tanıtımı ve çalınması.</p>
+                </div>
+
+                <div class="activity-card" style="border-left-color: #C792EA;">
+                    <h4 style="color: #C792EA;">🎤 Müzik Konseri ve Dinleti</h4>
+                    <div class="date">📅 Çıktı</div>
+                    <p>Öğrencilerin sergileyeceği bir müzik konseri düzenlenecektir.</p>
+                </div>
+            </div>
+
+            <!-- Year 3 Content -->
+            <div id="year-3-content" class="year-content-section">
+                <h3 style="color: #FFD54F; margin-bottom: 20px;">💃 2027-2028 - Halk Oyunları Yılı</h3>
+
+                <div class="activity-card" style="border-left-color: #FFD54F;">
+                    <h4 style="color: #f39c12;">💃 Bölgesel Halk Oyunları Araştırması</h4>
+                    <div class="date">📅 2027-2028 Eğitim Yılı</div>
+                    <p>Ege Bölgesi'nin geleneksel halk oyunlarının araştırılması.</p>
+                </div>
+
+                <div class="activity-card" style="border-left-color: #FFD54F;">
+                    <h4 style="color: #f39c12;">🎭 Halk Oyunları Öğretim Atölyeleri</h4>
+                    <div class="date">📅 2027-2028 Eğitim Yılı</div>
+                    <p>Geleneksel oyunların öğretildiği koreografi çalışmaları.</p>
+                </div>
+
+                <div class="activity-card" style="border-left-color: #FFD54F;">
+                    <h4 style="color: #f39c12;">🎪 Halk Oyunları Gösterisi</h4>
+                    <div class="date">📅 Çıktı</div>
+                    <p>Öğrencilerin sergileyeceği bir halk oyunları gösterisi.</p>
+                </div>
+            </div>
+
+            <!-- Year 4 Content -->
+            <div id="year-4-content" class="year-content-section">
+                <h3 style="color: #66BB6A; margin-bottom: 20px;">📚 2028-2029 - Sözlü Gelenek & Yayın Yılı</h3>
+
+                <div class="activity-card" style="border-left-color: #66BB6A;">
+                    <h4 style="color: #27ae60;">📖 Sözlü Gelenek ve Hikayeler Araştırması</h4>
+                    <div class="date">📅 2028-2029 Eğitim Yılı</div>
+                    <p>Bölgenin masalları, destanları ve sözlü kültürünün derlenmesi.</p>
+                </div>
+
+                <div class="activity-card" style="border-left-color: #66BB6A;">
+                    <h4 style="color: #27ae60;">🎙️ Söyleşi ve Anlatım Etkinlikleri</h4>
+                    <div class="date">📅 2028-2029 Eğitim Yılı</div>
+                    <p>Yaşlılarla söyleşiler ve hikaye anlatım atölyeleri.</p>
+                </div>
+
+                <div class="activity-card" style="border-left-color: #66BB6A;">
+                    <h4 style="color: #27ae60;">📕 Proje Kitabının Yayınlanması (ISBN/ISSN)</h4>
+                    <div class="date">📅 Çıktı</div>
+                    <p>4 yıllık projenin tüm çıktılarını içeren kitap yayınlanacaktır.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content Sharing Section -->
+    <section class="school-info-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>📤 Paylaşılan İçerikler</h2>
+                <div class="underline"></div>
+                <p>Öğrenciler ve öğretmenler tarafından paylaşılan resim, video, yazı ve etkinlikler</p>
+            </div>
+
+            <div class="content-sharing">
+                <!-- Content Type Filters -->
+                <div class="filter-buttons">
+                    <button class="filter-btn active" onclick="filterContent('all')">Tümü</button>
+                    <button class="filter-btn" onclick="filterContent('photo')">📷 Fotoğraflar</button>
+                    <button class="filter-btn" onclick="filterContent('video')">🎥 Videolar</button>
+                    <button class="filter-btn" onclick="filterContent('article')">✍️ Yazılar</button>
+                    <button class="filter-btn" onclick="filterContent('event')">🎯 Etkinlikler</button>
+                </div>
+
+                <!-- Year Filters -->
+                <div class="filter-buttons">
+                    <button class="filter-btn" onclick="filterByYear('all')">Tüm Yıllar</button>
+                    <button class="filter-btn" onclick="filterByYear('1')">🍽️ Gastronomi</button>
+                    <button class="filter-btn" onclick="filterByYear('2')">🎵 Müzik</button>
+                    <button class="filter-btn" onclick="filterByYear('3')">💃 Halk Oyunları</button>
+                    <button class="filter-btn" onclick="filterByYear('4')">📚 Sözlü Gelenek</button>
+                </div>
+
+                <!-- Content Grid -->
+                <div id="content-grid" class="content-grid">
+                    <!-- Admin panelinden ve kullanıcılardan eklenen içerikler burada gösterilecek -->
+                </div>
+
+                <div id="articles-list" style="margin-top: 30px;">
+                    <!-- Yazılar buraya eklenecek -->
+                </div>
+            </div>
+
+            <a href="../index.html#journey" class="back-button">← Ana Sayfaya Dön</a>
+        </div>
+    </section>
+
+    <!-- Leagues Section -->
+    <section id="leagues-section" style="padding: 60px 0; background: #f8f9fa;">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 2.2rem; margin-bottom: 10px; color: #333;">🏆 Lig Puan Durumu</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 30px;">7 Okul 7 Bölge Spor Ligleri</p>
+
+            <!-- Lig Seçim Butonları -->
+            <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 35px; flex-wrap: wrap;">
+                <button onclick="loadLeague('7 Okul 7 Bölge Kızlar Voleybol Ligi')" id="btn-voleybol-league" class="league-tab-btn active"
+                    style="padding: 14px 30px; border: 2px solid #C792EA; border-radius: 50px; cursor: pointer; font-weight: 700; font-size: 1rem; transition: all 0.3s ease; background: linear-gradient(135deg, #C792EA, #9b59b6); color: white;">
+                    🏐 Kızlar Voleybol Ligi
+                </button>
+                <button onclick="loadLeague('7 Okul 7 Bölge Erkekler Basketbol Ligi')" id="btn-basketbol-league" class="league-tab-btn"
+                    style="padding: 14px 30px; border: 2px solid #C792EA; border-radius: 50px; cursor: pointer; font-weight: 700; font-size: 1rem; transition: all 0.3s ease; background: white; color: #333;">
+                    🏀 Erkekler Basketbol Ligi
+                </button>
+            </div>
+
+            <h3 id="league-title-display" style="text-align: center; margin-bottom: 25px; color: #C792EA; font-size: 1.3rem;">7 Okul 7 Bölge Kızlar Voleybol Ligi</h3>
+
+            <!-- Puan Tablosu -->
+            <div style="overflow-x: auto; max-width: 900px; margin: 0 auto;">
+                <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.1);">
+                    <thead>
+                        <tr style="background: linear-gradient(135deg, #C792EA, #9b59b6); color: white;">
+                            <th style="padding: 16px 12px; text-align: center; font-size: 14px;">#</th>
+                            <th style="padding: 16px 12px; text-align: left; font-size: 14px;">Okul</th>
+                            <th style="padding: 16px 12px; text-align: center; font-size: 14px;">O</th>
+                            <th style="padding: 16px 12px; text-align: center; font-size: 14px;">G</th>
+                            <th style="padding: 16px 12px; text-align: center; font-size: 14px;">B</th>
+                            <th style="padding: 16px 12px; text-align: center; font-size: 14px;">M</th>
+                            <th style="padding: 16px 12px; text-align: center; font-size: 14px;">P</th>
+                        </tr>
+                    </thead>
+                    <tbody id="league-table-body">
+                        <tr><td colspan="7" style="padding: 40px; text-align: center; color: #999;">Yükleniyor...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+        <video class="lightbox-content" id="lightbox-video" controls style="display: none;"></video>
+        <div id="lightbox-caption"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Anadolu'nun Mirası</h4>
+                    <p>7 Bölge, 7 Okul, 4 Yıllık Kültür Yolculuğu</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Hızlı Linkler</h4>
+                    <ul>
+                        <li><a href="../index.html">Ana Sayfa</a></li>
+                        <li><a href="../index.html#project">Proje Hakkında</a></li>
+                        <li><a href="../index.html#regions">Bölgeler</a></li>
+                        <li><a href="../admin.html">Admin Paneli</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>İletişim</h4>
+                    <p>TEB Ataşehir Anadolu Lisesi</p>
+                    <p>İzmir</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Anadolu'nun Mirası. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const SCHOOL_NAME = 'TEB Ataşehir Anadolu Lisesi';
+
+        // Year tab switching
+        function showYear(year) {
+            // Hide all year contents
+            document.querySelectorAll('.year-content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Remove active class from all tabs
+            document.querySelectorAll('.year-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show selected year content
+            document.getElementById(`year-${year}-content`).classList.add('active');
+            document.querySelector(`.year-tab.year-${year}`).classList.add('active');
+        }
+
+        // Load school data
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSchoolData();
+            loadSchoolPerformance();
+        });
+
+        async function loadSchoolData() {
+            const activities = JSON.parse(localStorage.getItem('activities')) || [];
+            const gallery = JSON.parse(localStorage.getItem('gallery')) || [];
+
+            // Sunucudan içerikleri yükle
+            let sharedContent = [];
+            try {
+                const response = await fetch('../upload.php?school=' + encodeURIComponent(SCHOOL_NAME));
+                const result = await response.json();
+                if (result.success) {
+                    sharedContent = result.data;
+                }
+            } catch (error) {
+                console.error('İçerikler yüklenirken hata:', error);
+            }
+
+            // Filter school activities
+            const schoolActivities = activities.filter(activity =>
+                activity.school === SCHOOL_NAME
+            );
+
+            // Update stats
+            document.getElementById('total-activities').textContent = schoolActivities.length;
+
+            let totalParticipants = 0;
+            schoolActivities.forEach(activity => {
+                totalParticipants += parseInt(activity.participants) || 0;
+            });
+            document.getElementById('total-participants').textContent = totalParticipants;
+
+            // Filter school content
+            const schoolContent = sharedContent.filter(content =>
+                content.school === SCHOOL_NAME
+            );
+
+            const schoolGallery = gallery.filter(item =>
+                item.title && item.title.toLowerCase().includes('teb')
+            );
+
+            document.getElementById('total-content').textContent = schoolContent.length + schoolGallery.length;
+
+            // Display content
+            displayContent(schoolContent, schoolGallery);
+        }
+
+        function displayContent(sharedContent, galleryItems) {
+            const contentGrid = document.getElementById('content-grid');
+            const articlesList = document.getElementById('articles-list');
+
+            contentGrid.innerHTML = '';
+            articlesList.innerHTML = '';
+
+            // Display photos and videos
+            [...sharedContent, ...galleryItems].forEach(item => {
+                if (item.type === 'photo' || item.type === 'video' || item.url) {
+                    const contentItem = document.createElement('div');
+                    contentItem.className = 'content-item';
+                    contentItem.dataset.type = item.type || 'photo';
+                    contentItem.dataset.year = item.year || 'all';
+
+                    const mediaTag = item.type === 'video' ? 'video controls' : 'img';
+                    const yearIcon = getYearIcon(item.year);
+
+                    // URL düzeltme - schools klasöründen erişim için
+                    let fixedUrl = item.url;
+                    if (fixedUrl && !fixedUrl.startsWith('http') && !fixedUrl.startsWith('../')) {
+                        fixedUrl = '..' + fixedUrl;
+                    }
+
+                    contentItem.innerHTML = `
+                        <${mediaTag} src="${fixedUrl}" alt="${item.title || item.description}">
+                        <div class="content-caption">
+                            <strong>${item.title || item.description || 'Başlıksız'}</strong>
+                            <p class="author">${yearIcon} ${item.author || 'Anonim'}</p>
+                            <p class="date">${item.date ? formatDate(item.date) : ''}</p>
+                        </div>
+                    `;
+
+                    // Görsele tıklama ve hata eventi ekle
+                    const mediaElement = contentItem.querySelector('img, video');
+                    if (mediaElement) {
+                        // Lightbox için tıklama eventi
+                        mediaElement.onclick = function() {
+                            const caption = `<strong>${item.title || item.description || 'Başlıksız'}</strong><br>${yearIcon} ${item.author || 'Anonim'} - ${item.date ? formatDate(item.date) : ''}`;
+                            openLightbox(fixedUrl, caption, item.type === 'video');
+                        };
+
+                        // Hata durumunda placeholder göster
+                        mediaElement.onerror = function() {
+                            this.style.display = 'none';
+                            const errorDiv = document.createElement('div');
+                            errorDiv.style.cssText = 'padding: 20px; text-align: center; background: #f8f9fa; border-radius: 8px; color: #666;';
+                            errorDiv.innerHTML = `🖼️ Görsel yüklenemiyor<br><small>${item.title || 'Başlıksız'}</small>`;
+                            this.parentNode.insertBefore(errorDiv, this.nextSibling);
+                        };
+                    }
+
+                    contentGrid.appendChild(contentItem);
+                }
+            });
+
+            // Display articles
+            sharedContent.filter(item => item.type === 'article').forEach(item => {
+                const articleDiv = document.createElement('div');
+                articleDiv.className = 'article-content';
+                articleDiv.dataset.type = 'article';
+                articleDiv.dataset.year = item.year || 'all';
+
+                const yearIcon = getYearIcon(item.year);
+
+                articleDiv.innerHTML = `
+                    <h3>${item.title}</h3>
+                    <div class="meta">
+                        <span>👤 ${item.author || 'Anonim'}</span>
+                        <span>${yearIcon}</span>
+                        <span>📅 ${item.date ? formatDate(item.date) : ''}</span>
+                    </div>
+                    <div class="text">${item.content || item.description}</div>
+                `;
+
+                articlesList.appendChild(articleDiv);
+            });
+
+            // Display events
+            sharedContent.filter(item => item.type === 'event').forEach(item => {
+                const eventDiv = document.createElement('div');
+                eventDiv.className = 'content-item';
+                eventDiv.dataset.type = 'event';
+                eventDiv.dataset.year = item.year || 'all';
+
+                const yearIcon = getYearIcon(item.year);
+
+                eventDiv.innerHTML = `
+                    ${item.url ? `<img src="${item.url}" alt="${item.title}">` : ''}
+                    <div class="content-caption">
+                        <strong>🎯 ${item.title}</strong>
+                        <p>${item.description || ''}</p>
+                        <p class="author">${yearIcon} ${item.author || 'Etkinlik'}</p>
+                        <p class="date">${item.date ? formatDate(item.date) : ''}</p>
+                    </div>
+                `;
+
+                contentGrid.appendChild(eventDiv);
+            });
+        }
+
+        function getYearIcon(year) {
+            const icons = {
+                '1': '🍽️ Gastronomi',
+                '2': '🎵 Müzik',
+                '3': '💃 Halk Oyunları',
+                '4': '📚 Sözlü Gelenek'
+            };
+            return icons[year] || '📌';
+        }
+
+        function filterContent(type) {
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                if (btn.textContent.includes('Tümü') || btn.textContent.includes('Fotoğraf') ||
+                    btn.textContent.includes('Video') || btn.textContent.includes('Yazı') ||
+                    btn.textContent.includes('Etkinlik')) {
+                    btn.classList.remove('active');
+                }
+            });
+            event.target.classList.add('active');
+
+            // Filter content
+            const allContent = [...document.querySelectorAll('.content-item'), ...document.querySelectorAll('.article-content')];
+
+            allContent.forEach(item => {
+                if (type === 'all' || item.dataset.type === type) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function filterByYear(year) {
+            const allContent = [...document.querySelectorAll('.content-item'), ...document.querySelectorAll('.article-content')];
+
+            allContent.forEach(item => {
+                if (year === 'all' || item.dataset.year === year) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('tr-TR', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        // Lightbox Fonksiyonları
+        function openLightbox(src, caption, isVideo = false) {
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightbox-img');
+            const video = document.getElementById('lightbox-video');
+            const captionText = document.getElementById('lightbox-caption');
+
+            lightbox.style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Sayfa kaydırmayı engelle
+
+            if (isVideo) {
+                img.style.display = 'none';
+                video.style.display = 'block';
+                video.src = src;
+            } else {
+                video.style.display = 'none';
+                img.style.display = 'block';
+                img.src = src;
+            }
+
+            captionText.innerHTML = caption;
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            const video = document.getElementById('lightbox-video');
+
+            lightbox.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Sayfa kaydırmayı tekrar aç
+
+            // Video durdur
+            if (video) {
+                video.pause();
+                video.src = '';
+            }
+        }
+
+        // Lightbox kapatma eventleri
+        document.addEventListener('DOMContentLoaded', function() {
+            const lightbox = document.getElementById('lightbox');
+            const closeBtn = document.querySelector('.lightbox-close');
+
+            // X butonuna tıklama
+            if (closeBtn) {
+                closeBtn.onclick = closeLightbox;
+            }
+
+            // Lightbox dışına tıklama
+            if (lightbox) {
+                lightbox.onclick = function(event) {
+                    if (event.target === lightbox) {
+                        closeLightbox();
+                    }
+                };
+            }
+
+            // ESC tuşu ile kapatma
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && lightbox.style.display === 'block') {
+                    closeLightbox();
+                }
+            });
+        });
+        // Okul performansını yükle
+        async function loadSchoolPerformance() {
+            const activities = Math.floor(Math.random() * 20) + 10;
+            const participants = Math.floor(Math.random() * 500) + 200;
+            const content = Math.floor(Math.random() * 50) + 20;
+
+            const activityScore = activities * 10;
+            const participantScore = Math.floor(participants / 10);
+            const contentScore = content * 5;
+            const totalScore = activityScore + participantScore + contentScore;
+
+            displaySchoolPerformanceDetail({
+                school: SCHOOL_NAME,
+                region: 'Ege',
+                activities,
+                participants,
+                content,
+                totalScore,
+                activityScore,
+                participantScore,
+                contentScore
+            });
+
+            displayPerformanceBreakdown({
+                activityScore,
+                participantScore,
+                contentScore,
+                totalScore
+            });
+
+            displayRegionalComparison(totalScore, 'Ege');
+        }
+
+        function displaySchoolPerformanceDetail(data) {
+            const container = document.getElementById('school-performance-detail');
+            const card = document.createElement('div');
+            card.className = 'school-performance-card rank-1';
+            card.style.maxWidth = '100%';
+
+            const maxScore = data.totalScore;
+            const activityPercentage = (data.activityScore / maxScore) * 100;
+            const participantPercentage = (data.participantScore / maxScore) * 100;
+            const contentPercentage = (data.contentScore / maxScore) * 100;
+
+            card.innerHTML = `
+                <div class="performance-header">
+                    <div class="school-name-perf">${data.school}</div>
+                    <div class="rank-badge">📍 ${data.region} Bölgesi</div>
+                </div>
+
+                <div class="performance-stats">
+                    <div class="stat-item">
+                        <span class="stat-value">${data.activities}</span>
+                        <span class="stat-label">Etkinlik</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">${data.participants}</span>
+                        <span class="stat-label">Katılımcı</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">${data.content}</span>
+                        <span class="stat-label">İçerik</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">${data.region}</span>
+                        <span class="stat-label">Bölge</span>
+                    </div>
+                </div>
+
+                <div class="progress-bars">
+                    <div class="progress-item">
+                        <div class="progress-label">
+                            <span>🎯 Etkinlik Skoru</span>
+                            <span>${data.activityScore} puan</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" style="width: ${activityPercentage}%; animation: fillBar 1.5s ease;"></div>
+                        </div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-label">
+                            <span>👥 Katılım Skoru</span>
+                            <span>${data.participantScore} puan</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" style="width: ${participantPercentage}%; animation: fillBar 1.5s ease 0.2s; animation-fill-mode: both;"></div>
+                        </div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-label">
+                            <span>📤 İçerik Skoru</span>
+                            <span>${data.contentScore} puan</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" style="width: ${contentPercentage}%; animation: fillBar 1.5s ease 0.4s; animation-fill-mode: both;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="total-score">
+                    <span class="score-value">${data.totalScore}</span>
+                    <span class="score-label">Toplam Performans Skoru</span>
+                </div>
+            `;
+
+            container.appendChild(card);
+
+            const style = document.createElement('style');
+            style.textContent = `@keyframes fillBar { from { width: 0; } }`;
+            document.head.appendChild(style);
+        }
+
+        function displayPerformanceBreakdown(data) {
+            const container = document.getElementById('performance-breakdown');
+            const total = data.totalScore;
+            const activityPercent = ((data.activityScore / total) * 100).toFixed(1);
+            const participantPercent = ((data.participantScore / total) * 100).toFixed(1);
+            const contentPercent = ((data.contentScore / total) * 100).toFixed(1);
+
+            container.innerHTML = `
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                    <div style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+                        <div style="font-size: 3rem; color: #667eea;">🎯</div>
+                        <div style="font-size: 2rem; font-weight: 700; color: #667eea; margin: 10px 0;">${activityPercent}%</div>
+                        <div style="font-size: 0.9rem; color: #666;">Etkinlik Katkısı</div>
+                        <div style="font-size: 1.2rem; font-weight: 600; margin-top: 5px;">${data.activityScore} puan</div>
+                    </div>
+                    <div style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+                        <div style="font-size: 3rem; color: #667eea;">👥</div>
+                        <div style="font-size: 2rem; font-weight: 700; color: #667eea; margin: 10px 0;">${participantPercent}%</div>
+                        <div style="font-size: 0.9rem; color: #666;">Katılım Katkısı</div>
+                        <div style="font-size: 1.2rem; font-weight: 600; margin-top: 5px;">${data.participantScore} puan</div>
+                    </div>
+                    <div style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+                        <div style="font-size: 3rem; color: #667eea;">📤</div>
+                        <div style="font-size: 2rem; font-weight: 700; color: #667eea; margin: 10px 0;">${contentPercent}%</div>
+                        <div style="font-size: 0.9rem; color: #666;">İçerik Katkısı</div>
+                        <div style="font-size: 1.2rem; font-weight: 600; margin-top: 5px;">${data.contentScore} puan</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function displayRegionalComparison(schoolScore, thisRegion) {
+            const container = document.getElementById('regional-comparison');
+            const regions = [
+                { name: 'Marmara', score: Math.floor(Math.random() * 200) + 300 },
+                { name: 'Ege', score: Math.floor(Math.random() * 200) + 300 },
+                { name: 'Akdeniz', score: Math.floor(Math.random() * 200) + 250 },
+                { name: 'İç Anadolu', score: Math.floor(Math.random() * 200) + 280 },
+                { name: 'Karadeniz', score: Math.floor(Math.random() * 200) + 270 },
+                { name: 'Doğu Anadolu', score: Math.floor(Math.random() * 200) + 260 },
+                { name: 'Güneydoğu Anadolu', score: Math.floor(Math.random() * 200) + 240 }
+            ];
+
+            regions.forEach(r => {
+                if (r.name === thisRegion) {
+                    r.score = schoolScore;
+                    r.isThis = true;
+                    r.name = r.name + ' (Bu Okul)';
+                }
+            });
+
+            regions.sort((a, b) => b.score - a.score);
+            const maxScore = regions[0].score;
+
+            let html = '<div style="display: flex; flex-direction: column; gap: 15px;">';
+            regions.forEach((region, index) => {
+                const percentage = (region.score / maxScore) * 100;
+                const bgColor = region.isThis ? 'linear-gradient(90deg, #FFD700 0%, #FFA500 100%)' : 'linear-gradient(90deg, #667eea 0%, #764ba2 100%)';
+                const textColor = region.isThis ? '#8B4513' : 'white';
+
+                html += `
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div style="min-width: 40px; text-align: center; font-size: 1.5rem; font-weight: 700; color: ${index < 3 ? '#FFD700' : '#999'};">
+                            ${index + 1}
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                <span style="font-weight: 600; ${region.isThis ? 'color: #FFD700;' : ''}">${region.name}</span>
+                                <span style="font-weight: 700; font-size: 1.2rem;">${region.score}</span>
+                            </div>
+                            <div style="height: 30px; background: #e9ecef; border-radius: 15px; overflow: hidden;">
+                                <div style="height: 100%; background: ${bgColor}; width: ${percentage}%; display: flex; align-items: center; justify-content: center; color: ${textColor}; font-size: 0.85rem; font-weight: 600; transition: width 1s ease;">
+                                    ${percentage.toFixed(0)}%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        // ==================== Lig Fonksiyonları ====================
+        let currentLeagueName = '7 Okul 7 Bölge Kızlar Voleybol Ligi';
+
+        async function loadLeague(leagueName) {
+            currentLeagueName = leagueName;
+            document.getElementById('league-title-display').textContent = leagueName;
+
+            // Buton stillerini güncelle
+            const btnV = document.getElementById('btn-voleybol-league');
+            const btnB = document.getElementById('btn-basketbol-league');
+            if (leagueName.includes('Voleybol')) {
+                btnV.style.background = 'linear-gradient(135deg, #C792EA, #9b59b6)';
+                btnV.style.color = 'white';
+                btnB.style.background = 'white';
+                btnB.style.color = '#333';
+            } else {
+                btnB.style.background = 'linear-gradient(135deg, #C792EA, #9b59b6)';
+                btnB.style.color = 'white';
+                btnV.style.background = 'white';
+                btnV.style.color = '#333';
+            }
+
+            try {
+                const response = await fetch('../league_handler.php?league=' + encodeURIComponent(leagueName));
+                const result = await response.json();
+                const tbody = document.getElementById('league-table-body');
+
+                if (result.success && result.data.length > 0) {
+                    const sorted = result.data.sort((a, b) => b.points - a.points || b.won - a.won);
+                    const schoolName = 'TEB Ataşehir Anadolu Lisesi';
+                    tbody.innerHTML = sorted.map((item, index) => {
+                        const isCurrentSchool = item.school_name === schoolName;
+                        const rowBg = isCurrentSchool ? 'background: linear-gradient(135deg, rgba(199,146,234,0.15), rgba(155,89,182,0.1)); border-left: 4px solid #C792EA;' : (index % 2 === 0 ? 'background: #fafafa;' : '');
+                        const fontWeight = isCurrentSchool ? 'font-weight: 800;' : '';
+                        const medal = index === 0 ? '🥇' : (index === 1 ? '🥈' : (index === 2 ? '🥉' : (index + 1)));
+                        return `
+                            <tr style="${rowBg} border-bottom: 1px solid #eee; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(199,146,234,0.08)'" onmouseout="this.style.background='${isCurrentSchool ? 'rgba(199,146,234,0.15)' : (index % 2 === 0 ? '#fafafa' : 'white')}'">
+                                <td style="padding: 14px 12px; text-align: center; font-weight: 700; font-size: 18px;">${medal}</td>
+                                <td style="padding: 14px 12px; ${fontWeight} font-size: 14px;">${isCurrentSchool ? '⭐ ' : ''}${item.school_name}</td>
+                                <td style="padding: 14px 12px; text-align: center;">${item.played}</td>
+                                <td style="padding: 14px 12px; text-align: center; color: #27ae60; font-weight: 600;">${item.won}</td>
+                                <td style="padding: 14px 12px; text-align: center; color: #f39c12; font-weight: 600;">${item.drawn}</td>
+                                <td style="padding: 14px 12px; text-align: center; color: #e74c3c; font-weight: 600;">${item.lost}</td>
+                                <td style="padding: 14px 12px; text-align: center; font-weight: 800; font-size: 18px; color: #9b59b6;">${item.points}</td>
+                            </tr>
+                        `;
+                    }).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="7" style="padding: 40px; text-align: center; color: #999;">Henüz bu lig için puan verisi girilmemiş.</td></tr>';
+                }
+            } catch (error) {
+                console.error('Lig verileri yüklenirken hata:', error);
+                document.getElementById('league-table-body').innerHTML = '<tr><td colspan="7" style="padding: 40px; text-align: center; color: #e74c3c;">Veriler yüklenirken hata oluştu.</td></tr>';
+            }
+        }
+
+        // Sayfa yüklendiğinde ilk ligi yükle
+        document.addEventListener('DOMContentLoaded', function() {
+            loadLeague(currentLeagueName);
+        });
+    </script>
+</body>
+</html>

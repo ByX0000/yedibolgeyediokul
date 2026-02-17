@@ -1,0 +1,1804 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anadolu'nun Mirası - 7 Bölge, 7 Okul, 4 Yıllık Kültür Yolculuğu</title>
+    <link rel="stylesheet" href="styles.css?v=2.0">
+    <link rel="stylesheet" href="performance-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Ultra Modern Mosaic Background - Force Override */
+        .hero {
+            position: relative !important;
+            height: 100vh !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-align: center !important;
+            background: linear-gradient(135deg, #2c1810 0%, #1a1a2e 50%, #1e2838 100%) !important;
+            overflow: hidden !important;
+        }
+
+        /* Mosaic Puzzle Pattern */
+        .hero::before {
+            content: '' !important;
+            position: absolute !important;
+            top: -10% !important;
+            left: -10% !important;
+            width: 120% !important;
+            height: 120% !important;
+            background-image:
+                linear-gradient(45deg, transparent 30%, rgba(215, 106, 106, 0.08) 30%, rgba(215, 106, 106, 0.08) 40%, transparent 40%),
+                linear-gradient(-45deg, transparent 30%, rgba(199, 146, 234, 0.08) 30%, rgba(199, 146, 234, 0.08) 40%, transparent 40%),
+                linear-gradient(90deg, rgba(255, 213, 79, 0.05) 0%, transparent 10%, transparent 90%, rgba(255, 213, 79, 0.05) 100%),
+                linear-gradient(0deg, rgba(102, 187, 106, 0.05) 0%, transparent 10%, transparent 90%, rgba(102, 187, 106, 0.05) 100%) !important;
+            background-size: 200px 200px, 200px 200px, 100% 100%, 100% 100% !important;
+            background-position: 0 0, 100px 100px, 0 0, 0 0 !important;
+            animation: mosaicMove 40s linear infinite !important;
+            opacity: 0.6 !important;
+        }
+
+        @keyframes mosaicMove {
+            0% { background-position: 0 0, 100px 100px, 0 0, 0 0; }
+            100% { background-position: 200px 200px, 300px 300px, 0 0, 0 0; }
+        }
+
+        /* Floating Region Bubbles */
+        .hero::after {
+            content: '' !important;
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            background-image:
+                radial-gradient(ellipse 200px 150px at 10% 15%, rgba(215, 106, 106, 0.25) 0%, transparent 50%),
+                radial-gradient(ellipse 180px 180px at 85% 20%, rgba(199, 146, 234, 0.25) 0%, transparent 50%),
+                radial-gradient(ellipse 220px 160px at 25% 75%, rgba(255, 213, 79, 0.25) 0%, transparent 50%),
+                radial-gradient(ellipse 190px 190px at 75% 80%, rgba(255, 159, 79, 0.25) 0%, transparent 50%),
+                radial-gradient(ellipse 170px 170px at 50% 50%, rgba(102, 187, 106, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse 160px 200px at 90% 50%, rgba(129, 196, 232, 0.25) 0%, transparent 50%),
+                radial-gradient(ellipse 180px 150px at 15% 45%, rgba(188, 143, 143, 0.25) 0%, transparent 50%) !important;
+            animation: bubbleFloat 30s ease-in-out infinite !important;
+            pointer-events: none !important;
+        }
+
+        @keyframes bubbleFloat {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+                opacity: 0.7;
+            }
+            25% {
+                transform: translateY(-30px) scale(1.05);
+                opacity: 0.9;
+            }
+            50% {
+                transform: translateY(-15px) scale(0.95);
+                opacity: 0.8;
+            }
+            75% {
+                transform: translateY(-40px) scale(1.08);
+                opacity: 0.85;
+            }
+        }
+
+        /* Overlay tamamen gizle */
+        .hero-overlay {
+            display: none !important;
+        }
+
+        /* ROADMAP TIMELINE STYLES - Force Override */
+        .roadmap-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important;
+            padding: 80px 0 !important;
+            position: relative !important;
+        }
+
+        .timeline-roadmap {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 40px !important;
+            margin-top: 60px !important;
+            position: relative !important;
+        }
+
+        .timeline-roadmap::before {
+            content: '' !important;
+            position: absolute !important;
+            left: 50px !important;
+            top: 0 !important;
+            bottom: 0 !important;
+            width: 4px !important;
+            background: linear-gradient(180deg,
+                #D76A6A 0%,
+                #C792EA 25%,
+                #FFD54F 50%,
+                #FF9F4F 75%,
+                #66BB6A 100%) !important;
+            z-index: 1 !important;
+        }
+
+        .timeline-year {
+            background: white !important;
+            border-radius: 20px !important;
+            padding: 30px !important;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08) !important;
+            position: relative !important;
+            margin-left: 80px !important;
+            transition: all 0.4s ease !important;
+            border-left: 5px solid #c9302c !important;
+        }
+
+        .timeline-year:hover {
+            transform: translateX(10px) !important;
+            box-shadow: 0 15px 50px rgba(201, 48, 44, 0.15) !important;
+        }
+
+        .timeline-year[data-year="1"] {
+            border-left-color: #D76A6A !important;
+        }
+
+        .timeline-year[data-year="2"] {
+            border-left-color: #C792EA !important;
+        }
+
+        .timeline-year[data-year="3"] {
+            border-left-color: #FFD54F !important;
+        }
+
+        .timeline-year[data-year="4"] {
+            border-left-color: #66BB6A !important;
+        }
+
+        .timeline-year::before {
+            position: absolute !important;
+            left: -50px !important;
+            top: 24px !important;
+            width: 44px !important;
+            height: 44px !important;
+            background: white !important;
+            border: 4px solid currentColor !important;
+            border-radius: 50% !important;
+            z-index: 2 !important;
+            box-shadow: 0 0 0 8px rgba(255,255,255,0.9), 0 4px 12px rgba(0,0,0,0.15) !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-size: 22px !important;
+        }
+
+        .timeline-year[data-year="1"]::before {
+            content: '🍽️' !important;
+            border-color: #D76A6A !important;
+        }
+
+        .timeline-year[data-year="2"]::before {
+            content: '🎵' !important;
+            border-color: #C792EA !important;
+        }
+
+        .timeline-year[data-year="3"]::before {
+            content: '💃' !important;
+            border-color: #FFD54F !important;
+        }
+
+        .timeline-year[data-year="4"]::before {
+            content: '📖' !important;
+            border-color: #66BB6A !important;
+        }
+
+        .year-header {
+            display: flex !important;
+            align-items: center !important;
+            gap: 20px !important;
+            margin-bottom: 25px !important;
+            padding-bottom: 20px !important;
+            border-bottom: 2px solid #f0f0f0 !important;
+        }
+
+        .year-number {
+            background: linear-gradient(135deg, #c9302c, #8b1e1e) !important;
+            color: white !important;
+            padding: 10px 25px !important;
+            border-radius: 30px !important;
+            font-weight: 700 !important;
+            font-size: 1rem !important;
+            box-shadow: 0 4px 15px rgba(201, 48, 44, 0.3) !important;
+        }
+
+        .year-period {
+            font-size: 1.3rem !important;
+            font-weight: 700 !important;
+            color: #2c3e50 !important;
+        }
+
+        .year-theme {
+            font-size: 1.5rem !important;
+            font-weight: 700 !important;
+            color: #c9302c !important;
+            margin-left: auto !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+        }
+
+        .year-content {
+            padding: 20px 0 !important;
+        }
+
+        .year-description {
+            background: linear-gradient(135deg, rgba(201, 48, 44, 0.05), rgba(139, 30, 30, 0.05)) !important;
+            padding: 20px !important;
+            border-radius: 12px !important;
+            margin-bottom: 30px !important;
+        }
+
+        .year-description p {
+            margin: 0 !important;
+            font-size: 1.1rem !important;
+            color: #555 !important;
+            line-height: 1.6 !important;
+        }
+
+        .participating-schools {
+            display: grid !important;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+            gap: 20px !important;
+        }
+
+        .mini-school-card {
+            background: linear-gradient(135deg, #ffffff, #f8f9fa) !important;
+            padding: 20px !important;
+            border-radius: 15px !important;
+            border: 2px solid #e9ecef !important;
+            transition: all 0.3s ease !important;
+            position: relative !important;
+            overflow: hidden !important;
+            cursor: pointer !important;
+            text-decoration: none !important;
+            display: block !important;
+            color: inherit !important;
+        }
+
+        .mini-school-card::before {
+            content: '' !important;
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 4px !important;
+            background: linear-gradient(90deg,
+                var(--region-color, #c9302c),
+                transparent) !important;
+        }
+
+        .mini-school-card:hover {
+            transform: translateY(-5px) !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important;
+            border-color: var(--region-color, #c9302c) !important;
+        }
+
+        .mini-school-card[data-region="marmara"] {
+            --region-color: #D76A6A;
+        }
+
+        .mini-school-card[data-region="ege"] {
+            --region-color: #C792EA;
+        }
+
+        .mini-school-card[data-region="akdeniz"] {
+            --region-color: #FFD54F;
+        }
+
+        .mini-school-card[data-region="ic-anadolu"] {
+            --region-color: #FF9F4F;
+        }
+
+        .mini-school-card[data-region="karadeniz"] {
+            --region-color: #66BB6A;
+        }
+
+        .mini-school-card[data-region="dogu-anadolu"] {
+            --region-color: #81C4E8;
+        }
+
+        .mini-school-card[data-region="guneydogu-anadolu"] {
+            --region-color: #BC8F8F;
+        }
+
+        .school-region-badge {
+            display: inline-block !important;
+            background: var(--region-color, #c9302c) !important;
+            color: white !important;
+            padding: 5px 15px !important;
+            border-radius: 20px !important;
+            font-size: 0.85rem !important;
+            font-weight: 600 !important;
+            margin-bottom: 12px !important;
+        }
+
+        .mini-school-card h4 {
+            color: #2c3e50 !important;
+            font-size: 1.05rem !important;
+            font-weight: 700 !important;
+            margin: 10px 0 !important;
+            line-height: 1.4 !important;
+        }
+
+        .mini-school-card p {
+            color: #7f8c8d !important;
+            font-size: 0.95rem !important;
+            margin: 5px 0 !important;
+        }
+
+        .coordinator-tag {
+            display: inline-block !important;
+            background: linear-gradient(135deg, #ffd700, #ffed4e) !important;
+            color: #8b6914 !important;
+            padding: 4px 12px !important;
+            border-radius: 15px !important;
+            font-size: 0.8rem !important;
+            font-weight: 700 !important;
+            margin-top: 8px !important;
+            box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3) !important;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .timeline-roadmap::before {
+                left: 20px !important;
+            }
+
+            .timeline-year {
+                margin-left: 50px !important;
+                padding: 20px !important;
+            }
+
+            .timeline-year::before {
+                left: -33px !important;
+                width: 20px !important;
+                height: 20px !important;
+            }
+
+            .year-header {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 10px !important;
+            }
+
+            .year-theme {
+                margin-left: 0 !important;
+                font-size: 1.2rem !important;
+            }
+
+            .year-period {
+                font-size: 1.1rem !important;
+            }
+
+            .participating-schools {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
+        /* PROJECT STRUCTURE SECTION - Modern Design */
+        .structure-section {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%) !important;
+            padding: 80px 0 !important;
+            position: relative !important;
+        }
+
+        .structure-section::before {
+            content: '' !important;
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(215, 106, 106, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(102, 187, 106, 0.03) 0%, transparent 50%) !important;
+            pointer-events: none !important;
+        }
+
+        .project-info-wrapper {
+            margin: 50px 0 !important;
+        }
+
+        .main-info-card {
+            background: linear-gradient(135deg, #ffffff, #fefefe) !important;
+            border-radius: 25px !important;
+            padding: 40px !important;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.08) !important;
+            border: 2px solid #f0f0f0 !important;
+            position: relative !important;
+            overflow: hidden !important;
+            transition: all 0.4s ease !important;
+        }
+
+        .main-info-card:hover {
+            transform: translateY(-5px) !important;
+            box-shadow: 0 20px 60px rgba(201, 48, 44, 0.12) !important;
+            border-color: rgba(201, 48, 44, 0.2) !important;
+        }
+
+        .main-info-card::before {
+            content: '' !important;
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 5px !important;
+            background: linear-gradient(90deg,
+                #D76A6A 0%,
+                #C792EA 14%,
+                #FFD54F 28%,
+                #FF9F4F 42%,
+                #66BB6A 57%,
+                #81C4E8 71%,
+                #BC8F8F 85%,
+                #D76A6A 100%) !important;
+        }
+
+        .info-header {
+            display: flex !important;
+            align-items: center !important;
+            gap: 15px !important;
+            margin-bottom: 30px !important;
+            padding-bottom: 20px !important;
+            border-bottom: 3px solid #f0f0f0 !important;
+        }
+
+        .info-icon {
+            font-size: 2.5rem !important;
+            background: linear-gradient(135deg, #c9302c, #8b1e1e) !important;
+            width: 70px !important;
+            height: 70px !important;
+            border-radius: 50% !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            box-shadow: 0 8px 20px rgba(201, 48, 44, 0.25) !important;
+        }
+
+        .info-header h3 {
+            color: #2c3e50 !important;
+            font-size: 1.8rem !important;
+            font-weight: 700 !important;
+            margin: 0 !important;
+        }
+
+        .info-grid {
+            display: grid !important;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+            gap: 25px !important;
+        }
+
+        .info-item {
+            background: linear-gradient(135deg, #f8f9fa, #ffffff) !important;
+            padding: 25px !important;
+            border-radius: 15px !important;
+            border-left: 4px solid #c9302c !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .info-item:hover {
+            transform: translateX(5px) !important;
+            box-shadow: 0 8px 25px rgba(201, 48, 44, 0.1) !important;
+            border-left-width: 6px !important;
+        }
+
+        .info-label {
+            font-size: 0.9rem !important;
+            font-weight: 600 !important;
+            color: #c9302c !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+            margin-bottom: 10px !important;
+        }
+
+        .info-value {
+            font-size: 1.1rem !important;
+            font-weight: 600 !important;
+            color: #2c3e50 !important;
+            line-height: 1.5 !important;
+        }
+
+        /* Themes Section */
+        .themes-section {
+            margin-top: 60px !important;
+        }
+
+        .themes-header {
+            display: flex !important;
+            align-items: center !important;
+            gap: 20px !important;
+            margin-bottom: 40px !important;
+            padding: 30px !important;
+            background: linear-gradient(135deg, rgba(201, 48, 44, 0.05), rgba(139, 30, 30, 0.05)) !important;
+            border-radius: 20px !important;
+            border-left: 5px solid #c9302c !important;
+        }
+
+        .themes-icon {
+            font-size: 3rem !important;
+            background: white !important;
+            width: 80px !important;
+            height: 80px !important;
+            border-radius: 50% !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            box-shadow: 0 8px 20px rgba(201, 48, 44, 0.15) !important;
+        }
+
+        .themes-header h3 {
+            color: #2c3e50 !important;
+            font-size: 2rem !important;
+            font-weight: 700 !important;
+            margin: 0 !important;
+        }
+
+        .themes-grid {
+            display: grid !important;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+            gap: 30px !important;
+        }
+
+        .theme-card {
+            background: white !important;
+            border-radius: 20px !important;
+            padding: 30px !important;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08) !important;
+            border-top: 5px solid #c9302c !important;
+            transition: all 0.4s ease !important;
+            position: relative !important;
+            overflow: hidden !important;
+        }
+
+        .theme-card::before {
+            content: '' !important;
+            position: absolute !important;
+            top: 0 !important;
+            right: -50px !important;
+            width: 150px !important;
+            height: 150px !important;
+            background: radial-gradient(circle, rgba(201, 48, 44, 0.05) 0%, transparent 70%) !important;
+            border-radius: 50% !important;
+            transition: all 0.5s ease !important;
+        }
+
+        .theme-card:hover {
+            transform: translateY(-10px) !important;
+            box-shadow: 0 20px 60px rgba(201, 48, 44, 0.15) !important;
+        }
+
+        .theme-card:hover::before {
+            right: -20px !important;
+            width: 200px !important;
+            height: 200px !important;
+        }
+
+        .theme-card[data-year="1"] {
+            border-top-color: #D76A6A !important;
+        }
+
+        .theme-card[data-year="2"] {
+            border-top-color: #C792EA !important;
+        }
+
+        .theme-card[data-year="3"] {
+            border-top-color: #FFD54F !important;
+        }
+
+        .theme-card[data-year="4"] {
+            border-top-color: #66BB6A !important;
+        }
+
+        .theme-number {
+            display: inline-block !important;
+            background: linear-gradient(135deg, #c9302c, #8b1e1e) !important;
+            color: white !important;
+            padding: 8px 20px !important;
+            border-radius: 20px !important;
+            font-size: 0.9rem !important;
+            font-weight: 700 !important;
+            margin-bottom: 15px !important;
+            box-shadow: 0 4px 12px rgba(201, 48, 44, 0.25) !important;
+        }
+
+        .theme-title {
+            font-size: 1.6rem !important;
+            font-weight: 700 !important;
+            color: #2c3e50 !important;
+            margin-bottom: 20px !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+        }
+
+        .theme-content {
+            position: relative !important;
+            z-index: 1 !important;
+        }
+
+        .theme-list {
+            list-style: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+
+        .theme-list li {
+            padding: 12px 0 12px 30px !important;
+            color: #555 !important;
+            line-height: 1.6 !important;
+            position: relative !important;
+            border-bottom: 1px solid #f0f0f0 !important;
+        }
+
+        .theme-list li:last-child {
+            border-bottom: none !important;
+        }
+
+        .theme-list li::before {
+            content: '✓' !important;
+            position: absolute !important;
+            left: 0 !important;
+            color: #c9302c !important;
+            font-weight: 700 !important;
+            font-size: 1.2rem !important;
+        }
+
+        .theme-list li strong {
+            color: #c9302c !important;
+            font-weight: 700 !important;
+        }
+
+        /* Responsive - Themes Section */
+        @media (max-width: 768px) {
+            .themes-grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            .themes-header {
+                flex-direction: column !important;
+                text-align: center !important;
+            }
+
+            .themes-header h3 {
+                font-size: 1.5rem !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-logo">
+                <svg class="heritage-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#D76A6A;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#c9302c;stop-opacity:1" />
+                        </linearGradient>
+                        <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#C792EA;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#9b59b6;stop-opacity:1" />
+                        </linearGradient>
+                        <linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#FFD54F;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#f39c12;stop-opacity:1" />
+                        </linearGradient>
+                        <linearGradient id="grad4" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#66BB6A;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#27ae60;stop-opacity:1" />
+                        </linearGradient>
+                        <linearGradient id="grad5" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#42A5F5;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#2196F3;stop-opacity:1" />
+                        </linearGradient>
+                        <linearGradient id="grad6" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#FFA726;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#FF9800;stop-opacity:1" />
+                        </linearGradient>
+                        <linearGradient id="grad7" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#AB47BC;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#8E24AA;stop-opacity:1" />
+                        </linearGradient>
+                        <filter id="glow">
+                            <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                            <feMerge>
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                    </defs>
+
+                    <!-- Merkez Daire (Anadolu'nun Kalbini Temsil Eder) -->
+                    <circle class="center-circle" cx="50" cy="50" r="12" fill="#d4a574" opacity="0.9" filter="url(#glow)"/>
+
+                    <!-- 7 Bölge Halkaları -->
+                    <g class="rotating-circles">
+                        <circle class="region-circle region-1" cx="50" cy="20" r="10" fill="url(#grad1)" opacity="0.85"/>
+                        <text class="region-icon" x="50" y="25" font-size="10" text-anchor="middle" fill="white">🍽️</text>
+
+                        <circle class="region-circle region-2" cx="76" cy="30" r="10" fill="url(#grad2)" opacity="0.85"/>
+                        <text class="region-icon" x="76" y="35" font-size="10" text-anchor="middle" fill="white">🎵</text>
+
+                        <circle class="region-circle region-3" cx="85" cy="56" r="10" fill="url(#grad3)" opacity="0.85"/>
+                        <text class="region-icon" x="85" y="61" font-size="10" text-anchor="middle" fill="white">💃</text>
+
+                        <circle class="region-circle region-4" cx="70" cy="78" r="10" fill="url(#grad4)" opacity="0.85"/>
+                        <text class="region-icon" x="70" y="83" font-size="10" text-anchor="middle" fill="white">📖</text>
+
+                        <circle class="region-circle region-5" cx="30" cy="78" r="10" fill="url(#grad5)" opacity="0.85"/>
+                        <text class="region-icon" x="30" y="83" font-size="10" text-anchor="middle" fill="white">🎨</text>
+
+                        <circle class="region-circle region-6" cx="15" cy="56" r="10" fill="url(#grad6)" opacity="0.85"/>
+                        <text class="region-icon" x="15" y="61" font-size="10" text-anchor="middle" fill="white">🏺</text>
+
+                        <circle class="region-circle region-7" cx="24" cy="30" r="10" fill="url(#grad7)" opacity="0.85"/>
+                        <text class="region-icon" x="24" y="35" font-size="10" text-anchor="middle" fill="white">🕌</text>
+                    </g>
+
+                    <!-- Merkez Yıldız -->
+                    <path class="center-star" d="M50,43 L51.5,47 L55.5,47 L52.5,49.5 L53.5,53.5 L50,51 L46.5,53.5 L47.5,49.5 L44.5,47 L48.5,47 Z"
+                          fill="#fff" opacity="0.9" filter="url(#glow)"/>
+
+                    <!-- Bağlantı Çizgileri -->
+                    <g class="connection-lines" opacity="0.3">
+                        <line x1="50" y1="50" x2="50" y2="20" stroke="#d4a574" stroke-width="1"/>
+                        <line x1="50" y1="50" x2="76" y2="30" stroke="#d4a574" stroke-width="1"/>
+                        <line x1="50" y1="50" x2="85" y2="56" stroke="#d4a574" stroke-width="1"/>
+                        <line x1="50" y1="50" x2="70" y2="78" stroke="#d4a574" stroke-width="1"/>
+                        <line x1="50" y1="50" x2="30" y2="78" stroke="#d4a574" stroke-width="1"/>
+                        <line x1="50" y1="50" x2="15" y2="56" stroke="#d4a574" stroke-width="1"/>
+                        <line x1="50" y1="50" x2="24" y2="30" stroke="#d4a574" stroke-width="1"/>
+                    </g>
+                </svg>
+                <span>Anadolu'nun Mirası</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home">Ana Sayfa</a></li>
+                <li><a href="#project">Proje Hakkında</a></li>
+                <li><a href="#regions">Bölgeler</a></li>
+                <li><a href="#journey">Kültürel Yolculuk</a></li>
+                <li><a href="#schools">Okullar</a></li>
+                <li><a href="#performance">Performans Göstergeleri</a></li>
+                <li><a href="#leagues">Ligler</a></li>
+                <li><a href="#contact">İletişim</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Anadolu'nun Mirası</h1>
+            <p class="hero-subtitle">7 Bölge, 7 Okul, 4 Yıllık Kültür Yolculuğu</p>
+            <p class="hero-description">Anadolu'nun kültürel mirasını araştıran dört yıllık bir okul gelişim projesi</p>
+            <a href="#project" class="btn btn-primary">Projeyi Keşfet</a>
+        </div>
+        <div class="scroll-indicator">
+            <span>Aşağı Kaydır</span>
+            <div class="arrow-down"></div>
+        </div>
+    </section>
+
+    <!-- Project Overview -->
+    <section id="project" class="project-overview">
+        <div class="container">
+            <div class="section-header">
+                <h2>Projenin Künyesi ve Ortakları</h2>
+                <div class="underline"></div>
+            </div>
+            <div class="project-grid">
+                <div class="project-card">
+                    <div class="card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </div>
+                    <h3>7 Bölge, 7 Kültür, 7 Okul</h3>
+                    <p>Anadolu'nun kültürel mirasını araştıran dört yıllık bir okul gelişim projesi</p>
+                </div>
+                <div class="project-card">
+                    <div class="card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
+                    <h3>Koordinatör Kurum</h3>
+                    <p>Proje, Göztepe İhsan Kurşunoğlu Anadolu Lisesi tarafından koordine edilmektedir.</p>
+                </div>
+                <div class="project-card">
+                    <div class="card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                            <path d="M2 17l10 5 10-5"></path>
+                            <path d="M2 12l10 5 10-5"></path>
+                        </svg>
+                    </div>
+                    <h3>4 Yıllık Kültürel Yolculuk</h3>
+                    <p>2025-2029 yılları arasında gastronomi, müzik, halk oyunları ve sözlü gelenek</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Roadmap Section -->
+    <section id="regions" class="roadmap-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>4 Yıllık Proje Yol Haritası</h2>
+                <div class="underline"></div>
+                <p>7 Okul, 4 Yıl, 7 Bölge - Anadolu'nun Kültürel Mirasını Keşfediyoruz</p>
+            </div>
+
+            <!-- Timeline Roadmap -->
+            <div class="timeline-roadmap">
+                <!-- Year 1: 2025-2026 - Gastronomy -->
+                <div class="timeline-year" data-year="1">
+                    <div class="year-header">
+                        <div class="year-number">1. YIL</div>
+                        <div class="year-period">2025-2026</div>
+                        <div class="year-theme">🍽️ Gastronomi</div>
+                    </div>
+                    <div class="year-content">
+                        <div class="year-description">
+                            <p>Anadolu'nun zengin mutfak kültürü ve yemek gelenekleri araştırılıyor</p>
+                        </div>
+                        <div class="participating-schools">
+                            <a href="schools/goztepe-ihsan-kursunoglu.html" class="mini-school-card" data-region="marmara">
+                                <div class="school-region-badge">Marmara</div>
+                                <h4>Göztepe İhsan Kurşunoğlu Anadolu Lisesi</h4>
+                                <p>Bilecik</p>
+                                <span class="coordinator-tag">Koordinatör</span>
+                            </a>
+                            <a href="schools/teb-atasehir.html" class="mini-school-card" data-region="ege">
+                                <div class="school-region-badge">Ege</div>
+                                <h4>TEB Ataşehir Anadolu Lisesi</h4>
+                                <p>İzmir</p>
+                            </a>
+                            <a href="schools/ataturk-fen.html" class="mini-school-card" data-region="akdeniz">
+                                <div class="school-region-badge">Akdeniz</div>
+                                <h4>Atatürk Fen Lisesi</h4>
+                                <p>Antalya</p>
+                            </a>
+                            <a href="schools/kadir-has.html" class="mini-school-card" data-region="ic-anadolu">
+                                <div class="school-region-badge">İç Anadolu</div>
+                                <h4>Kadir Has Anadolu Lisesi</h4>
+                                <p>Ankara</p>
+                            </a>
+                            <a href="schools/kadikoy.html" class="mini-school-card" data-region="karadeniz">
+                                <div class="school-region-badge">Karadeniz</div>
+                                <h4>Kadıköy Anadolu Lisesi</h4>
+                                <p>Trabzon</p>
+                            </a>
+                            <a href="schools/erenkoy-kiz.html" class="mini-school-card" data-region="dogu-anadolu">
+                                <div class="school-region-badge">Doğu Anadolu</div>
+                                <h4>Erenköy Kız Anadolu Lisesi</h4>
+                                <p>Elazığ</p>
+                            </a>
+                            <a href="schools/hayrullah-kefoglu.html" class="mini-school-card" data-region="guneydogu-anadolu">
+                                <div class="school-region-badge">G. Doğu Anadolu</div>
+                                <h4>Hayrullah Kefoğlu Anadolu Lisesi</h4>
+                                <p>Gaziantep</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Year 2: 2026-2027 - Music -->
+                <div class="timeline-year" data-year="2">
+                    <div class="year-header">
+                        <div class="year-number">2. YIL</div>
+                        <div class="year-period">2026-2027</div>
+                        <div class="year-theme">🎵 Müzik</div>
+                    </div>
+                    <div class="year-content">
+                        <div class="year-description">
+                            <p>Geleneksel Türk müziği, halk ezgileri ve yerel çalgılar inceleniyor</p>
+                        </div>
+                        <div class="participating-schools">
+                            <a href="schools/goztepe-ihsan-kursunoglu.html" class="mini-school-card" data-region="marmara">
+                                <div class="school-region-badge">Marmara</div>
+                                <h4>Göztepe İhsan Kurşunoğlu Anadolu Lisesi</h4>
+                                <p>Bilecik</p>
+                                <span class="coordinator-tag">Koordinatör</span>
+                            </a>
+                            <a href="schools/teb-atasehir.html" class="mini-school-card" data-region="ege">
+                                <div class="school-region-badge">Ege</div>
+                                <h4>TEB Ataşehir Anadolu Lisesi</h4>
+                                <p>İzmir</p>
+                            </a>
+                            <a href="schools/ataturk-fen.html" class="mini-school-card" data-region="akdeniz">
+                                <div class="school-region-badge">Akdeniz</div>
+                                <h4>Atatürk Fen Lisesi</h4>
+                                <p>Antalya</p>
+                            </a>
+                            <a href="schools/kadir-has.html" class="mini-school-card" data-region="ic-anadolu">
+                                <div class="school-region-badge">İç Anadolu</div>
+                                <h4>Kadir Has Anadolu Lisesi</h4>
+                                <p>Ankara</p>
+                            </a>
+                            <a href="schools/kadikoy.html" class="mini-school-card" data-region="karadeniz">
+                                <div class="school-region-badge">Karadeniz</div>
+                                <h4>Kadıköy Anadolu Lisesi</h4>
+                                <p>Trabzon</p>
+                            </a>
+                            <a href="schools/erenkoy-kiz.html" class="mini-school-card" data-region="dogu-anadolu">
+                                <div class="school-region-badge">Doğu Anadolu</div>
+                                <h4>Erenköy Kız Anadolu Lisesi</h4>
+                                <p>Elazığ</p>
+                            </a>
+                            <a href="schools/hayrullah-kefoglu.html" class="mini-school-card" data-region="guneydogu-anadolu">
+                                <div class="school-region-badge">G. Doğu Anadolu</div>
+                                <h4>Hayrullah Kefoğlu Anadolu Lisesi</h4>
+                                <p>Gaziantep</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Year 3: 2027-2028 - Folk Dances -->
+                <div class="timeline-year" data-year="3">
+                    <div class="year-header">
+                        <div class="year-number">3. YIL</div>
+                        <div class="year-period">2027-2028</div>
+                        <div class="year-theme">💃 Halk Oyunları</div>
+                    </div>
+                    <div class="year-content">
+                        <div class="year-description">
+                            <p>Bölgesel halk oyunları, kostümler ve dans gelenekleri keşfediliyor</p>
+                        </div>
+                        <div class="participating-schools">
+                            <a href="schools/goztepe-ihsan-kursunoglu.html" class="mini-school-card" data-region="marmara">
+                                <div class="school-region-badge">Marmara</div>
+                                <h4>Göztepe İhsan Kurşunoğlu Anadolu Lisesi</h4>
+                                <p>Bilecik</p>
+                                <span class="coordinator-tag">Koordinatör</span>
+                            </a>
+                            <a href="schools/teb-atasehir.html" class="mini-school-card" data-region="ege">
+                                <div class="school-region-badge">Ege</div>
+                                <h4>TEB Ataşehir Anadolu Lisesi</h4>
+                                <p>İzmir</p>
+                            </a>
+                            <a href="schools/ataturk-fen.html" class="mini-school-card" data-region="akdeniz">
+                                <div class="school-region-badge">Akdeniz</div>
+                                <h4>Atatürk Fen Lisesi</h4>
+                                <p>Antalya</p>
+                            </a>
+                            <a href="schools/kadir-has.html" class="mini-school-card" data-region="ic-anadolu">
+                                <div class="school-region-badge">İç Anadolu</div>
+                                <h4>Kadir Has Anadolu Lisesi</h4>
+                                <p>Ankara</p>
+                            </a>
+                            <a href="schools/kadikoy.html" class="mini-school-card" data-region="karadeniz">
+                                <div class="school-region-badge">Karadeniz</div>
+                                <h4>Kadıköy Anadolu Lisesi</h4>
+                                <p>Trabzon</p>
+                            </a>
+                            <a href="schools/erenkoy-kiz.html" class="mini-school-card" data-region="dogu-anadolu">
+                                <div class="school-region-badge">Doğu Anadolu</div>
+                                <h4>Erenköy Kız Anadolu Lisesi</h4>
+                                <p>Elazığ</p>
+                            </a>
+                            <a href="schools/hayrullah-kefoglu.html" class="mini-school-card" data-region="guneydogu-anadolu">
+                                <div class="school-region-badge">G. Doğu Anadolu</div>
+                                <h4>Hayrullah Kefoğlu Anadolu Lisesi</h4>
+                                <p>Gaziantep</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Year 4: 2028-2029 - Oral Tradition -->
+                <div class="timeline-year" data-year="4">
+                    <div class="year-header">
+                        <div class="year-number">4. YIL</div>
+                        <div class="year-period">2028-2029</div>
+                        <div class="year-theme">📖 Sözlü Gelenek & Yayın</div>
+                    </div>
+                    <div class="year-content">
+                        <div class="year-description">
+                            <p>Masallar, destanlar, atasözleri derleniyor ve dijital platform yayınlanıyor</p>
+                        </div>
+                        <div class="participating-schools">
+                            <a href="schools/goztepe-ihsan-kursunoglu.html" class="mini-school-card" data-region="marmara">
+                                <div class="school-region-badge">Marmara</div>
+                                <h4>Göztepe İhsan Kurşunoğlu Anadolu Lisesi</h4>
+                                <p>Bilecik</p>
+                                <span class="coordinator-tag">Koordinatör</span>
+                            </a>
+                            <a href="schools/teb-atasehir.html" class="mini-school-card" data-region="ege">
+                                <div class="school-region-badge">Ege</div>
+                                <h4>TEB Ataşehir Anadolu Lisesi</h4>
+                                <p>İzmir</p>
+                            </a>
+                            <a href="schools/ataturk-fen.html" class="mini-school-card" data-region="akdeniz">
+                                <div class="school-region-badge">Akdeniz</div>
+                                <h4>Atatürk Fen Lisesi</h4>
+                                <p>Antalya</p>
+                            </a>
+                            <a href="schools/kadir-has.html" class="mini-school-card" data-region="ic-anadolu">
+                                <div class="school-region-badge">İç Anadolu</div>
+                                <h4>Kadir Has Anadolu Lisesi</h4>
+                                <p>Ankara</p>
+                            </a>
+                            <a href="schools/kadikoy.html" class="mini-school-card" data-region="karadeniz">
+                                <div class="school-region-badge">Karadeniz</div>
+                                <h4>Kadıköy Anadolu Lisesi</h4>
+                                <p>Trabzon</p>
+                            </a>
+                            <a href="schools/erenkoy-kiz.html" class="mini-school-card" data-region="dogu-anadolu">
+                                <div class="school-region-badge">Doğu Anadolu</div>
+                                <h4>Erenköy Kız Anadolu Lisesi</h4>
+                                <p>Elazığ</p>
+                            </a>
+                            <a href="schools/hayrullah-kefoglu.html" class="mini-school-card" data-region="guneydogu-anadolu">
+                                <div class="school-region-badge">G. Doğu Anadolu</div>
+                                <h4>Hayrullah Kefoğlu Anadolu Lisesi</h4>
+                                <p>Gaziantep</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cultural Journey Timeline -->
+    <section id="journey" class="journey-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>4 Yıllık Kültürel Yolculuk</h2>
+                <div class="underline"></div>
+                <p>2025-2029 Arasında Gerçekleşecek Kültürel Keşif Programı</p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item" data-year="1">
+                    <div class="timeline-icon">
+                        <span class="icon">🍽️</span>
+                    </div>
+                    <div class="timeline-content">
+                        <span class="timeline-year">YIL 1 (2025-2026)</span>
+                        <h3>GASTRONOMİ</h3>
+                        <p>Yöresel mutfak mirası araştırılacak, atölyeler ve tadım etkinlikleri düzenlenecek.</p>
+                        <ul>
+                            <li>Bölgesel Gastronomi Mirasını Araştırma</li>
+                            <li>Yöresel Yemek Atölyeleri</li>
+                            <li>Çoklu Terf Kaşığı ve Bilge Sepeti</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-year="2">
+                    <div class="timeline-icon">
+                        <span class="icon">🎵</span>
+                    </div>
+                    <div class="timeline-content">
+                        <span class="timeline-year">YIL 2 (2026-2027)</span>
+                        <h3>MÜZİK</h3>
+                        <p>Yöresel müzik kültürü ve enstrümanlar belgelenecek, konserler verilecek.</p>
+                        <ul>
+                            <li>Bölgesel Müzik Kültürünün İzini Sürmek ve Belgelemek</li>
+                            <li>Müzik Atölyeleri (Enstrüman/Ses Eğitimi)</li>
+                            <li>Çoklu Yöresel Müzik Konseri</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-year="3">
+                    <div class="timeline-icon">
+                        <span class="icon">💃</span>
+                    </div>
+                    <div class="timeline-content">
+                        <span class="timeline-year">YIL 3 (2027-2028)</span>
+                        <h3>HALK OYUNLARI</h3>
+                        <p>Yöresel halk oyunları araştırılıp sahnelencek, şölenler düzenlenecek.</p>
+                        <ul>
+                            <li>Halk Oyunları Mirasını Sahnelendirmek</li>
+                            <li>Eğitim Atölyeleri (Figür ve Kostüm Tasarımları)</li>
+                            <li>Çoklu Yöresel Halk Oyunları Şöleni</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-year="4">
+                    <div class="timeline-icon">
+                        <span class="icon">📚</span>
+                    </div>
+                    <div class="timeline-content">
+                        <span class="timeline-year">YIL 4 (2028-2029)</span>
+                        <h3>SÖZLÜ GELENEK & YAYIN</h3>
+                        <p>Masal ve efsaneler derlenip proje kitabı basılarak kalıcı bir eser oluşturulacak.</p>
+                        <ul>
+                            <li>Sözlü Gelenek: Derlenirler (Masal/Hikaye)</li>
+                            <li>Dijital Felsefedir Bilimelerin Animasyon</li>
+                            <li>Çoklu Ders Yılı Proje Kitabının Yayımlanması (ISBN/ISSN)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Structure -->
+    <section id="schools" class="structure-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Proje Kapsamı ve Yapısı</h2>
+                <div class="underline"></div>
+                <p>Anadolu'nun İrsiyılı Mirasını "7 Bölge + 7 Kültür" Projesi</p>
+            </div>
+
+            <!-- Project Info Cards -->
+            <div class="project-info-wrapper">
+                <div class="main-info-card">
+                    <div class="info-header">
+                        <div class="info-icon">📋</div>
+                        <h3>Proje Kapısı ve Kapsamı Bilgileri</h3>
+                    </div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Proje Tema</div>
+                            <div class="info-value">Okul Geliştirme Projesi</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Proje Süresi</div>
+                            <div class="info-value">4 Yıl (2025-2029)</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Koordinatör Kurum</div>
+                            <div class="info-value">Göztepe İhsan Kurşunoğlu Anadolu Lisesi</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Genel Amaç</div>
+                            <div class="info-value">7 Bölge+7 Kültür Mirasını Araştırmak, Belgelemek ve Genç Kuşak</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Year Themes Section -->
+            <div class="themes-section">
+                <div class="themes-header">
+                    <div class="themes-icon">🎯</div>
+                    <h3>Numaralı Hedefe ve Vizile Temalar</h3>
+                </div>
+
+                <div class="themes-grid">
+                    <!-- Year 1 -->
+                    <div class="theme-card" data-year="1">
+                        <div class="theme-number">Yıl 1</div>
+                        <div class="theme-title">🍽️ Gastronomi</div>
+                        <div class="theme-content">
+                            <ul class="theme-list">
+                                <li>Bölgesel Gastronomi Mirasını Araştırmak, Belgelemek ve Genç Kuşaklara Aktarmak</li>
+                                <li>Yöresel Yemek Yapım Atölyeleri</li>
+                                <li><strong>Çıktı:</strong> Tarif Kitapçığı</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Year 2 -->
+                    <div class="theme-card" data-year="2">
+                        <div class="theme-number">Yıl 2</div>
+                        <div class="theme-title">🎵 Müzik</div>
+                        <div class="theme-content">
+                            <ul class="theme-list">
+                                <li>Bölgesel Müzik Kültürünün İzini Sürmek ve Belgelemek</li>
+                                <li>Müzik Atölyeleri (Enstrüman/Ses Eğitimi)</li>
+                                <li><strong>Çıktı:</strong> Yöresel Müzik Konseri</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Year 3 -->
+                    <div class="theme-card" data-year="3">
+                        <div class="theme-number">Yıl 3</div>
+                        <div class="theme-title">💃 Halk Oyunları</div>
+                        <div class="theme-content">
+                            <ul class="theme-list">
+                                <li>Halk Oyunları Mirasını Sahnelendirmek</li>
+                                <li>Eğitim Atölyeleri (Figür ve Kostüm Tasarımları)</li>
+                                <li><strong>Çıktı:</strong> Yöresel Halk Oyunları Şöleni</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Year 4 -->
+                    <div class="theme-card" data-year="4">
+                        <div class="theme-number">Yıl 4</div>
+                        <div class="theme-title">📖 Sözlü Gelenek & Yayın</div>
+                        <div class="theme-content">
+                            <ul class="theme-list">
+                                <li>Sözlü Gelenek: Derlenirler (Masal/Hikaye)</li>
+                                <li>Dijital Felsefedir Bilimelerin Animasyon</li>
+                                <li><strong>Çıktı:</strong> Proje Kitabının Yayımlanması (ISBN/ISSN)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Performance Indicators Section -->
+    <section id="performance" class="performance-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>📊 Performans Göstergeleri</h2>
+                <div class="underline"></div>
+                <p>Her okulun proje sürecindeki katkıları ve performans metrikleri</p>
+            </div>
+
+            <!-- Performance Dashboard -->
+            <div class="performance-dashboard">
+                <!-- School Performance Cards will be loaded here -->
+                <div id="performance-cards" class="performance-grid">
+                    <!-- Dinamik olarak yüklenecek -->
+                </div>
+            </div>
+
+            <!-- Performance Metrics Explanation -->
+            <div class="metrics-info">
+                <h3>📈 Performans Metrikleri Nasıl Hesaplanır?</h3>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-icon">🎯</div>
+                        <h4>Etkinlik Skoru</h4>
+                        <p>Düzenlenen etkinlik sayısı × 10 puan</p>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">👥</div>
+                        <h4>Katılım Skoru</h4>
+                        <p>Toplam katılımcı sayısı ÷ 10</p>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">📤</div>
+                        <h4>İçerik Skoru</h4>
+                        <p>Paylaşılan içerik sayısı × 5 puan</p>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">⭐</div>
+                        <h4>Koordinatör Bonusu</h4>
+                        <p>Koordinatör okul +50 puan</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Leaderboard -->
+            <div class="leaderboard">
+                <h3>🏆 Liderlik Tablosu</h3>
+                <div id="leaderboard-table">
+                    <!-- Dinamik olarak yüklenecek -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leagues Section -->
+    <section id="leagues" class="leagues-section" style="padding: 80px 0; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+        <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            <div class="section-header" style="text-align: center; margin-bottom: 50px;">
+                <h2 style="font-size: 2.5rem; color: #2c3e50; margin-bottom: 10px;">Spor Ligleri</h2>
+                <div class="underline" style="width: 80px; height: 4px; background: linear-gradient(135deg, #c9302c, #d4a574); margin: 0 auto 15px; border-radius: 2px;"></div>
+                <p style="color: #666; font-size: 1.1rem;">7 Bölge 7 Okul Kızlar Voleybol ve Erkekler Basketbol Ligi puan durumları</p>
+            </div>
+
+            <!-- Lig Seçimi Butonları -->
+            <div style="display: flex; gap: 15px; justify-content: center; margin-bottom: 40px; flex-wrap: wrap;">
+                <button id="btn-league-voleybol" class="league-tab-btn active" style="padding: 15px 35px; font-size: 16px; font-weight: 600; border: none; border-radius: 12px; cursor: pointer; transition: all 0.3s ease; background: linear-gradient(135deg, #c9302c, #8b1e1e); color: white; box-shadow: 0 4px 15px rgba(201,48,44,0.3);">
+                    🏐 Kızlar Voleybol Ligi
+                </button>
+                <button id="btn-league-basketbol" class="league-tab-btn" style="padding: 15px 35px; font-size: 16px; font-weight: 600; border: 2px solid #c9302c; border-radius: 12px; cursor: pointer; transition: all 0.3s ease; background: white; color: #c9302c;">
+                    🏀 Erkekler Basketbol Ligi
+                </button>
+            </div>
+
+            <!-- Voleybol Ligi Tablosu -->
+            <div id="league-voleybol" class="league-table-container" style="display: block;">
+                <div style="background: white; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); overflow: hidden;">
+                    <div style="background: linear-gradient(135deg, #c9302c, #8b1e1e); padding: 20px 30px; color: white;">
+                        <h3 style="margin: 0; font-size: 1.3rem;">🏐 7 Okul 7 Bölge Kızlar Voleybol Ligi</h3>
+                    </div>
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="background: #f8f9fa;">
+                                    <th style="padding: 14px 12px; text-align: center; font-size: 13px; color: #666; border-bottom: 2px solid #eee;">Sıra</th>
+                                    <th style="padding: 14px 12px; text-align: left; font-size: 13px; color: #666; border-bottom: 2px solid #eee;">Okul</th>
+                                    <th style="padding: 14px 12px; text-align: center; font-size: 13px; color: #666; border-bottom: 2px solid #eee;">O</th>
+                                    <th style="padding: 14px 12px; text-align: center; font-size: 13px; color: #666; border-bottom: 2px solid #eee;">G</th>
+                                    <th style="padding: 14px 12px; text-align: center; font-size: 13px; color: #666; border-bottom: 2px solid #eee;">B</th>
+                                    <th style="padding: 14px 12px; text-align: center; font-size: 13px; color: #666; border-bottom: 2px solid #eee;">M</th>
+                                    <th style="padding: 14px 12px; text-align: center; font-size: 13px; color: #666; border-bottom: 2px solid #eee;">P</th>
+                                </tr>
+                            </thead>
+                            <tbody id="voleybol-standings">
+                                <tr><td colspan="7" style="padding: 30px; text-align: center; color: #999;">Yükleniyor...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Basketbol Ligi Tablosu -->
+            <div id="league-basketbol" class="league-table-container" style="display: none;">
+                <div style="background: white; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); overflow: hidden;">
+                    <div style="background: linear-gradient(135deg, #c9302c, #8b1e1e); padding: 20px 30px; color: white;">
+                        <h3 style="margin: 0; font-size: 1.3rem;">🏀 7 Okul 7 Bölge Erkekler Basketbol Ligi</h3>
+                    </div>
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="background: #f8f9fa;">
+                                    <th style="padding: 14px 12px; text-align: center; font-size: 13px; color: #666; border-bottom: 2px solid #eee;">Sıra</th>
+                                    <th style="padding: 14px 12px; text-align: left; font-size: 13px; color: #666; border-bottom: 2px solid #eee;">Okul</th>
+                                    <th style="padding: 14px 12px; text-align: center; font-size: 13px; color: #666; border-bottom: 2px solid #eee;">O</th>
+                                    <th style="padding: 14px 12px; text-align: center; font-size: 13px; color: #666; border-bottom: 2px solid #eee;">G</th>
+                                    <th style="padding: 14px 12px; text-align: center; font-size: 13px; color: #666; border-bottom: 2px solid #eee;">B</th>
+                                    <th style="padding: 14px 12px; text-align: center; font-size: 13px; color: #666; border-bottom: 2px solid #eee;">M</th>
+                                    <th style="padding: 14px 12px; text-align: center; font-size: 13px; color: #666; border-bottom: 2px solid #eee;">P</th>
+                                </tr>
+                            </thead>
+                            <tbody id="basketbol-standings">
+                                <tr><td colspan="7" style="padding: 30px; text-align: center; color: #999;">Yükleniyor...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sütun Açıklamaları -->
+            <div style="margin-top: 20px; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; font-size: 13px; color: #888;">
+                <span><strong>O</strong> = Oynanan</span>
+                <span><strong>G</strong> = Galibiyet</span>
+                <span><strong>B</strong> = Beraberlik</span>
+                <span><strong>M</strong> = Mağlubiyet</span>
+                <span><strong>P</strong> = Puan</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>İletişim</h2>
+                <div class="underline"></div>
+                <p>Proje hakkında daha fazla bilgi almak için bizimle iletişime geçin</p>
+            </div>
+
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <h4>Adres</h4>
+                        <p>Göztepe İhsan Kurşunoğlu Anadolu Lisesi<br>Tanzimat Sok. No. 55<br>Göztepe, Kadıköy / İstanbul</p>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <h4>Telefon</h4>
+                        <p>0216 355 56 69</p>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">🌐</div>
+                        <h4>Web Sitesi</h4>
+                        <p><a href="https://gikal.meb.k12.tr/" target="_blank" style="color: #c9302c; text-decoration: none;">gikal.meb.k12.tr</a></p>
+                    </div>
+                </div>
+
+                <div class="contact-form">
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <input type="text" id="contact-name" placeholder="Adınız Soyadınız" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="contact-email" placeholder="E-posta Adresiniz" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="contact-subject" placeholder="Konu" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="contact-message" placeholder="Mesajınız" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Gönder</button>
+                    </form>
+                    <div id="contact-status" style="margin-top: 15px; padding: 15px; border-radius: 8px; display: none;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Anadolu'nun Mirası</h4>
+                    <p>7 Bölge, 7 Okul, 4 Yıllık Kültür Yolculuğu</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Hızlı Linkler</h4>
+                    <ul>
+                        <li><a href="#home">Ana Sayfa</a></li>
+                        <li><a href="#project">Proje Hakkında</a></li>
+                        <li><a href="#regions">Bölgeler</a></li>
+                        <li><a href="#journey">Kültürel Yolculuk</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>İletişim</h4>
+                    <p>Göztepe İhsan Kurşunoğlu Anadolu Lisesi</p>
+                    <p>Tanzimat Sok. No. 55</p>
+                    <p>Göztepe, Kadıköy / İstanbul</p>
+                    <p>Tel: 0216 355 56 69</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Anadolu'nun Mirası. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // İletişim formu
+        document.getElementById('contact-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('contact-name').value;
+            const email = document.getElementById('contact-email').value;
+            const subject = document.getElementById('contact-subject').value;
+            const message = document.getElementById('contact-message').value;
+            const statusDiv = document.getElementById('contact-status');
+
+            try {
+                const response = await fetch('upload.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        action: 'contact',
+                        name: name,
+                        email: email,
+                        subject: subject,
+                        message: message
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    statusDiv.style.display = 'block';
+                    statusDiv.style.background = '#d4edda';
+                    statusDiv.style.color = '#155724';
+                    statusDiv.style.border = '1px solid #c3e6cb';
+                    statusDiv.innerHTML = '✅ Mesajınız başarıyla gönderildi! En kısa sürede size dönüş yapacağız.';
+
+                    // Formu temizle
+                    document.getElementById('contact-form').reset();
+
+                    // 5 saniye sonra mesajı gizle
+                    setTimeout(() => {
+                        statusDiv.style.display = 'none';
+                    }, 5000);
+                } else {
+                    throw new Error(result.message || 'Bir hata oluştu');
+                }
+            } catch (error) {
+                statusDiv.style.display = 'block';
+                statusDiv.style.background = '#f8d7da';
+                statusDiv.style.color = '#721c24';
+                statusDiv.style.border = '1px solid #f5c6cb';
+                statusDiv.innerHTML = '❌ Mesaj gönderilemedi: ' + error.message;
+            }
+        });
+
+        // Logo Tıklama Efekti
+        document.addEventListener('DOMContentLoaded', function() {
+            const logo = document.querySelector('.nav-logo');
+
+            if (logo) {
+                logo.addEventListener('click', function(e) {
+                    // Ana sayfaya scroll
+                    const heroSection = document.getElementById('home');
+                    if (heroSection) {
+                        heroSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+
+                    // Tıklama efekti
+                    this.style.animation = 'logoClick 0.6s ease';
+
+                    setTimeout(() => {
+                        this.style.animation = '';
+                    }, 600);
+                });
+            }
+        });
+
+        // Logo tıklama animasyonu için keyframe
+        const logoStyle = document.createElement('style');
+        logoStyle.textContent = `
+            @keyframes logoClick {
+                0% { transform: scale(1); }
+                25% { transform: scale(0.9) rotate(-5deg); }
+                50% { transform: scale(1.1) rotate(5deg); }
+                75% { transform: scale(0.95) rotate(-2deg); }
+                100% { transform: scale(1) rotate(0deg); }
+            }
+        `;
+        document.head.appendChild(logoStyle);
+
+        async function loadPerformanceData() {
+            try {
+                const response = await fetch('performance_handler.php');
+                const result = await response.json();
+
+                if (result.success && result.data.length > 0) {
+                    displayPerformanceCards(result.data);
+                    displayLeaderboard(result.data);
+                } else {
+                    document.getElementById('performance-cards').innerHTML = '<p style="text-align:center; color:#999; padding:40px;">Henuz performans verisi yok. Admin panelden etkinlik ve icerik ekleyin.</p>';
+                    document.getElementById('leaderboard-table').innerHTML = '<p style="text-align:center; color:#999; padding:40px;">Veri bekleniyor...</p>';
+                }
+            } catch (error) {
+                console.log('Performans verileri yuklenemedi:', error);
+                document.getElementById('performance-cards').innerHTML = '<p style="text-align:center; color:#999; padding:40px;">Performans verileri yuklenemedi.</p>';
+            }
+        }
+
+        function displayPerformanceCards(data) {
+            const container = document.getElementById('performance-cards');
+            container.innerHTML = '';
+
+            data.forEach((school, index) => {
+                const rank = index + 1;
+                const rankClass = rank <= 3 ? `rank-${rank}` : '';
+
+                const card = document.createElement('div');
+                card.className = `school-performance-card ${rankClass}`;
+
+                const maxScore = data[0].totalScore || 1;
+                const activityPercentage = (school.activityScore / maxScore) * 100;
+                const participantPercentage = (school.participantScore / maxScore) * 100;
+                const contentPercentage = (school.contentScore / maxScore) * 100;
+
+                card.innerHTML = `
+                    <div class="performance-header">
+                        <div class="school-name-perf">
+                            ${school.school}
+                        </div>
+                        <div class="rank-badge ${rankClass}">#${rank}</div>
+                    </div>
+
+                    <div class="performance-stats">
+                        <div class="stat-item">
+                            <span class="stat-value">${school.activities}</span>
+                            <span class="stat-label">Etkinlik</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">${school.participants}</span>
+                            <span class="stat-label">Katılımcı</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">${school.content}</span>
+                            <span class="stat-label">İçerik</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">${school.region}</span>
+                            <span class="stat-label">Bölge</span>
+                        </div>
+                    </div>
+
+                    <div class="progress-bars">
+                        <div class="progress-item">
+                            <div class="progress-label">
+                                <span>Etkinlik Skoru</span>
+                                <span>${school.activityScore} puan</span>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" style="width: ${activityPercentage}%"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-label">
+                                <span>Katılım Skoru</span>
+                                <span>${school.participantScore} puan</span>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" style="width: ${participantPercentage}%"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-label">
+                                <span>İçerik Skoru</span>
+                                <span>${school.contentScore} puan</span>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" style="width: ${contentPercentage}%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="total-score">
+                        <span class="score-value">${school.totalScore}</span>
+                        <span class="score-label">Toplam Performans Skoru</span>
+                    </div>
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        function displayLeaderboard(data) {
+            const container = document.getElementById('leaderboard-table');
+            container.innerHTML = '';
+
+            // Header
+            const header = document.createElement('div');
+            header.className = 'leaderboard-row header';
+            header.innerHTML = `
+                <div>Sıra</div>
+                <div>Okul</div>
+                <div>Skor</div>
+                <div>Rozet</div>
+            `;
+            container.appendChild(header);
+
+            // Rows
+            data.forEach((school, index) => {
+                const rank = index + 1;
+                let rankClass = '';
+                let badge = '';
+
+                if (rank === 1) {
+                    rankClass = 'gold';
+                    badge = '🥇';
+                } else if (rank === 2) {
+                    rankClass = 'silver';
+                    badge = '🥈';
+                } else if (rank === 3) {
+                    rankClass = 'bronze';
+                    badge = '🥉';
+                } else {
+                    badge = '🎓';
+                }
+
+                const row = document.createElement('div');
+                row.className = 'leaderboard-row';
+                row.innerHTML = `
+                    <div class="leaderboard-rank ${rankClass}">${rank}</div>
+                    <div class="leaderboard-school">${school.school}</div>
+                    <div class="leaderboard-score">${school.totalScore}</div>
+                    <div class="leaderboard-badge">${badge}</div>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        // ==================== LİG FONKSİYONLARI ====================
+
+        function showLeagueTable(type) {
+            // Tabloları gizle/göster
+            document.getElementById('league-voleybol').style.display = type === 'voleybol' ? 'block' : 'none';
+            document.getElementById('league-basketbol').style.display = type === 'basketbol' ? 'block' : 'none';
+
+            // Buton stillerini güncelle
+            const btnV = document.getElementById('btn-league-voleybol');
+            const btnB = document.getElementById('btn-league-basketbol');
+
+            if (type === 'voleybol') {
+                btnV.style.background = 'linear-gradient(135deg, #c9302c, #8b1e1e)';
+                btnV.style.color = 'white';
+                btnV.style.border = 'none';
+                btnV.style.boxShadow = '0 4px 15px rgba(201,48,44,0.3)';
+                btnB.style.background = 'white';
+                btnB.style.color = '#c9302c';
+                btnB.style.border = '2px solid #c9302c';
+                btnB.style.boxShadow = 'none';
+            } else {
+                btnB.style.background = 'linear-gradient(135deg, #c9302c, #8b1e1e)';
+                btnB.style.color = 'white';
+                btnB.style.border = 'none';
+                btnB.style.boxShadow = '0 4px 15px rgba(201,48,44,0.3)';
+                btnV.style.background = 'white';
+                btnV.style.color = '#c9302c';
+                btnV.style.border = '2px solid #c9302c';
+                btnV.style.boxShadow = 'none';
+            }
+        }
+
+        async function loadLeagueTables() {
+            const leagues = [
+                { name: '7 Okul 7 Bölge Kızlar Voleybol Ligi', tbody: 'voleybol-standings' },
+                { name: '7 Okul 7 Bölge Erkekler Basketbol Ligi', tbody: 'basketbol-standings' }
+            ];
+
+            for (const league of leagues) {
+                try {
+                    const response = await fetch('league_handler.php?league=' + encodeURIComponent(league.name));
+                    const result = await response.json();
+
+                    const tbody = document.getElementById(league.tbody);
+
+                    if (result.success && result.data.length > 0) {
+                        tbody.innerHTML = '';
+                        result.data.forEach((item, index) => {
+                            const rank = index + 1;
+                            let medal = rank;
+                            let rowBg = '';
+                            let rankStyle = '';
+
+                            if (rank === 1) {
+                                medal = '🥇';
+                                rowBg = 'background: linear-gradient(135deg, #fff9e6, #fff3cc);';
+                                rankStyle = 'font-size: 20px;';
+                            } else if (rank === 2) {
+                                medal = '🥈';
+                                rowBg = 'background: linear-gradient(135deg, #f5f5f5, #ebebeb);';
+                                rankStyle = 'font-size: 20px;';
+                            } else if (rank === 3) {
+                                medal = '🥉';
+                                rowBg = 'background: linear-gradient(135deg, #fef0e6, #fde3cc);';
+                                rankStyle = 'font-size: 20px;';
+                            }
+
+                            tbody.innerHTML += `
+                                <tr style="${rowBg} border-bottom: 1px solid #f0f0f0; transition: background 0.2s;">
+                                    <td style="padding: 14px 12px; text-align: center; font-weight: 700; ${rankStyle}">${medal}</td>
+                                    <td style="padding: 14px 12px; text-align: left; font-weight: 500;">${item.school_name}</td>
+                                    <td style="padding: 14px 12px; text-align: center;">${item.played}</td>
+                                    <td style="padding: 14px 12px; text-align: center; color: #27ae60; font-weight: 600;">${item.won}</td>
+                                    <td style="padding: 14px 12px; text-align: center; color: #f39c12; font-weight: 600;">${item.drawn}</td>
+                                    <td style="padding: 14px 12px; text-align: center; color: #e74c3c; font-weight: 600;">${item.lost}</td>
+                                    <td style="padding: 14px 12px; text-align: center; font-weight: 700; font-size: 16px; color: #c9302c;">${item.points}</td>
+                                </tr>
+                            `;
+                        });
+                    } else {
+                        tbody.innerHTML = '<tr><td colspan="7" style="padding: 30px; text-align: center; color: #999;">Henüz puan verisi girilmemiş.</td></tr>';
+                    }
+                } catch (error) {
+                    console.log('Lig verileri yüklenemedi:', error);
+                    document.getElementById(league.tbody).innerHTML = '<tr><td colspan="7" style="padding: 30px; text-align: center; color: #999;">Lig verileri yüklenemedi.</td></tr>';
+                }
+            }
+        }
+
+        // Lig butonlarına event listener ekle
+        document.getElementById('btn-league-voleybol').addEventListener('click', function() {
+            showLeagueTable('voleybol');
+        });
+        document.getElementById('btn-league-basketbol').addEventListener('click', function() {
+            showLeagueTable('basketbol');
+        });
+
+        // Sayfa hazır olduğunda tüm verileri yükle
+        loadPerformanceData();
+        loadLeagueTables();
+    </script>
+</body>
+</html>

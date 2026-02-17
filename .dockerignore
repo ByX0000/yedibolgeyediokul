@@ -1,0 +1,36 @@
+# Git
+.git
+.gitignore
+
+# Docker
+docker-compose.yml
+docker-compose.override.yml
+Dockerfile
+.dockerignore
+
+# Ortam dosyaları
+.env
+.env.local
+.env.*.local
+.env.example
+
+# IDE
+.idea/
+.vscode/
+.claude/
+
+# Gereksiz dosyalar
+*.md
+*.xlsx
+nul
+*-backup.html
+create_database.php
+
+# Logs ve uploads (volume olarak mount edilecek)
+logs/
+uploads/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini

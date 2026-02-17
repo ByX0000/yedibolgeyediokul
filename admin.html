@@ -1,0 +1,2621 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Paneli - Anadolu'nun Mirası</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Login Screen Styles */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .login-box {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .login-box h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+
+        .login-box p {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .login-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .login-form {
+            text-align: left;
+        }
+
+        .login-form .form-group {
+            margin-bottom: 20px;
+        }
+
+        .login-form label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .login-form input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+            border: 1px solid #f5c6cb;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .admin-panel {
+            display: none;
+        }
+
+        .admin-panel.show {
+            display: block;
+        }
+
+        .logout-btn {
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-left: 20px;
+        }
+
+        .logout-btn:hover {
+            background: #d32f2f;
+        }
+
+        .default-credentials {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .default-credentials strong {
+            color: #1976d2;
+        }
+
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+        }
+
+        .admin-grid {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 20px;
+        }
+
+        .sidebar {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            height: fit-content;
+        }
+
+        .sidebar h3 {
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .menu-item {
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .menu-item:hover {
+            background: #f0f0f0;
+        }
+
+        .menu-item.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .main-content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            min-height: 600px;
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-success {
+            background: #4caf50;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #f44336;
+            color: white;
+        }
+
+        .btn-warning {
+            background: #ff9800;
+            color: white;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .data-table th {
+            background: #f5f5f5;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .data-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-buttons button {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 36px;
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            opacity: 0.9;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .color-picker-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .color-preview {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-container">
+        <div class="login-box">
+            <div class="login-icon">🔐</div>
+            <h1>Admin Girişi</h1>
+            <p>Anadolu'nun Mirası - Yönetim Paneli</p>
+
+            <div id="loginError" class="error-message">
+                Kullanıcı adı veya şifre hatalı!
+            </div>
+
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label>👤 Kullanıcı Adı</label>
+                    <input type="text" id="username" required placeholder="Kullanıcı adınızı girin" autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label>🔑 Şifre</label>
+                    <input type="password" id="password" required placeholder="Şifrenizi girin" autocomplete="current-password">
+                </div>
+                <button type="submit" class="login-btn">🚀 Giriş Yap</button>
+            </form>
+
+            <div class="default-credentials">
+                <strong>📌 Giriş bilgileri için sistem yöneticisine başvurun.</strong>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel (Hidden by default) -->
+    <div id="adminPanel" class="admin-panel">
+        <div class="container">
+            <div class="header">
+                <h1>🎓 Admin Paneli</h1>
+                <p>Anadolu'nun Mirası - 7 Bölge + 7 Okul Yönetim Paneli</p>
+                <button class="logout-btn" onclick="logout()">🚪 Çıkış Yap</button>
+            </div>
+
+        <div class="admin-grid">
+            <div class="sidebar">
+                <h3>📊 Menü</h3>
+                <div class="menu-item active" onclick="showSection('dashboard')">
+                    📈 Dashboard
+                </div>
+                <div class="menu-item" onclick="showSection('regions')">
+                    🗺️ Bölgeler
+                </div>
+                <div class="menu-item" onclick="showSection('schools')">
+                    🏫 Okullar
+                </div>
+                <div class="menu-item" onclick="showSection('school-about')">
+                    🏫 Okul Hakkında
+                </div>
+                <div class="menu-item" onclick="showSection('leagues')">
+                    🏆 Ligler
+                </div>
+                <div class="menu-item" onclick="showSection('activities')">
+                    🎯 Etkinlikler
+                </div>
+                <div class="menu-item" onclick="showSection('gallery')">
+                    📸 Galeri
+                </div>
+                <div class="menu-item" onclick="showSection('content')">
+                    📤 İçerik Paylaşımı
+                </div>
+                <div class="menu-item" onclick="showSection('performance')">
+                    📊 Performans
+                </div>
+                <div class="menu-item" onclick="showSection('messages')">
+                    📧 Gelen Kutusu <span id="unread-badge" style="background: #e74c3c; color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px; margin-left: 5px; display: none;"></span>
+                </div>
+                <div class="menu-item" onclick="showSection('export')">
+                    💾 Veri Yönetimi
+                </div>
+            </div>
+
+            <div class="main-content">
+                <!-- Dashboard Section -->
+                <div id="dashboard" class="content-section active">
+                    <h2>📈 Genel Bakış</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h3 id="stat-regions">7</h3>
+                            <p>Toplam Bölge</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3 id="stat-schools">7</h3>
+                            <p>Toplam Okul</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3 id="stat-activities">0</h3>
+                            <p>Toplam Etkinlik</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3 id="stat-gallery">0</h3>
+                            <p>Galeri Görseli</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3 id="stat-content">0</h3>
+                            <p>Paylaşılan İçerik</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Regions Section -->
+                <div id="regions" class="content-section">
+                    <h2>🗺️ Bölge Yönetimi</h2>
+                    <div class="alert alert-success" id="region-alert"></div>
+
+                    <form id="regionForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Bölge Adı *</label>
+                                <input type="text" id="region-name" required placeholder="Örn: Marmara Bölgesi">
+                            </div>
+                            <div class="form-group">
+                                <label>Renk *</label>
+                                <div class="color-picker-group">
+                                    <input type="color" id="region-color" required>
+                                    <div class="color-preview" id="region-color-preview"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Açıklama</label>
+                            <textarea id="region-description" placeholder="Bölge hakkında kısa bilgi..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">➕ Bölge Ekle</button>
+                    </form>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Bölge Adı</th>
+                                <th>Renk</th>
+                                <th>Açıklama</th>
+                                <th>İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody id="regions-list">
+                            <!-- JavaScript ile doldurulacak -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Schools Section -->
+                <div id="schools" class="content-section">
+                    <h2>🏫 Okul Yönetimi</h2>
+                    <div class="alert alert-success" id="school-alert"></div>
+
+                    <form id="schoolForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Okul Adı *</label>
+                                <input type="text" id="school-name" required placeholder="Örn: Atatürk İlkokulu">
+                            </div>
+                            <div class="form-group">
+                                <label>Bölge *</label>
+                                <select id="school-region" required>
+                                    <option value="">Bölge Seçin</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Şehir *</label>
+                                <input type="text" id="school-city" required placeholder="Örn: Istanbul">
+                            </div>
+                            <div class="form-group">
+                                <label>Öğrenci Sayısı</label>
+                                <input type="number" id="school-students" placeholder="Örn: 500">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Adres</label>
+                            <textarea id="school-address" placeholder="Okul adresi..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">➕ Okul Ekle</button>
+                    </form>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Okul Adı</th>
+                                <th>Bölge</th>
+                                <th>Şehir</th>
+                                <th>Öğrenci Sayısı</th>
+                                <th>İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody id="schools-list">
+                            <!-- JavaScript ile doldurulacak -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Activities Section -->
+                <div id="activities" class="content-section">
+                    <h2>🎯 Etkinlik Yönetimi</h2>
+                    <div class="alert alert-success" id="activity-alert"></div>
+
+                    <form id="activityForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Etkinlik Adı *</label>
+                                <input type="text" id="activity-name" required placeholder="Örn: Yöresel Yemek Atölyesi">
+                            </div>
+                            <div class="form-group">
+                                <label>Okul *</label>
+                                <select id="activity-school" required>
+                                    <option value="">Okul Seçin</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Tarih *</label>
+                                <input type="date" id="activity-date" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Kategori *</label>
+                                <select id="activity-category" required>
+                                    <option value="">Kategori Seçin</option>
+                                    <option value="Gastronomi">🍽️ Gastronomi</option>
+                                    <option value="Müzik">🎵 Müzik</option>
+                                    <option value="Halk Oyunları">💃 Halk Oyunları</option>
+                                    <option value="Sözlü Gelenek">📚 Sözlü Gelenek</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Açıklama</label>
+                            <textarea id="activity-description" placeholder="Etkinlik detayları..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Katılımcı Sayısı</label>
+                            <input type="number" id="activity-participants" placeholder="Örn: 50">
+                        </div>
+                        <button type="submit" class="btn btn-primary">➕ Etkinlik Ekle</button>
+                    </form>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Etkinlik Adı</th>
+                                <th>Okul</th>
+                                <th>Kategori</th>
+                                <th>Tarih</th>
+                                <th>Katılımcı</th>
+                                <th>İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody id="activities-list">
+                            <!-- JavaScript ile doldurulacak -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Gallery Section -->
+                <div id="gallery" class="content-section">
+                    <h2>📸 Galeri Yönetimi</h2>
+                    <div class="alert alert-success" id="gallery-alert"></div>
+
+                    <form id="galleryForm">
+                        <div class="form-group">
+                            <label>Görsel URL *</label>
+                            <input type="url" id="gallery-url" required placeholder="https://example.com/image.jpg">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Başlık *</label>
+                                <input type="text" id="gallery-title" required placeholder="Örn: Yöresel Yemek Atölyesi">
+                            </div>
+                            <div class="form-group">
+                                <label>Kategori *</label>
+                                <select id="gallery-category" required>
+                                    <option value="">Kategori Seçin</option>
+                                    <option value="Gastronomi">🍽️ Gastronomi</option>
+                                    <option value="Müzik">🎵 Müzik</option>
+                                    <option value="Halk Oyunları">💃 Halk Oyunları</option>
+                                    <option value="Sözlü Gelenek">📚 Sözlü Gelenek</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">➕ Görsel Ekle</button>
+                    </form>
+
+                    <div id="gallery-preview" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin-top: 20px;">
+                        <!-- JavaScript ile doldurulacak -->
+                    </div>
+                </div>
+
+                <!-- Content Sharing Section -->
+                <div id="content" class="content-section">
+                    <h2>📤 İçerik Paylaşımı</h2>
+                    <div class="alert alert-success" id="content-alert"></div>
+
+                    <form id="contentForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>İçerik Tipi *</label>
+                                <select id="content-type" required onchange="toggleContentFields()">
+                                    <option value="">Tip Seçin</option>
+                                    <option value="photo">📷 Fotoğraf</option>
+                                    <option value="video">🎥 Video</option>
+                                    <option value="article">✍️ Yazı</option>
+                                    <option value="event">🎯 Etkinlik</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Okul *</label>
+                                <select id="content-school" required>
+                                    <option value="">Okul Seçin</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Yıl Teması *</label>
+                                <select id="content-year" required>
+                                    <option value="">Yıl Seçin</option>
+                                    <option value="1">🍽️ 1. Yıl - Gastronomi</option>
+                                    <option value="2">🎵 2. Yıl - Müzik</option>
+                                    <option value="3">💃 3. Yıl - Halk Oyunları</option>
+                                    <option value="4">📚 4. Yıl - Sözlü Gelenek</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Tarih *</label>
+                                <input type="date" id="content-date" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Başlık *</label>
+                            <input type="text" id="content-title" required placeholder="İçerik başlığı">
+                        </div>
+
+                        <div id="file-field" class="form-group" style="display: none;">
+                            <label>Dosya Yükle (Resim/Video) *</label>
+                            <input type="file" id="content-file" accept="image/*,video/*">
+                            <small style="color: #666; display: block; margin-top: 5px;">Maksimum 50MB - JPG, PNG, GIF, MP4, WEBM, OGG</small>
+                            <div id="upload-progress" style="display: none; margin-top: 10px;">
+                                <div style="background: #e0e0e0; height: 20px; border-radius: 10px; overflow: hidden;">
+                                    <div id="progress-bar" style="background: #667eea; height: 100%; width: 0%; transition: width 0.3s;"></div>
+                                </div>
+                                <small id="progress-text" style="color: #666; display: block; margin-top: 5px;">Yükleniyor...</small>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Açıklama/İçerik</label>
+                            <textarea id="content-description" rows="5" placeholder="İçerik açıklaması veya yazı metni..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Yazar/Paylaşan</label>
+                            <input type="text" id="content-author" placeholder="Örn: Ahmet Yılmaz - 10/A">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">➕ İçerik Ekle</button>
+                    </form>
+
+                    <h3 style="margin-top: 40px;">Paylaşılan İçerikler</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Tip</th>
+                                <th>Başlık</th>
+                                <th>Okul</th>
+                                <th>Yıl</th>
+                                <th>Yazar</th>
+                                <th>Tarih</th>
+                                <th>İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody id="content-list">
+                            <!-- JavaScript ile doldurulacak -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- School About Section -->
+                <div id="school-about" class="content-section">
+                    <h2>🏫 Okul Hakkında - Bilgi Yönetimi</h2>
+                    <p style="color: #666; margin-bottom: 20px;">Her okul için Kuruluş, Öğrenci Sayısı, Öğretmen Kadrosu ve Başarılar bilgilerini girin.</p>
+
+                    <div class="alert alert-success" id="school-about-alert"></div>
+
+                    <div class="form-group">
+                        <label>Okul Seçin *</label>
+                        <select id="about-school-select" onchange="loadSchoolAboutData()" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px;">
+                            <option value="">-- Okul Seçin --</option>
+                        </select>
+                    </div>
+
+                    <div id="school-about-form-container" style="display: none;">
+                        <!-- Kuruluş -->
+                        <div style="background: #f8f9fa; padding: 25px; border-radius: 15px; margin-bottom: 20px; border-left: 5px solid #667eea;">
+                            <h3 style="color: #667eea; margin-bottom: 15px;">🏛️ Kuruluş Bilgileri</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Kuruluş Yılı</label>
+                                    <input type="number" id="about-kurulus-yili" placeholder="Örn: 1985" min="1900" max="2030">
+                                </div>
+                                <div class="form-group">
+                                    <label>Okul Türü</label>
+                                    <select id="about-okul-turu">
+                                        <option value="">Seçin</option>
+                                        <option value="Anadolu Lisesi">Anadolu Lisesi</option>
+                                        <option value="Fen Lisesi">Fen Lisesi</option>
+                                        <option value="Sosyal Bilimler Lisesi">Sosyal Bilimler Lisesi</option>
+                                        <option value="İmam Hatip Lisesi">İmam Hatip Lisesi</option>
+                                        <option value="Mesleki ve Teknik Lise">Mesleki ve Teknik Lise</option>
+                                        <option value="Güzel Sanatlar Lisesi">Güzel Sanatlar Lisesi</option>
+                                        <option value="Spor Lisesi">Spor Lisesi</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Kuruluş Hikayesi / Tarihçe</label>
+                                <textarea id="about-kurulus-hikaye" rows="4" placeholder="Okulun kuruluş hikayesi ve tarihçesi..."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Öğrenci Sayısı -->
+                        <div style="background: #f8f9fa; padding: 25px; border-radius: 15px; margin-bottom: 20px; border-left: 5px solid #4caf50;">
+                            <h3 style="color: #4caf50; margin-bottom: 15px;">👨‍🎓 Öğrenci Bilgileri</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Toplam Öğrenci Sayısı</label>
+                                    <input type="number" id="about-ogrenci-toplam" placeholder="Örn: 850">
+                                </div>
+                                <div class="form-group">
+                                    <label>Kız Öğrenci Sayısı</label>
+                                    <input type="number" id="about-ogrenci-kiz" placeholder="Örn: 420">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Erkek Öğrenci Sayısı</label>
+                                    <input type="number" id="about-ogrenci-erkek" placeholder="Örn: 430">
+                                </div>
+                                <div class="form-group">
+                                    <label>Sınıf Sayısı</label>
+                                    <input type="number" id="about-sinif-sayisi" placeholder="Örn: 32">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Öğretmen Kadrosu -->
+                        <div style="background: #f8f9fa; padding: 25px; border-radius: 15px; margin-bottom: 20px; border-left: 5px solid #ff9800;">
+                            <h3 style="color: #ff9800; margin-bottom: 15px;">👩‍🏫 Öğretmen Kadrosu</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Toplam Öğretmen Sayısı</label>
+                                    <input type="number" id="about-ogretmen-toplam" placeholder="Örn: 65">
+                                </div>
+                                <div class="form-group">
+                                    <label>Müdür Adı</label>
+                                    <input type="text" id="about-mudur-adi" placeholder="Örn: Ahmet Yılmaz">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Branş Dağılımı / Kadro Bilgisi</label>
+                                <textarea id="about-ogretmen-brans" rows="3" placeholder="Örn: Matematik: 8, Türkçe: 6, Fen Bilimleri: 7..."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Başarılar -->
+                        <div style="background: #f8f9fa; padding: 25px; border-radius: 15px; margin-bottom: 20px; border-left: 5px solid #e91e63;">
+                            <h3 style="color: #e91e63; margin-bottom: 15px;">🏆 Başarılar</h3>
+                            <div class="form-group">
+                                <label>Akademik Başarılar</label>
+                                <textarea id="about-basari-akademik" rows="3" placeholder="YKS, olimpiyat, yarışma başarıları..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Sportif Başarılar</label>
+                                <textarea id="about-basari-sportif" rows="3" placeholder="Spor müsabakaları, şampiyonluklar..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Sosyal ve Kültürel Başarılar</label>
+                                <textarea id="about-basari-sosyal" rows="3" placeholder="Proje ödülleri, kültürel etkinlik başarıları..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Proje Başarıları (eTwinning, TÜBİTAK vb.)</label>
+                                <textarea id="about-basari-proje" rows="3" placeholder="eTwinning, TÜBİTAK, Erasmus+ vb. proje başarıları..."></textarea>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 10px;">
+                            <button class="btn btn-primary" onclick="saveSchoolAboutData()">💾 Kaydet</button>
+                            <button class="btn btn-warning" onclick="clearSchoolAboutForm()">🔄 Formu Temizle</button>
+                        </div>
+
+                        <!-- Kayıtlı Bilgiler Tablosu -->
+                        <div style="margin-top: 40px;">
+                            <h3>📋 Kayıtlı Okul Bilgileri Özeti</h3>
+                            <div id="school-about-summary" style="margin-top: 15px;">
+                                <!-- JS ile doldurulacak -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Leagues Section -->
+                <div id="leagues" class="content-section">
+                    <h2>🏆 Lig Yönetimi</h2>
+                    <p style="color: #666; margin-bottom: 20px;">Kızlar Voleybol ve Erkekler Basketbol liglerinde okul puan durumlarını yönetin.</p>
+
+                    <div class="alert alert-success" id="league-alert"></div>
+
+                    <!-- Lig Seçimi -->
+                    <div style="display: flex; gap: 10px; margin-bottom: 25px;">
+                        <button class="btn btn-primary" id="league-btn-voleybol" onclick="selectLeague('7 Okul 7 Bölge Kızlar Voleybol Ligi')" style="flex: 1; padding: 15px; font-size: 15px;">
+                            🏐 Kızlar Voleybol Ligi
+                        </button>
+                        <button class="btn btn-secondary" id="league-btn-basketbol" onclick="selectLeague('7 Okul 7 Bölge Erkekler Basketbol Ligi')" style="flex: 1; padding: 15px; font-size: 15px;">
+                            🏀 Erkekler Basketbol Ligi
+                        </button>
+                    </div>
+
+                    <div id="league-form-container" style="display: none;">
+                        <h3 id="league-selected-title" style="margin-bottom: 20px; color: #333;"></h3>
+
+                        <!-- Puan Tablosu -->
+                        <div style="overflow-x: auto; margin-bottom: 30px;">
+                            <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.08);">
+                                <thead>
+                                    <tr style="background: linear-gradient(135deg, #667eea, #764ba2); color: white;">
+                                        <th style="padding: 14px 12px; text-align: center; font-size: 13px;">Sıra</th>
+                                        <th style="padding: 14px 12px; text-align: left; font-size: 13px;">Okul</th>
+                                        <th style="padding: 14px 12px; text-align: center; font-size: 13px;">O</th>
+                                        <th style="padding: 14px 12px; text-align: center; font-size: 13px;">G</th>
+                                        <th style="padding: 14px 12px; text-align: center; font-size: 13px;">B</th>
+                                        <th style="padding: 14px 12px; text-align: center; font-size: 13px;">M</th>
+                                        <th style="padding: 14px 12px; text-align: center; font-size: 13px;">P</th>
+                                        <th style="padding: 14px 12px; text-align: center; font-size: 13px;">İşlem</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="league-standings-body">
+                                    <!-- JS ile doldurulacak -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Veri Girişi -->
+                        <div style="background: #f8f9fa; padding: 25px; border-radius: 15px; border-left: 5px solid #667eea;">
+                            <h3 style="color: #667eea; margin-bottom: 15px;">📝 Puan Girişi</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Okul Seçin *</label>
+                                    <select id="league-school-select" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px;">
+                                        <option value="">-- Okul Seçin --</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Oynanan Maç (O)</label>
+                                    <input type="number" id="league-played" placeholder="0" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label>Galibiyet (G)</label>
+                                    <input type="number" id="league-won" placeholder="0" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label>Beraberlik (B)</label>
+                                    <input type="number" id="league-drawn" placeholder="0" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label>Mağlubiyet (M)</label>
+                                    <input type="number" id="league-lost" placeholder="0" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label>Puan (P)</label>
+                                    <input type="number" id="league-points" placeholder="0" min="0">
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 10px;">
+                                <button class="btn btn-primary" onclick="saveLeagueData()">💾 Kaydet</button>
+                                <button class="btn btn-warning" onclick="clearLeagueForm()">🔄 Temizle</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Performance Section -->
+                <div id="performance" class="content-section">
+                    <h2>📊 Performans Takibi</h2>
+                    <p style="color: #666; margin-bottom: 20px;">Okulların etkinlik, katılımcı ve içerik verilerine göre otomatik hesaplanan performans puanları. Bu veriler ana sayfada görüntülenir.</p>
+
+                    <div class="alert alert-success" id="performance-alert"></div>
+
+                    <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                        <button class="btn btn-primary" onclick="loadPerformanceAdmin()">🔄 Yenile</button>
+                    </div>
+
+                    <!-- Puan Hesaplama Bilgisi -->
+                    <div style="background: #e8f5e9; padding: 20px; border-radius: 12px; margin-bottom: 25px; border-left: 4px solid #4caf50;">
+                        <h3 style="margin: 0 0 10px 0; color: #2e7d32;">Puan Hesaplama</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                            <div><strong>Etkinlik:</strong> Her etkinlik = 10 puan</div>
+                            <div><strong>Katilimci:</strong> Her 10 katilimci = 1 puan</div>
+                            <div><strong>Icerik:</strong> Her icerik = 5 puan</div>
+                            <div><strong>Koordinator:</strong> +50 bonus puan</div>
+                        </div>
+                    </div>
+
+                    <!-- Performans Tablosu -->
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Sira</th>
+                                <th>Okul</th>
+                                <th>Bolge</th>
+                                <th>Etkinlik</th>
+                                <th>Katilimci</th>
+                                <th>Icerik</th>
+                                <th>Koordinator</th>
+                                <th>Toplam Puan</th>
+                            </tr>
+                        </thead>
+                        <tbody id="performance-list">
+                            <tr><td colspan="8" style="text-align: center; padding: 30px; color: #999;">Yukluyor...</td></tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Ozet Kartlari -->
+                    <div id="performance-summary" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-top: 25px;">
+                    </div>
+                </div>
+
+                <!-- Messages Section -->
+                <div id="messages" class="content-section">
+                    <h2>📧 Gelen Kutusu</h2>
+
+                    <div style="margin-bottom: 20px; display: flex; gap: 10px;">
+                        <button class="btn btn-primary" onclick="loadMessages()">🔄 Yenile</button>
+                        <button class="btn btn-secondary" onclick="filterMessages('all')">📬 Tümü</button>
+                        <button class="btn btn-info" onclick="filterMessages('unread')">📩 Okunmamış</button>
+                        <button class="btn btn-success" onclick="filterMessages('read')">✅ Okunmuş</button>
+                    </div>
+
+                    <div id="messages-list" style="display: grid; gap: 15px;">
+                        <!-- Mesajlar buraya yüklenecek -->
+                    </div>
+                </div>
+
+                <div id="export" class="content-section">
+                    <h2>💾 Veri Yönetimi</h2>
+
+                    <div style="display: grid; gap: 20px;">
+                        <div style="background: #f5f5f5; padding: 20px; border-radius: 10px;">
+                            <h3>📥 Veri Dışa Aktar</h3>
+                            <p style="margin: 10px 0; color: #666;">Tüm verileri JSON formatında dışa aktarın.</p>
+                            <button class="btn btn-success" onclick="exportData()">📥 Verileri İndir (JSON)</button>
+                        </div>
+
+                        <div style="background: #f5f5f5; padding: 20px; border-radius: 10px;">
+                            <h3>📤 Veri İçe Aktar</h3>
+                            <p style="margin: 10px 0; color: #666;">Daha önce dışa aktarılmış JSON dosyasını yükleyin.</p>
+                            <input type="file" id="import-file" accept=".json" style="margin: 10px 0;">
+                            <button class="btn btn-warning" onclick="importData()">📤 Verileri Yükle</button>
+                        </div>
+
+                        <div style="background: #fff3cd; padding: 20px; border-radius: 10px; border: 2px solid #ffc107;">
+                            <h3>⚠️ Tehlikeli Bölge</h3>
+                            <p style="margin: 10px 0; color: #856404;">Tüm verileri silmek için dikkatli olun. Bu işlem geri alınamaz!</p>
+                            <button class="btn btn-danger" onclick="clearAllData()">🗑️ Tüm Verileri Sil</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        // Varsayılan 7 okul
+        const DEFAULT_SCHOOLS = [
+            {
+                id: 1,
+                name: 'Göztepe İhsan Kurşunoğlu Anadolu Lisesi',
+                region: 'Marmara Bölgesi',
+                city: 'Bilecik',
+                students: '500',
+                address: 'Bilecik'
+            },
+            {
+                id: 2,
+                name: 'TEB Ataşehir Anadolu Lisesi',
+                region: 'Ege Bölgesi',
+                city: 'İzmir',
+                students: '450',
+                address: 'İzmir'
+            },
+            {
+                id: 3,
+                name: 'Atatürk Fen Lisesi',
+                region: 'Akdeniz Bölgesi',
+                city: 'Antalya',
+                students: '600',
+                address: 'Antalya'
+            },
+            {
+                id: 4,
+                name: 'Kadir Has Anadolu Lisesi',
+                region: 'İç Anadolu Bölgesi',
+                city: 'Ankara',
+                students: '550',
+                address: 'Ankara'
+            },
+            {
+                id: 5,
+                name: 'Kadıköy Anadolu Lisesi',
+                region: 'Karadeniz Bölgesi',
+                city: 'Trabzon',
+                students: '400',
+                address: 'Trabzon'
+            },
+            {
+                id: 6,
+                name: 'Erenköy Kız Anadolu Lisesi',
+                region: 'Doğu Anadolu Bölgesi',
+                city: 'Elazığ',
+                students: '350',
+                address: 'Elazığ'
+            },
+            {
+                id: 7,
+                name: 'Hayrullah Kefoğlu Anadolu Lisesi',
+                region: 'Güneydoğu Anadolu Bölgesi',
+                city: 'Gaziantep',
+                students: '480',
+                address: 'Gaziantep'
+            }
+        ];
+
+        // API URL'leri
+        const REGIONS_API = 'regions_handler.php';
+        const SCHOOLS_API = 'schools_handler.php';
+        const ACTIVITIES_API = 'activities_handler.php';
+        const GALLERY_API = 'gallery_handler.php';
+
+        // Veritabanından yüklenen veriler
+        let regions = [];
+        let schools = [];
+        let activities = [];
+        let gallery = [];
+        let sharedContent = [];
+
+        // Sayfa yüklendiğinde tüm verileri sunucudan çek
+        document.addEventListener('DOMContentLoaded', async function() {
+            await loadAllDataFromServer();
+            updateDropdowns();
+        });
+
+        // Tüm verileri sunucudan yükle
+        async function loadAllDataFromServer() {
+            try {
+                const [regionsRes, schoolsRes, activitiesRes, galleryRes] = await Promise.all([
+                    fetch(REGIONS_API).then(r => r.json()),
+                    fetch(SCHOOLS_API).then(r => r.json()),
+                    fetch(ACTIVITIES_API).then(r => r.json()),
+                    fetch(GALLERY_API).then(r => r.json())
+                ]);
+
+                if (regionsRes.success) regions = regionsRes.data;
+                if (schoolsRes.success) schools = schoolsRes.data;
+                if (activitiesRes.success) activities = activitiesRes.data;
+                if (galleryRes.success) gallery = galleryRes.data;
+
+                updateStats();
+                renderRegions();
+                renderSchools();
+                renderActivities();
+                renderGallery();
+                loadContentFromServer();
+            } catch (error) {
+                console.error('Veriler yüklenirken hata:', error);
+                showAlert('region-alert', 'Sunucu bağlantısı kurulamadı. Veritabanı ayarlarını kontrol edin.', 'error');
+            }
+        }
+
+        // Menü navigasyonu
+        function showSection(sectionId) {
+            // Tüm content bölümlerini gizle
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Seçili bölümü göster
+            document.getElementById(sectionId).classList.add('active');
+
+            // Menü item'lerini güncelle
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Mesajlar bölümü açıldığında mesajları yükle
+            if (sectionId === 'messages') {
+                loadMessages();
+            }
+            // Performans bölümü açıldığında verileri yükle
+            if (sectionId === 'performance') {
+                loadPerformanceAdmin();
+            }
+        }
+
+        // İstatistikleri güncelle
+        function updateStats() {
+            document.getElementById('stat-regions').textContent = regions.length;
+            document.getElementById('stat-schools').textContent = schools.length;
+            document.getElementById('stat-activities').textContent = activities.length;
+            document.getElementById('stat-gallery').textContent = gallery.length;
+            document.getElementById('stat-content').textContent = sharedContent.length;
+        }
+
+        // Alert göster
+        function showAlert(alertId, message, type = 'success') {
+            const alert = document.getElementById(alertId);
+            alert.textContent = message;
+            alert.className = `alert alert-${type} show`;
+            setTimeout(() => {
+                alert.classList.remove('show');
+            }, 3000);
+        }
+
+        // BÖLGE YÖNETİMİ
+        document.getElementById('regionForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const region = {
+                name: document.getElementById('region-name').value,
+                color: document.getElementById('region-color').value,
+                description: document.getElementById('region-description').value
+            };
+
+            try {
+                const response = await fetch(REGIONS_API, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(region)
+                });
+                const result = await response.json();
+
+                if (result.success) {
+                    showAlert('region-alert', 'Bölge başarıyla eklendi!');
+                    this.reset();
+                    await loadRegionsFromServer();
+                    updateStats();
+                    updateDropdowns();
+                } else {
+                    showAlert('region-alert', 'Hata: ' + result.message, 'error');
+                }
+            } catch (error) {
+                showAlert('region-alert', 'Sunucu hatası: ' + error.message, 'error');
+            }
+        });
+
+        async function loadRegionsFromServer() {
+            try {
+                const response = await fetch(REGIONS_API);
+                const result = await response.json();
+                if (result.success) {
+                    regions = result.data;
+                    renderRegions();
+                }
+            } catch (error) {
+                console.error('Bölgeler yüklenirken hata:', error);
+            }
+        }
+
+        function renderRegions() {
+            const list = document.getElementById('regions-list');
+            list.innerHTML = '';
+
+            regions.forEach(region => {
+                const row = `
+                    <tr>
+                        <td>${region.name}</td>
+                        <td><div style="width: 30px; height: 30px; background: ${region.color}; border-radius: 5px;"></div></td>
+                        <td>${region.description || '-'}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-danger" onclick="deleteRegion(${region.id})">🗑️ Sil</button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                list.innerHTML += row;
+            });
+        }
+
+        async function deleteRegion(id) {
+            if (confirm('Bu bölgeyi silmek istediğinizden emin misiniz?')) {
+                try {
+                    const response = await fetch(REGIONS_API, {
+                        method: 'DELETE',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id: id })
+                    });
+                    const result = await response.json();
+
+                    if (result.success) {
+                        showAlert('region-alert', 'Bölge silindi!');
+                        await loadRegionsFromServer();
+                        updateStats();
+                        updateDropdowns();
+                    }
+                } catch (error) {
+                    showAlert('region-alert', 'Silme hatası: ' + error.message, 'error');
+                }
+            }
+        }
+
+        // OKUL YÖNETİMİ
+        document.getElementById('schoolForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const school = {
+                name: document.getElementById('school-name').value,
+                region: document.getElementById('school-region').value,
+                city: document.getElementById('school-city').value,
+                students: document.getElementById('school-students').value,
+                address: document.getElementById('school-address').value
+            };
+
+            try {
+                const response = await fetch(SCHOOLS_API, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(school)
+                });
+                const result = await response.json();
+
+                if (result.success) {
+                    showAlert('school-alert', 'Okul başarıyla eklendi!');
+                    this.reset();
+                    await loadSchoolsFromServer();
+                    updateStats();
+                    updateDropdowns();
+                } else {
+                    showAlert('school-alert', 'Hata: ' + result.message, 'error');
+                }
+            } catch (error) {
+                showAlert('school-alert', 'Sunucu hatası: ' + error.message, 'error');
+            }
+        });
+
+        async function loadSchoolsFromServer() {
+            try {
+                const response = await fetch(SCHOOLS_API);
+                const result = await response.json();
+                if (result.success) {
+                    schools = result.data;
+                    renderSchools();
+                }
+            } catch (error) {
+                console.error('Okullar yüklenirken hata:', error);
+            }
+        }
+
+        function renderSchools() {
+            const list = document.getElementById('schools-list');
+            list.innerHTML = '';
+
+            schools.forEach(school => {
+                const row = `
+                    <tr>
+                        <td>${school.name}</td>
+                        <td>${school.region}</td>
+                        <td>${school.city}</td>
+                        <td>${school.students || '-'}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-danger" onclick="deleteSchool(${school.id})">🗑️ Sil</button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                list.innerHTML += row;
+            });
+        }
+
+        async function deleteSchool(id) {
+            if (confirm('Bu okulu silmek istediğinizden emin misiniz?')) {
+                try {
+                    const response = await fetch(SCHOOLS_API, {
+                        method: 'DELETE',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id: id })
+                    });
+                    const result = await response.json();
+
+                    if (result.success) {
+                        showAlert('school-alert', 'Okul silindi!');
+                        await loadSchoolsFromServer();
+                        updateStats();
+                        updateDropdowns();
+                    }
+                } catch (error) {
+                    showAlert('school-alert', 'Silme hatası: ' + error.message, 'error');
+                }
+            }
+        }
+
+        // ETKİNLİK YÖNETİMİ
+        document.getElementById('activityForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const activity = {
+                name: document.getElementById('activity-name').value,
+                school: document.getElementById('activity-school').value,
+                date: document.getElementById('activity-date').value,
+                category: document.getElementById('activity-category').value,
+                description: document.getElementById('activity-description').value,
+                participants: document.getElementById('activity-participants').value
+            };
+
+            try {
+                const response = await fetch(ACTIVITIES_API, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(activity)
+                });
+                const result = await response.json();
+
+                if (result.success) {
+                    showAlert('activity-alert', 'Etkinlik başarıyla eklendi!');
+                    this.reset();
+                    await loadActivitiesFromServer();
+                    updateStats();
+                } else {
+                    showAlert('activity-alert', 'Hata: ' + result.message, 'error');
+                }
+            } catch (error) {
+                showAlert('activity-alert', 'Sunucu hatası: ' + error.message, 'error');
+            }
+        });
+
+        async function loadActivitiesFromServer() {
+            try {
+                const response = await fetch(ACTIVITIES_API);
+                const result = await response.json();
+                if (result.success) {
+                    activities = result.data;
+                    renderActivities();
+                }
+            } catch (error) {
+                console.error('Etkinlikler yüklenirken hata:', error);
+            }
+        }
+
+        function renderActivities() {
+            const list = document.getElementById('activities-list');
+            list.innerHTML = '';
+
+            activities.forEach(activity => {
+                const row = `
+                    <tr>
+                        <td>${activity.name}</td>
+                        <td>${activity.school}</td>
+                        <td>${activity.category}</td>
+                        <td>${activity.date}</td>
+                        <td>${activity.participants || '-'}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-danger" onclick="deleteActivity(${activity.id})">🗑️ Sil</button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                list.innerHTML += row;
+            });
+        }
+
+        async function deleteActivity(id) {
+            if (confirm('Bu etkinliği silmek istediğinizden emin misiniz?')) {
+                try {
+                    const response = await fetch(ACTIVITIES_API, {
+                        method: 'DELETE',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id: id })
+                    });
+                    const result = await response.json();
+
+                    if (result.success) {
+                        showAlert('activity-alert', 'Etkinlik silindi!');
+                        await loadActivitiesFromServer();
+                        updateStats();
+                    }
+                } catch (error) {
+                    showAlert('activity-alert', 'Silme hatası: ' + error.message, 'error');
+                }
+            }
+        }
+
+        // GALERİ YÖNETİMİ
+        document.getElementById('galleryForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const item = {
+                url: document.getElementById('gallery-url').value,
+                title: document.getElementById('gallery-title').value,
+                category: document.getElementById('gallery-category').value
+            };
+
+            try {
+                const response = await fetch(GALLERY_API, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(item)
+                });
+                const result = await response.json();
+
+                if (result.success) {
+                    showAlert('gallery-alert', 'Görsel başarıyla eklendi!');
+                    this.reset();
+                    await loadGalleryFromServer();
+                    updateStats();
+                } else {
+                    showAlert('gallery-alert', 'Hata: ' + result.message, 'error');
+                }
+            } catch (error) {
+                showAlert('gallery-alert', 'Sunucu hatası: ' + error.message, 'error');
+            }
+        });
+
+        async function loadGalleryFromServer() {
+            try {
+                const response = await fetch(GALLERY_API);
+                const result = await response.json();
+                if (result.success) {
+                    gallery = result.data;
+                    renderGallery();
+                }
+            } catch (error) {
+                console.error('Galeri yüklenirken hata:', error);
+            }
+        }
+
+        function renderGallery() {
+            const preview = document.getElementById('gallery-preview');
+            preview.innerHTML = '';
+
+            gallery.forEach(item => {
+                const card = `
+                    <div style="position: relative; border-radius: 10px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                        <img src="${item.url}" alt="${item.title}" style="width: 100%; height: 200px; object-fit: cover;">
+                        <div style="padding: 10px; background: white;">
+                            <strong>${item.title}</strong>
+                            <p style="font-size: 12px; color: #666; margin: 5px 0 0 0;">${item.category}</p>
+                        </div>
+                        <button onclick="deleteGallery(${item.id})" style="position: absolute; top: 10px; right: 10px; background: #f44336; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">🗑️</button>
+                    </div>
+                `;
+                preview.innerHTML += card;
+            });
+        }
+
+        async function deleteGallery(id) {
+            if (confirm('Bu görseli silmek istediğinizden emin misiniz?')) {
+                try {
+                    const response = await fetch(GALLERY_API, {
+                        method: 'DELETE',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id: id })
+                    });
+                    const result = await response.json();
+
+                    if (result.success) {
+                        showAlert('gallery-alert', 'Görsel silindi!');
+                        await loadGalleryFromServer();
+                        updateStats();
+                    }
+                } catch (error) {
+                    showAlert('gallery-alert', 'Silme hatası: ' + error.message, 'error');
+                }
+            }
+        }
+
+        // İÇERİK PAYLAŞIMI YÖNETİMİ
+        const API_URL = 'upload.php'; // PHP backend URL'i
+
+        function toggleContentFields() {
+            const type = document.getElementById('content-type').value;
+            const fileField = document.getElementById('file-field');
+            const fileInput = document.getElementById('content-file');
+
+            if (type === 'photo' || type === 'video' || type === 'event') {
+                fileField.style.display = 'block';
+                fileInput.required = true;
+            } else {
+                fileField.style.display = 'none';
+                fileInput.required = false;
+            }
+        }
+
+        // Dosya yükleme fonksiyonu
+        async function uploadFile(file) {
+            const formData = new FormData();
+            formData.append('file', file);
+
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            const uploadProgress = document.getElementById('upload-progress');
+
+            uploadProgress.style.display = 'block';
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                uploadProgress.style.display = 'none';
+
+                if (result.success) {
+                    return result.url;
+                } else {
+                    throw new Error(result.message);
+                }
+
+            } catch (error) {
+                uploadProgress.style.display = 'none';
+                throw error;
+            }
+        }
+
+        document.getElementById('contentForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const type = document.getElementById('content-type').value;
+            const fileInput = document.getElementById('content-file');
+            let fileUrl = '';
+
+            try {
+                // Eğer fotoğraf veya video ise dosyayı yükle
+                if ((type === 'photo' || type === 'video' || type === 'event') && fileInput.files.length > 0) {
+                    showAlert('content-alert', 'Dosya yükleniyor...', 'success');
+                    fileUrl = await uploadFile(fileInput.files[0]);
+                }
+
+                const content = {
+                    type: type,
+                    school: document.getElementById('content-school').value,
+                    year: document.getElementById('content-year').value,
+                    date: document.getElementById('content-date').value,
+                    title: document.getElementById('content-title').value,
+                    url: fileUrl,
+                    description: document.getElementById('content-description').value,
+                    author: document.getElementById('content-author').value,
+                    content: document.getElementById('content-description').value
+                };
+
+                // Sunucuya kaydet
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(content)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showAlert('content-alert', 'İçerik başarıyla eklendi!');
+                    this.reset();
+                    toggleContentFields();
+                    loadContentFromServer(); // Sunucudan içerikleri yeniden yükle
+                    updateStats();
+                } else {
+                    showAlert('content-alert', 'Hata: ' + result.message, 'error');
+                }
+
+            } catch (error) {
+                showAlert('content-alert', 'Hata: ' + error.message, 'error');
+            }
+        });
+
+        // Sunucudan içerikleri yükle
+        async function loadContentFromServer() {
+            try {
+                const response = await fetch(API_URL);
+                const result = await response.json();
+
+                if (result.success) {
+                    sharedContent = result.data;
+                    renderContent();
+                    updateStats();
+                }
+            } catch (error) {
+                console.error('İçerikler yüklenirken hata:', error);
+            }
+        }
+
+        function renderContent() {
+            const list = document.getElementById('content-list');
+            list.innerHTML = '';
+
+            sharedContent.forEach(content => {
+                const typeIcons = {
+                    'photo': '📷',
+                    'video': '🎥',
+                    'article': '✍️',
+                    'event': '🎯'
+                };
+
+                const yearLabels = {
+                    '1': '🍽️ Gastronomi',
+                    '2': '🎵 Müzik',
+                    '3': '💃 Halk Oyunları',
+                    '4': '📚 Sözlü Gelenek'
+                };
+
+                const row = `
+                    <tr>
+                        <td>${typeIcons[content.type]} ${content.type}</td>
+                        <td>${content.title}</td>
+                        <td>${content.school}</td>
+                        <td>${yearLabels[content.year] || content.year}</td>
+                        <td>${content.author || '-'}</td>
+                        <td>${new Date(content.date).toLocaleDateString('tr-TR')}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-danger" onclick="deleteContent(${content.id})">🗑️ Sil</button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                list.innerHTML += row;
+            });
+        }
+
+        async function deleteContent(id) {
+            if (confirm('Bu içeriği silmek istediğinizden emin misiniz?')) {
+                try {
+                    const response = await fetch(API_URL, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ id: id })
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        showAlert('content-alert', 'İçerik başarıyla silindi!');
+                        loadContentFromServer();
+                    } else {
+                        alert('Hata: ' + result.message);
+                    }
+                } catch (error) {
+                    alert('Hata: ' + error.message);
+                }
+            }
+        }
+
+        // Dropdown'ları güncelle
+        function updateDropdowns() {
+            // Bölge dropdown
+            const regionSelect = document.getElementById('school-region');
+            regionSelect.innerHTML = '<option value="">Bölge Seçin</option>';
+            regions.forEach(region => {
+                regionSelect.innerHTML += `<option value="${region.name}">${region.name}</option>`;
+            });
+
+            // Okul dropdown (Etkinlikler)
+            const schoolSelect = document.getElementById('activity-school');
+            schoolSelect.innerHTML = '<option value="">Okul Seçin</option>';
+            schools.forEach(school => {
+                schoolSelect.innerHTML += `<option value="${school.name}">${school.name}</option>`;
+            });
+
+            // Okul dropdown (İçerik Paylaşımı)
+            const contentSchoolSelect = document.getElementById('content-school');
+            if (contentSchoolSelect) {
+                contentSchoolSelect.innerHTML = '<option value="">Okul Seçin</option>';
+                schools.forEach(school => {
+                    contentSchoolSelect.innerHTML += `<option value="${school.name}">${school.name}</option>`;
+                });
+            }
+        }
+
+        // Renk önizleme
+        document.getElementById('region-color').addEventListener('input', function(e) {
+            document.getElementById('region-color-preview').style.background = e.target.value;
+        });
+
+        // PERFORMANS TAKİBİ
+        async function loadPerformanceAdmin() {
+            try {
+                const response = await fetch('performance_handler.php');
+                const result = await response.json();
+
+                const tbody = document.getElementById('performance-list');
+                const summary = document.getElementById('performance-summary');
+
+                if (result.success && result.data.length > 0) {
+                    tbody.innerHTML = '';
+                    let totalActivities = 0, totalParticipants = 0, totalContent = 0;
+
+                    result.data.forEach((item, index) => {
+                        const rank = index + 1;
+                        let medal = rank;
+                        let rowStyle = '';
+
+                        if (rank === 1) { medal = '🥇'; rowStyle = 'background: #fff9e6;'; }
+                        else if (rank === 2) { medal = '🥈'; rowStyle = 'background: #f5f5f5;'; }
+                        else if (rank === 3) { medal = '🥉'; rowStyle = 'background: #fef0e6;'; }
+
+                        totalActivities += item.activities;
+                        totalParticipants += item.participants;
+                        totalContent += item.content;
+
+                        tbody.innerHTML += `
+                            <tr style="${rowStyle}">
+                                <td style="text-align: center; font-weight: 700; font-size: 18px;">${medal}</td>
+                                <td><strong>${item.school}</strong>${item.isCoordinator ? ' <span style="background: #667eea; color: white; padding: 2px 8px; border-radius: 8px; font-size: 11px;">Koordinator</span>' : ''}</td>
+                                <td>${item.region}</td>
+                                <td style="text-align: center;"><span style="background: #e3f2fd; padding: 4px 10px; border-radius: 8px; font-weight: 600;">${item.activities}</span></td>
+                                <td style="text-align: center;"><span style="background: #f3e5f5; padding: 4px 10px; border-radius: 8px; font-weight: 600;">${item.participants}</span></td>
+                                <td style="text-align: center;"><span style="background: #e8f5e9; padding: 4px 10px; border-radius: 8px; font-weight: 600;">${item.content}</span></td>
+                                <td style="text-align: center;">${item.coordinatorBonus > 0 ? '+' + item.coordinatorBonus : '-'}</td>
+                                <td style="text-align: center; font-weight: 700; font-size: 18px; color: #667eea;">${item.totalScore}</td>
+                            </tr>
+                        `;
+                    });
+
+                    summary.innerHTML = `
+                        <div style="background: linear-gradient(135deg, #667eea, #764ba2); padding: 20px; border-radius: 12px; color: white; text-align: center;">
+                            <div style="font-size: 28px; font-weight: 700;">${totalActivities}</div>
+                            <div style="font-size: 13px; opacity: 0.9;">Toplam Etkinlik</div>
+                        </div>
+                        <div style="background: linear-gradient(135deg, #f093fb, #f5576c); padding: 20px; border-radius: 12px; color: white; text-align: center;">
+                            <div style="font-size: 28px; font-weight: 700;">${totalParticipants}</div>
+                            <div style="font-size: 13px; opacity: 0.9;">Toplam Katilimci</div>
+                        </div>
+                        <div style="background: linear-gradient(135deg, #4facfe, #00f2fe); padding: 20px; border-radius: 12px; color: white; text-align: center;">
+                            <div style="font-size: 28px; font-weight: 700;">${totalContent}</div>
+                            <div style="font-size: 13px; opacity: 0.9;">Toplam Icerik</div>
+                        </div>
+                        <div style="background: linear-gradient(135deg, #43e97b, #38f9d7); padding: 20px; border-radius: 12px; color: white; text-align: center;">
+                            <div style="font-size: 28px; font-weight: 700;">${result.data.reduce((sum, i) => sum + i.totalScore, 0)}</div>
+                            <div style="font-size: 13px; opacity: 0.9;">Toplam Puan</div>
+                        </div>
+                    `;
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 30px; color: #999;">Henuz veri yok. Etkinlik ve icerik ekleyerek performans puani kazanin.</td></tr>';
+                    summary.innerHTML = '';
+                }
+            } catch (error) {
+                console.error('Performans verileri yuklenemedi:', error);
+                document.getElementById('performance-list').innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 30px; color: #e74c3c;">Performans verileri yuklenemedi.</td></tr>';
+            }
+        }
+
+        // VERİ YÖNETİMİ
+        async function exportData() {
+            // Sunucudan güncel verileri al
+            try {
+                const [regionsRes, schoolsRes, activitiesRes, galleryRes, contentRes] = await Promise.all([
+                    fetch(REGIONS_API).then(r => r.json()),
+                    fetch(SCHOOLS_API).then(r => r.json()),
+                    fetch(ACTIVITIES_API).then(r => r.json()),
+                    fetch(GALLERY_API).then(r => r.json()),
+                    fetch(API_URL).then(r => r.json())
+                ]);
+
+                const data = {
+                    regions: regionsRes.data || [],
+                    schools: schoolsRes.data || [],
+                    activities: activitiesRes.data || [],
+                    gallery: galleryRes.data || [],
+                    sharedContent: contentRes.data || [],
+                    exportDate: new Date().toISOString()
+                };
+
+                const dataStr = JSON.stringify(data, null, 2);
+                const dataBlob = new Blob([dataStr], { type: 'application/json' });
+                const url = URL.createObjectURL(dataBlob);
+
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `anadolunun-mirasi-${new Date().toISOString().split('T')[0]}.json`;
+                link.click();
+
+                URL.revokeObjectURL(url);
+                alert('Veriler başarıyla dışa aktarıldı!');
+            } catch (error) {
+                alert('Dışa aktarma hatası: ' + error.message);
+            }
+        }
+
+        async function importData() {
+            const fileInput = document.getElementById('import-file');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                alert('Lütfen bir dosya seçin!');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = async function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+
+                    if (confirm('Yeni veriler mevcut verilere eklenecek. Devam etmek istiyor musunuz?')) {
+                        const importPromises = [];
+
+                        // Bölgeleri içe aktar
+                        if (data.regions) {
+                            for (const region of data.regions) {
+                                importPromises.push(
+                                    fetch(REGIONS_API, {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify(region)
+                                    })
+                                );
+                            }
+                        }
+
+                        // Okulları içe aktar
+                        if (data.schools) {
+                            for (const school of data.schools) {
+                                importPromises.push(
+                                    fetch(SCHOOLS_API, {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify(school)
+                                    })
+                                );
+                            }
+                        }
+
+                        // Etkinlikleri içe aktar
+                        if (data.activities) {
+                            for (const activity of data.activities) {
+                                importPromises.push(
+                                    fetch(ACTIVITIES_API, {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify(activity)
+                                    })
+                                );
+                            }
+                        }
+
+                        // Galeriyi içe aktar
+                        if (data.gallery) {
+                            for (const item of data.gallery) {
+                                importPromises.push(
+                                    fetch(GALLERY_API, {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify(item)
+                                    })
+                                );
+                            }
+                        }
+
+                        await Promise.allSettled(importPromises);
+                        await loadAllDataFromServer();
+                        updateDropdowns();
+
+                        alert('Veriler başarıyla içe aktarıldı!');
+                        fileInput.value = '';
+                    }
+                } catch (error) {
+                    alert('Dosya okunamadı! Lütfen geçerli bir JSON dosyası seçin.');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function clearAllData() {
+            alert('Veritabanı verilerini silmek için phpMyAdmin kullanın veya her bölümden tek tek silin.');
+        }
+
+        // LOGIN SİSTEMİ
+
+        // Sayfa yüklendiğinde login kontrolü
+        window.addEventListener('DOMContentLoaded', function() {
+            checkLoginStatus();
+        });
+
+        // Login form submit
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch('admin_login.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                const result = await response.json();
+
+                if (result.success) {
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('loginTime', new Date().getTime());
+                    showAdminPanel();
+                } else {
+                    document.getElementById('loginError').classList.add('show');
+                    document.getElementById('password').value = '';
+                    setTimeout(() => {
+                        document.getElementById('loginError').classList.remove('show');
+                    }, 3000);
+                }
+            } catch (err) {
+                document.getElementById('loginError').classList.add('show');
+                document.getElementById('password').value = '';
+                setTimeout(() => {
+                    document.getElementById('loginError').classList.remove('show');
+                }, 3000);
+            }
+        });
+
+        // Login durumu kontrolü
+        function checkLoginStatus() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const loginTime = localStorage.getItem('loginTime');
+            const currentTime = new Date().getTime();
+
+            // 24 saat = 86400000 milisaniye
+            const sessionDuration = 24 * 60 * 60 * 1000;
+
+            if (isLoggedIn === 'true' && loginTime && (currentTime - loginTime < sessionDuration)) {
+                showAdminPanel();
+            } else {
+                showLoginScreen();
+                // Oturum süresi dolmuşsa temizle
+                if (loginTime && (currentTime - loginTime >= sessionDuration)) {
+                    localStorage.removeItem('isLoggedIn');
+                    localStorage.removeItem('loginTime');
+                }
+            }
+        }
+
+        // Admin panelini göster
+        function showAdminPanel() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('adminPanel').classList.add('show');
+            // Okunmamış mesaj sayısını güncelle
+            updateUnreadBadge();
+        }
+
+        // Login ekranını göster
+        function showLoginScreen() {
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('adminPanel').classList.remove('show');
+        }
+
+        // Çıkış yap
+        function logout() {
+            if (confirm('Çıkış yapmak istediğinizden emin misiniz?')) {
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('loginTime');
+                showLoginScreen();
+                document.getElementById('loginForm').reset();
+            }
+        }
+
+        // ==================== Gelen Kutusu Fonksiyonları ====================
+        let allMessages = [];
+
+        // Mesajları yükle
+        async function loadMessages() {
+            try {
+                const response = await fetch('upload.php?action=get_messages');
+                const result = await response.json();
+
+                if (result.success) {
+                    allMessages = result.data;
+                    displayMessages(allMessages);
+                    updateUnreadBadge();
+                } else {
+                    alert('Mesajlar yüklenemedi: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Mesajlar yüklenirken hata:', error);
+                alert('Mesajlar yüklenirken bir hata oluştu.');
+            }
+        }
+
+        // Mesajları görüntüle
+        function displayMessages(messages) {
+            const messagesList = document.getElementById('messages-list');
+
+            if (messages.length === 0) {
+                messagesList.innerHTML = '<div style="padding: 40px; text-align: center; color: #999;"><h3>📭 Mesaj yok</h3><p>Henüz gelen mesaj bulunmuyor.</p></div>';
+                return;
+            }
+
+            messagesList.innerHTML = messages.map(msg => `
+                <div class="message-card" style="background: ${msg.is_read ? '#f9f9f9' : '#e3f2fd'}; padding: 20px; border-radius: 10px; border-left: 4px solid ${msg.is_read ? '#ddd' : '#2196F3'}; position: relative;">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 10px;">
+                        <div style="flex: 1;">
+                            <h3 style="margin: 0 0 5px 0; color: #2c3e50;">
+                                ${msg.is_read ? '' : '🔵 '}${msg.subject}
+                            </h3>
+                            <div style="color: #666; font-size: 14px;">
+                                <strong>👤 ${msg.name}</strong> •
+                                📧 <a href="mailto:${msg.email}" style="color: #3498db;">${msg.email}</a> •
+                                📅 ${formatDateTime(msg.created_at)}
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 5px;">
+                            ${!msg.is_read ? `<button class="btn btn-info btn-sm" onclick="markAsRead(${msg.id})" title="Okundu olarak işaretle">✅</button>` : ''}
+                            <button class="btn btn-danger btn-sm" onclick="deleteMessage(${msg.id})" title="Sil">🗑️</button>
+                        </div>
+                    </div>
+                    <div style="background: white; padding: 15px; border-radius: 8px; margin-top: 10px;">
+                        <p style="margin: 0; white-space: pre-wrap; color: #2c3e50;">${msg.message}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Mesajları filtrele
+        function filterMessages(filter) {
+            let filtered = allMessages;
+
+            if (filter === 'unread') {
+                filtered = allMessages.filter(msg => !msg.is_read);
+            } else if (filter === 'read') {
+                filtered = allMessages.filter(msg => msg.is_read);
+            }
+
+            displayMessages(filtered);
+        }
+
+        // Mesajı okundu olarak işaretle
+        async function markAsRead(id) {
+            if (!confirm('Bu mesajı okundu olarak işaretlemek istiyor musunuz?')) return;
+
+            try {
+                const response = await fetch('upload.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        action: 'mark_read',
+                        id: id
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    loadMessages();
+                } else {
+                    alert('Mesaj işaretlenemedi: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Mesaj işaretlenirken hata:', error);
+                alert('Mesaj işaretlenirken bir hata oluştu.');
+            }
+        }
+
+        // Mesajı sil
+        async function deleteMessage(id) {
+            if (!confirm('Bu mesajı silmek istediğinizden emin misiniz?')) return;
+
+            try {
+                const response = await fetch('upload.php', {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        action: 'delete_message',
+                        id: id
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    loadMessages();
+                } else {
+                    alert('Mesaj silinemedi: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Mesaj silinirken hata:', error);
+                alert('Mesaj silinirken bir hata oluştu.');
+            }
+        }
+
+        // Okunmamış mesaj sayısını güncelle
+        async function updateUnreadBadge() {
+            try {
+                const response = await fetch('upload.php?action=unread_count');
+                const result = await response.json();
+
+                if (result.success && result.count > 0) {
+                    const badge = document.getElementById('unread-badge');
+                    badge.textContent = result.count;
+                    badge.style.display = 'inline';
+                } else {
+                    document.getElementById('unread-badge').style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Okunmamış mesaj sayısı alınamadı:', error);
+            }
+        }
+
+        // Tarih formatla
+        function formatDateTime(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleString('tr-TR', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // Sayfa yüklendiğinde okunmamış mesaj sayısını güncelle
+        setInterval(updateUnreadBadge, 30000); // Her 30 saniyede bir güncelle
+
+        // ==================== Okul Hakkında Fonksiyonları ====================
+
+        // Okul Hakkında dropdown'ını güncelle
+        function updateAboutSchoolDropdown() {
+            const select = document.getElementById('about-school-select');
+            if (!select) return;
+            const currentVal = select.value;
+            select.innerHTML = '<option value="">-- Okul Seçin --</option>';
+            schools.forEach(school => {
+                select.innerHTML += `<option value="${school.name}">${school.name}</option>`;
+            });
+            if (currentVal) select.value = currentVal;
+        }
+
+        // Sayfa yüklendiğinde dropdown güncelle
+        const origUpdateDropdowns = updateDropdowns;
+        updateDropdowns = function() {
+            origUpdateDropdowns();
+            updateAboutSchoolDropdown();
+        };
+        // İlk yüklemede de çalıştır
+        document.addEventListener('DOMContentLoaded', function() {
+            updateAboutSchoolDropdown();
+        });
+
+        // Seçili okul için verileri yükle
+        async function loadSchoolAboutData() {
+            const schoolName = document.getElementById('about-school-select').value;
+            const formContainer = document.getElementById('school-about-form-container');
+
+            if (!schoolName) {
+                formContainer.style.display = 'none';
+                return;
+            }
+
+            formContainer.style.display = 'block';
+            clearSchoolAboutForm();
+
+            try {
+                const response = await fetch('school_info_handler.php?school=' + encodeURIComponent(schoolName));
+                const result = await response.json();
+
+                if (result.success && result.data.length > 0) {
+                    result.data.forEach(item => {
+                        fillAboutField(item.info_type, item.content);
+                    });
+                    loadSchoolAboutSummary(result.data);
+                } else {
+                    document.getElementById('school-about-summary').innerHTML = '<p style="color: #999; text-align: center;">Bu okul için henüz kayıtlı bilgi yok.</p>';
+                }
+            } catch (error) {
+                console.error('Okul bilgileri yüklenirken hata:', error);
+            }
+        }
+
+        // Alandan veriyi doldur
+        function fillAboutField(infoType, content) {
+            try {
+                const data = JSON.parse(content);
+                switch(infoType) {
+                    case 'kurulus':
+                        document.getElementById('about-kurulus-yili').value = data.yil || '';
+                        document.getElementById('about-okul-turu').value = data.tur || '';
+                        document.getElementById('about-kurulus-hikaye').value = data.hikaye || '';
+                        break;
+                    case 'ogrenci':
+                        document.getElementById('about-ogrenci-toplam').value = data.toplam || '';
+                        document.getElementById('about-ogrenci-kiz').value = data.kiz || '';
+                        document.getElementById('about-ogrenci-erkek').value = data.erkek || '';
+                        document.getElementById('about-sinif-sayisi').value = data.sinif || '';
+                        break;
+                    case 'ogretmen':
+                        document.getElementById('about-ogretmen-toplam').value = data.toplam || '';
+                        document.getElementById('about-mudur-adi').value = data.mudur || '';
+                        document.getElementById('about-ogretmen-brans').value = data.brans || '';
+                        break;
+                    case 'basarilar':
+                        document.getElementById('about-basari-akademik').value = data.akademik || '';
+                        document.getElementById('about-basari-sportif').value = data.sportif || '';
+                        document.getElementById('about-basari-sosyal').value = data.sosyal || '';
+                        document.getElementById('about-basari-proje').value = data.proje || '';
+                        break;
+                }
+            } catch(e) {
+                // Eski format veya düz metin ise
+            }
+        }
+
+        // Okul bilgilerini kaydet
+        async function saveSchoolAboutData() {
+            const schoolName = document.getElementById('about-school-select').value;
+            if (!schoolName) {
+                alert('Lütfen bir okul seçin!');
+                return;
+            }
+
+            const sections = [
+                {
+                    info_type: 'kurulus',
+                    content: JSON.stringify({
+                        yil: document.getElementById('about-kurulus-yili').value,
+                        tur: document.getElementById('about-okul-turu').value,
+                        hikaye: document.getElementById('about-kurulus-hikaye').value
+                    })
+                },
+                {
+                    info_type: 'ogrenci',
+                    content: JSON.stringify({
+                        toplam: document.getElementById('about-ogrenci-toplam').value,
+                        kiz: document.getElementById('about-ogrenci-kiz').value,
+                        erkek: document.getElementById('about-ogrenci-erkek').value,
+                        sinif: document.getElementById('about-sinif-sayisi').value
+                    })
+                },
+                {
+                    info_type: 'ogretmen',
+                    content: JSON.stringify({
+                        toplam: document.getElementById('about-ogretmen-toplam').value,
+                        mudur: document.getElementById('about-mudur-adi').value,
+                        brans: document.getElementById('about-ogretmen-brans').value
+                    })
+                },
+                {
+                    info_type: 'basarilar',
+                    content: JSON.stringify({
+                        akademik: document.getElementById('about-basari-akademik').value,
+                        sportif: document.getElementById('about-basari-sportif').value,
+                        sosyal: document.getElementById('about-basari-sosyal').value,
+                        proje: document.getElementById('about-basari-proje').value
+                    })
+                }
+            ];
+
+            let savedCount = 0;
+            for (const section of sections) {
+                try {
+                    const response = await fetch('school_info_handler.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            school_name: schoolName,
+                            info_type: section.info_type,
+                            content: section.content
+                        })
+                    });
+                    const result = await response.json();
+                    if (result.success) savedCount++;
+                } catch (error) {
+                    console.error('Kaydetme hatası:', error);
+                }
+            }
+
+            if (savedCount === sections.length) {
+                showAlert('school-about-alert', `${schoolName} bilgileri başarıyla kaydedildi!`);
+                loadSchoolAboutData(); // Özeti güncelle
+            } else {
+                showAlert('school-about-alert', 'Bazı bilgiler kaydedilemedi!', 'error');
+            }
+        }
+
+        // Özet tablosunu göster
+        function loadSchoolAboutSummary(data) {
+            const container = document.getElementById('school-about-summary');
+            const labels = {
+                'kurulus': { icon: '🏛️', title: 'Kuruluş Bilgileri' },
+                'ogrenci': { icon: '👨‍🎓', title: 'Öğrenci Bilgileri' },
+                'ogretmen': { icon: '👩‍🏫', title: 'Öğretmen Kadrosu' },
+                'basarilar': { icon: '🏆', title: 'Başarılar' }
+            };
+
+            let html = '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px;">';
+
+            data.forEach(item => {
+                const label = labels[item.info_type] || { icon: '📄', title: item.info_type };
+                let details = '';
+                try {
+                    const parsed = JSON.parse(item.content);
+                    const entries = Object.entries(parsed).filter(([k, v]) => v && v.trim && v.trim() !== '');
+                    details = entries.map(([k, v]) => `<div style="margin: 4px 0; font-size: 13px;"><strong>${formatFieldName(k)}:</strong> ${v.length > 80 ? v.substring(0, 80) + '...' : v}</div>`).join('');
+                } catch(e) {
+                    details = '<div style="font-size: 13px;">' + item.content + '</div>';
+                }
+
+                if (!details) details = '<div style="color: #999; font-size: 13px;">Henüz girilmemiş</div>';
+
+                html += `
+                    <div style="background: white; padding: 18px; border-radius: 12px; border: 1px solid #e0e0e0; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                        <div style="font-size: 1.1rem; font-weight: 600; margin-bottom: 10px; color: #333;">${label.icon} ${label.title}</div>
+                        ${details}
+                        <div style="font-size: 11px; color: #aaa; margin-top: 8px;">Son güncelleme: ${new Date(item.updated_at).toLocaleString('tr-TR')}</div>
+                    </div>
+                `;
+            });
+
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        function formatFieldName(key) {
+            const names = {
+                'yil': 'Kuruluş Yılı', 'tur': 'Okul Türü', 'hikaye': 'Tarihçe',
+                'toplam': 'Toplam', 'kiz': 'Kız', 'erkek': 'Erkek', 'sinif': 'Sınıf Sayısı',
+                'mudur': 'Müdür', 'brans': 'Branş Dağılımı',
+                'akademik': 'Akademik', 'sportif': 'Sportif', 'sosyal': 'Sosyal/Kültürel', 'proje': 'Proje'
+            };
+            return names[key] || key;
+        }
+
+        // Formu temizle
+        function clearSchoolAboutForm() {
+            const ids = [
+                'about-kurulus-yili', 'about-okul-turu', 'about-kurulus-hikaye',
+                'about-ogrenci-toplam', 'about-ogrenci-kiz', 'about-ogrenci-erkek', 'about-sinif-sayisi',
+                'about-ogretmen-toplam', 'about-mudur-adi', 'about-ogretmen-brans',
+                'about-basari-akademik', 'about-basari-sportif', 'about-basari-sosyal', 'about-basari-proje'
+            ];
+            ids.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = '';
+            });
+            document.getElementById('school-about-summary').innerHTML = '';
+        }
+
+        // ==================== Lig Fonksiyonları ====================
+
+        let currentLeague = '';
+
+        const leagueSchools = [
+            'Göztepe İhsan Kurşunoğlu Anadolu Lisesi',
+            'TEB Ataşehir Anadolu Lisesi',
+            'Atatürk Fen Lisesi',
+            'Kadir Has Anadolu Lisesi',
+            'Kadıköy Anadolu Lisesi',
+            'Erenköy Kız Anadolu Lisesi',
+            'Hayrullah Kefoğlu Anadolu Lisesi'
+        ];
+
+        function selectLeague(leagueName) {
+            currentLeague = leagueName;
+            document.getElementById('league-form-container').style.display = 'block';
+            document.getElementById('league-selected-title').textContent = leagueName;
+
+            // Buton stillerini güncelle
+            const btnV = document.getElementById('league-btn-voleybol');
+            const btnB = document.getElementById('league-btn-basketbol');
+            if (leagueName.includes('Voleybol')) {
+                btnV.className = 'btn btn-primary';
+                btnB.className = 'btn btn-secondary';
+            } else {
+                btnV.className = 'btn btn-secondary';
+                btnB.className = 'btn btn-primary';
+            }
+
+            // Okul dropdown'ı doldur
+            const select = document.getElementById('league-school-select');
+            select.innerHTML = '<option value="">-- Okul Seçin --</option>';
+            leagueSchools.forEach(school => {
+                select.innerHTML += `<option value="${school}">${school}</option>`;
+            });
+
+            loadLeagueStandings();
+        }
+
+        async function loadLeagueStandings() {
+            if (!currentLeague) return;
+
+            try {
+                const response = await fetch('league_handler.php?league=' + encodeURIComponent(currentLeague));
+                const result = await response.json();
+
+                const tbody = document.getElementById('league-standings-body');
+
+                if (result.success && result.data.length > 0) {
+                    // Puana göre sırala
+                    const sorted = result.data.sort((a, b) => b.points - a.points || b.won - a.won);
+                    tbody.innerHTML = sorted.map((item, index) => {
+                        const rowBg = index === 0 ? 'background: #fff9e6;' : (index % 2 === 0 ? 'background: #fafafa;' : '');
+                        const medal = index === 0 ? '🥇' : (index === 1 ? '🥈' : (index === 2 ? '🥉' : (index + 1)));
+                        return `
+                            <tr style="${rowBg} border-bottom: 1px solid #eee;">
+                                <td style="padding: 12px; text-align: center; font-weight: 700; font-size: 16px;">${medal}</td>
+                                <td style="padding: 12px; font-weight: 600; font-size: 13px;">${item.school_name}</td>
+                                <td style="padding: 12px; text-align: center;">${item.played}</td>
+                                <td style="padding: 12px; text-align: center; color: #27ae60; font-weight: 600;">${item.won}</td>
+                                <td style="padding: 12px; text-align: center; color: #f39c12; font-weight: 600;">${item.drawn}</td>
+                                <td style="padding: 12px; text-align: center; color: #e74c3c; font-weight: 600;">${item.lost}</td>
+                                <td style="padding: 12px; text-align: center; font-weight: 700; font-size: 16px; color: #667eea;">${item.points}</td>
+                                <td style="padding: 12px; text-align: center;">
+                                    <button onclick="editLeagueRow(${item.id}, '${item.school_name.replace(/'/g, "\\'")}', ${item.played}, ${item.won}, ${item.drawn}, ${item.lost}, ${item.points})" style="background: #3498db; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 12px; margin-right: 4px;">✏️</button>
+                                    <button onclick="deleteLeagueRow(${item.id})" style="background: #e74c3c; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 12px;">🗑️</button>
+                                </td>
+                            </tr>
+                        `;
+                    }).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="8" style="padding: 30px; text-align: center; color: #999;">Henüz puan verisi girilmemiş. Aşağıdaki formu kullanarak veri girin.</td></tr>';
+                }
+            } catch (error) {
+                console.error('Lig verileri yüklenirken hata:', error);
+            }
+        }
+
+        function editLeagueRow(id, schoolName, played, won, drawn, lost, points) {
+            document.getElementById('league-school-select').value = schoolName;
+            document.getElementById('league-played').value = played;
+            document.getElementById('league-won').value = won;
+            document.getElementById('league-drawn').value = drawn;
+            document.getElementById('league-lost').value = lost;
+            document.getElementById('league-points').value = points;
+        }
+
+        async function deleteLeagueRow(id) {
+            if (!confirm('Bu lig verisini silmek istediğinize emin misiniz?')) return;
+
+            try {
+                const response = await fetch('league_handler.php', {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: id })
+                });
+                const result = await response.json();
+                if (result.success) {
+                    showAlert('league-alert', 'Lig verisi silindi!');
+                    loadLeagueStandings();
+                }
+            } catch (error) {
+                console.error('Silme hatası:', error);
+            }
+        }
+
+        async function saveLeagueData() {
+            const schoolName = document.getElementById('league-school-select').value;
+            if (!currentLeague || !schoolName) {
+                alert('Lütfen bir lig ve okul seçin!');
+                return;
+            }
+
+            const payload = {
+                league_name: currentLeague,
+                school_name: schoolName,
+                played: parseInt(document.getElementById('league-played').value) || 0,
+                won: parseInt(document.getElementById('league-won').value) || 0,
+                drawn: parseInt(document.getElementById('league-drawn').value) || 0,
+                lost: parseInt(document.getElementById('league-lost').value) || 0,
+                points: parseInt(document.getElementById('league-points').value) || 0
+            };
+
+            try {
+                const response = await fetch('league_handler.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+                if (result.success) {
+                    showAlert('league-alert', `${schoolName} puan verisi kaydedildi!`);
+                    clearLeagueForm();
+                    loadLeagueStandings();
+                } else {
+                    showAlert('league-alert', result.message, 'error');
+                }
+            } catch (error) {
+                console.error('Kaydetme hatası:', error);
+            }
+        }
+
+        function clearLeagueForm() {
+            document.getElementById('league-school-select').value = '';
+            document.getElementById('league-played').value = '';
+            document.getElementById('league-won').value = '';
+            document.getElementById('league-drawn').value = '';
+            document.getElementById('league-lost').value = '';
+            document.getElementById('league-points').value = '';
+        }
+    </script>
+</body>
+</html>

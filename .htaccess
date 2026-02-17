@@ -1,0 +1,21 @@
+# PHP ayarları
+php_value upload_max_filesize 50M
+php_value post_max_size 50M
+php_value max_execution_time 300
+php_value max_input_time 300
+
+# Dosya yüklemeleri için izinler
+<FilesMatch "\.(jpg|jpeg|png|gif|mp4|webm|ogg)$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>
+
+# uploads klasörüne erişim izni
+# (uploads klasörü kendi .htaccess ile yönetilir)
+
+# CORS ayarları
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+    Header set Access-Control-Allow-Headers "Content-Type, Authorization"
+</IfModule>

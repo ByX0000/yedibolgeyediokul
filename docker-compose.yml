@@ -1,0 +1,128 @@
+version: '3.8'
+
+services:
+  # ===========================================
+  # PHP + Apache Uygulama Sunucusu
+  # ===========================================
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: anadolu_app
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www/html
+      - ./docker/php/php.ini:/usr/local/etc/php/conf.d/custom.ini
+      - ./docker/apache/vhost.conf:/etc/apache2/sites-available/000-default.conf
+      - uploads_data:/var/www/html/uploads
+      - logs_data:/var/www/html/logs
+    environment:
+      - APP_ENV=${APP_ENV:-production}
+      - APP_DEBUG=${APP_DEBUG:-false}
+      - APP_URL=${APP_URL:-http://localhost:8080}
+      - APP_TIMEZONE=${APP_TIMEZONE:-Europe/Istanbul}
+      - DB_HOST=${DB_HOST:-mysql}
+      - DB_PORT=${DB_PORT:-3306}
+      - DB_NAME=${DB_NAME:-anadolunun_mirasi}
+      - DB_USER=${DB_USER:-anadolu_app}
+      - DB_PASS=${DB_PASS}
+      - DB_CHARSET=${DB_CHARSET:-utf8mb4}
+      - UPLOAD_DIR=${UPLOAD_DIR:-/var/www/html/uploads}
+      - UPLOAD_MAX_SIZE=${UPLOAD_MAX_SIZE:-20971520}
+      - ALLOWED_FILE_TYPES=${ALLOWED_FILE_TYPES:-image/jpeg,image/png,image/gif,video/mp4,video/webm,video/ogg}
+      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS:-http://localhost:8080}
+      - LOG_LEVEL=${LOG_LEVEL:-error}
+      - LOG_FILE=${LOG_FILE:-/var/www/html/logs/app.log}
+      - SESSION_LIFETIME=${SESSION_LIFETIME:-3600}
+      - ADMIN_USERNAME=${ADMIN_USERNAME:-admin}
+      - ADMIN_PASSWORD_HASH=${ADMIN_PASSWORD_HASH}
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - anadolu_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ===========================================
+  # MySQL Veritabanı
+  # ===========================================
+  mysql:
+    image: mysql:8.0
+    container_name: anadolu_mysql
+    restart: unless-stopped
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-anadolunun_mirasi}
+      MYSQL_USER: ${MYSQL_USER:-anadolu_app}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database.sql:/docker-entrypoint-initdb.d/01-schema.sql
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/custom.cnf
+    command: >
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_turkish_ci
+      --default-authentication-plugin=mysql_native_password
+      --sql-mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
+    networks:
+      - anadolu_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # ===========================================
+  # phpMyAdmin (Opsiyonel - Geliştirme)
+  # ===========================================
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: anadolu_phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      UPLOAD_LIMIT: 50M
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - anadolu_network
+    profiles:
+      - dev
+
+# ===========================================
+# Ağ Yapılandırması
+# ===========================================
+networks:
+  anadolu_network:
+    driver: bridge
+    name: anadolu_network
+
+# ===========================================
+# Kalıcı Veri Hacimleri
+# ===========================================
+volumes:
+  mysql_data:
+    driver: local
+    name: anadolu_mysql_data
+  uploads_data:
+    driver: local
+    name: anadolu_uploads
+  logs_data:
+    driver: local
+    name: anadolu_logs
