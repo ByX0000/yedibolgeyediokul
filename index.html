@@ -694,8 +694,8 @@
             background-size: cover !important;
             background-position: center center !important;
             background-repeat: no-repeat !important;
-            opacity: 0 !important;
-            animation: anatoliaSlide 42s ease-in-out infinite !important;
+            /* opacity ayrı tanımlanmıyor — keyframe (0% = opacity:0) + backwards fill-mode halleder */
+            animation: anatoliaSlide 42s ease-in-out infinite backwards !important;
             will-change: opacity, transform !important;
         }
 
@@ -866,28 +866,28 @@
         <!-- Anadolu Tarih Seri Resimleri - Arka Plan Slideshow -->
         <div class="hero-slideshow" aria-hidden="true">
             <!-- 1. Kapadokya - İç Anadolu -->
-            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1570939274717-7eda259b50ed?w=1920&q=85&fit=crop&auto=format')">
+            <div class="slide" style="background-image: url('https://commons.wikimedia.org/wiki/Special:FilePath/Hot_air_balloon_over_Cappadocia,_Turkey.JPG?width=1280')">
                 <span class="slide-label">Kapadokya &mdash; İç Anadolu</span>
             </div>
-            <!-- 2. İstanbul - Marmara -->
-            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=1920&q=85&fit=crop&auto=format')">
-                <span class="slide-label">İstanbul &mdash; Marmara Bölgesi</span>
-            </div>
-            <!-- 3. Efes Antik Kenti - Ege -->
-            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1548695607-9c73430d3dbd?w=1920&q=85&fit=crop&auto=format')">
+            <!-- 2. Efes Celsus Kütüphanesi - Ege -->
+            <div class="slide" style="background-image: url('https://commons.wikimedia.org/wiki/Special:FilePath/Celsus_library_in_Ephesus.JPG?width=1280')">
                 <span class="slide-label">Efes &mdash; Ege Bölgesi</span>
             </div>
-            <!-- 4. Pamukkale - Ege -->
-            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1575652256462-f29c5c20e3dc?w=1920&q=85&fit=crop&auto=format')">
+            <!-- 3. Pamukkale - Ege -->
+            <div class="slide" style="background-image: url('https://commons.wikimedia.org/wiki/Special:FilePath/Pamukkale_Hierapolis_Travertine_pools.JPG?width=1280')">
                 <span class="slide-label">Pamukkale &mdash; Ege Bölgesi</span>
             </div>
-            <!-- 5. Nemrut Dağı - Güneydoğu Anadolu -->
-            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1589561454226-796a8aa89b05?w=1920&q=85&fit=crop&auto=format')">
+            <!-- 4. Nemrut Dağı - Güneydoğu Anadolu -->
+            <div class="slide" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Heads_on_Mount_Nemrut.JPG/1280px-Heads_on_Mount_Nemrut.JPG')">
                 <span class="slide-label">Nemrut Dağı &mdash; Güneydoğu Anadolu</span>
             </div>
-            <!-- 6. Karadeniz Sahil / Sümela - Karadeniz -->
-            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=85&fit=crop&auto=format')">
-                <span class="slide-label">Karadeniz Bölgesi</span>
+            <!-- 5. Ayasofya / İstanbul - Marmara -->
+            <div class="slide" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/c/c9/Hagia_Sophia%2C_Istanbul%2C_Turkey.JPG')">
+                <span class="slide-label">İstanbul &mdash; Marmara Bölgesi</span>
+            </div>
+            <!-- 6. Sümela Manastırı - Karadeniz -->
+            <div class="slide" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Sumela_monastery_in_province_of_Trabzon%2C_Turkey_view_from_the_road.JPG/1280px-Sumela_monastery_in_province_of_Trabzon%2C_Turkey_view_from_the_road.JPG')">
+                <span class="slide-label">Sümela &mdash; Karadeniz Bölgesi</span>
             </div>
         </div>
         <!-- Slideshow Sonu -->
