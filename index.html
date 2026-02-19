@@ -913,7 +913,7 @@
                 <div class="underline"></div>
             </div>
             <div class="project-grid">
-                <div class="project-card">
+                <div class="project-card turkey-map-card">
                     <div class="card-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
@@ -924,6 +924,11 @@
                     </div>
                     <h3>7 Bölge, 7 Kültür, 7 Okul</h3>
                     <p>Anadolu'nun kültürel mirasını araştıran dört yıllık bir okul gelişim projesi</p>
+                    <!-- Dinamik Türkiye Haritası -->
+                    <div class="turkey-map-wrap" id="turkey-map-wrap">
+                        <canvas id="turkey-map-canvas" class="turkey-map-canvas"></canvas>
+                        <div class="ankara-label" id="ankara-label">★ Ankara</div>
+                    </div>
                 </div>
                 <div class="project-card magic-journey-card" id="magic-card">
                     <div class="card-icon">
@@ -2003,6 +2008,40 @@
         loadLeagueTables();
     </script>
 
+    <!-- 🗺️ Türkiye Haritası + Yolculuk Rotası + ✨ Büyü Tozu Stilleri -->
+    <style>
+        /* ── Türkiye Harita Kartı ── */
+        .turkey-map-card {
+            overflow: visible !important;
+        }
+        .turkey-map-wrap {
+            position: relative;
+            margin-top: 14px;
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            background: rgba(201,48,44,0.04);
+            border: 1px solid rgba(201,48,44,0.12);
+        }
+        .turkey-map-canvas {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+        .ankara-label {
+            position: absolute;
+            font-size: 9px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            color: #FFD700;
+            text-shadow: 0 0 8px rgba(255,215,0,0.9), 0 0 16px rgba(255,215,0,0.5);
+            pointer-events: none;
+            white-space: nowrap;
+            transform: translate(-50%, -150%);
+            letter-spacing: 0.5px;
+        }
+    </style>
+
     <!-- 🗺️ Yolculuk Rotası + ✨ Büyü Tozu Stilleri -->
     <style>
         /* ── Yolculuk Kartı ── */
@@ -2037,6 +2076,181 @@
             50%       { opacity: 0.9; transform: scale(1.5); }
         }
     </style>
+
+    <!-- 🗺️ Dinamik Türkiye Haritası - Canvas -->
+    <script>
+    (function () {
+        const wrap   = document.getElementById('turkey-map-wrap');
+        const canvas = document.getElementById('turkey-map-canvas');
+        const label  = document.getElementById('ankara-label');
+        if (!canvas || !wrap) return;
+
+        const ctx = canvas.getContext('2d');
+        const dpr = window.devicePixelRatio || 1;
+
+        /* Koordinat sınırları (enlem/boylam) */
+        const LON0 = 25.6, LON1 = 45.3;
+        const LAT0 = 35.4, LAT1 = 42.6;
+
+        let W = 0, H = 0;
+
+        function resize() {
+            W = wrap.clientWidth;
+            H = Math.round(W * 0.37);
+            canvas.width  = W * dpr;
+            canvas.height = H * dpr;
+            canvas.style.width  = W + 'px';
+            canvas.style.height = H + 'px';
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        /* Koordinat dönüştürücü */
+        function ll(lon, lat) {
+            return {
+                x: (lon - LON0) / (LON1 - LON0) * W,
+                y: (LAT1 - lat) / (LAT1 - LAT0) * H
+            };
+        }
+
+        /* Türkiye sınır noktaları [boylam, enlem] - basitleştirilmiş */
+        const OUTLINE = [
+            /* Trakya */
+            [26.5,41.6],[26.8,42.0],[27.5,42.1],[28.0,41.9],[28.3,41.6],
+            /* İstanbul / Marmara geçişi */
+            [28.9,41.1],[29.1,40.9],[29.5,41.2],
+            /* Karadeniz kıyısı (batıdan doğuya) */
+            [30.5,41.5],[31.5,41.7],[32.5,42.0],[34.5,42.0],
+            [36.5,42.1],[38.0,41.5],[39.5,41.0],[41.0,41.1],
+            /* Kuzeydoğu köşesi */
+            [41.5,40.8],[43.0,40.5],[44.5,39.5],
+            /* Doğu sınırı */
+            [44.8,38.0],[44.4,37.2],
+            /* Güneydoğu / Güney sınırı */
+            [42.5,37.1],[41.5,36.6],[40.8,36.5],[38.5,36.5],
+            [37.0,36.7],[36.5,36.1],[35.5,36.3],[34.0,36.2],
+            /* Akdeniz kıyısı (doğudan batıya) */
+            [32.5,36.4],[30.5,36.2],[29.0,36.4],[27.5,37.0],
+            /* Ege kıyısı */
+            [27.0,37.5],[27.2,37.9],[26.5,38.4],[26.2,39.0],
+            /* Çanakkale / Marmara geri dönüş */
+            [26.5,40.0],[27.0,40.4],[27.8,40.6],[28.3,40.5],
+            /* Kapanış - Trakya'ya dön */
+            [26.5,41.6]
+        ];
+
+        /* 7 Bölge noktaları */
+        const BOLGE = [
+            { lon:29.0,  lat:40.8,  c:'#D76A6A', r:3.8, label:'Marmara'      },
+            { lon:27.6,  lat:38.3,  c:'#C792EA', r:3.5, label:'Ege'           },
+            { lon:31.2,  lat:36.8,  c:'#FF9F4F', r:3.5, label:'Akdeniz'       },
+            { lon:35.5,  lat:41.2,  c:'#66BB6A', r:3.5, label:'Karadeniz'     },
+            { lon:40.5,  lat:39.7,  c:'#81C4E8', r:3.5, label:'Doğu Anadolu' },
+            { lon:37.8,  lat:37.3,  c:'#F06292', r:3.5, label:'Güneydoğu'    },
+        ];
+
+        /* Ankara — kalp */
+        const ANKARA = { lon: 32.86, lat: 39.93 };
+
+        let t = 0;
+
+        function drawFrame() {
+            if (W === 0) { requestAnimationFrame(drawFrame); return; }
+            ctx.clearRect(0, 0, W, H);
+            t += 0.022;
+
+            const ak = ll(ANKARA.lon, ANKARA.lat);
+
+            /* --- Türkiye dolgusu: Ankara'dan yayılan radyal ışık --- */
+            ctx.beginPath();
+            OUTLINE.forEach(([lon, lat], i) => {
+                const p = ll(lon, lat);
+                i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y);
+            });
+            ctx.closePath();
+
+            const grd = ctx.createRadialGradient(ak.x, ak.y, 2, ak.x, ak.y, W * 0.65);
+            grd.addColorStop(0,    'rgba(255,215,0,0.22)');
+            grd.addColorStop(0.25, 'rgba(201,48,44,0.14)');
+            grd.addColorStop(0.7,  'rgba(139,30,28,0.08)');
+            grd.addColorStop(1,    'rgba(30,10,10,0.04)');
+            ctx.fillStyle   = grd;
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(201,48,44,0.55)';
+            ctx.lineWidth   = 1.5;
+            ctx.stroke();
+
+            /* --- Ankara: genişleyen ışık halkaları --- */
+            for (let i = 0; i < 4; i++) {
+                const phase = ((t * 1.1 + i * 1.57) % (Math.PI * 2));
+                const prog  = phase / (Math.PI * 2);
+                const r     = 5 + prog * 42;
+                const alpha = 0.75 * (1 - prog);
+                ctx.beginPath();
+                ctx.arc(ak.x, ak.y, r, 0, Math.PI * 2);
+                ctx.strokeStyle = `rgba(255,215,0,${alpha.toFixed(3)})`;
+                ctx.lineWidth   = 2.5 * (1 - prog * 0.7);
+                ctx.stroke();
+            }
+
+            /* --- Ankara: ışın demetleri --- */
+            for (let i = 0; i < 8; i++) {
+                const angle = (i / 8) * Math.PI * 2 + t * 0.12;
+                const len   = 12 + Math.sin(t * 2.2 + i * 0.78) * 6;
+                const alpha = 0.2 + Math.abs(Math.sin(t * 1.6 + i)) * 0.3;
+                ctx.beginPath();
+                ctx.moveTo(ak.x + Math.cos(angle) * 7,   ak.y + Math.sin(angle) * 7);
+                ctx.lineTo(ak.x + Math.cos(angle) * len, ak.y + Math.sin(angle) * len);
+                ctx.strokeStyle = `rgba(255,210,0,${alpha.toFixed(3)})`;
+                ctx.lineWidth   = 1.3;
+                ctx.stroke();
+            }
+
+            /* --- Ankara: kalp atışı (nokta) --- */
+            const beat = 1 + Math.sin(t * 3.0) * 0.32;
+            ctx.save();
+            ctx.shadowColor = '#FFD700';
+            ctx.shadowBlur  = 18;
+            ctx.beginPath();
+            ctx.arc(ak.x, ak.y, 5.5 * beat, 0, Math.PI * 2);
+            ctx.fillStyle = '#FFD700';
+            ctx.fill();
+            ctx.restore();
+
+            /* Beyaz merkez */
+            ctx.beginPath();
+            ctx.arc(ak.x, ak.y, 2.2, 0, Math.PI * 2);
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+
+            /* --- 7 Bölge noktaları --- */
+            BOLGE.forEach((b, i) => {
+                const p     = ll(b.lon, b.lat);
+                const pulse = 1 + Math.sin(t * 1.7 + i * 1.05) * 0.22;
+                ctx.save();
+                ctx.shadowColor = b.c;
+                ctx.shadowBlur  = 7;
+                ctx.globalAlpha = 0.88;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, b.r * pulse, 0, Math.PI * 2);
+                ctx.fillStyle = b.c;
+                ctx.fill();
+                ctx.restore();
+            });
+
+            /* --- Ankara etiketini konumlandır --- */
+            if (label) {
+                label.style.left = ak.x + 'px';
+                label.style.top  = ak.y + 'px';
+            }
+
+            requestAnimationFrame(drawFrame);
+        }
+
+        drawFrame();
+    })();
+    </script>
 
     <!-- ✨ Büyü Tozu Parçacıkları -->
     <style>
