@@ -938,16 +938,108 @@
                     <h3 class="magic-title">Anadolu'nun Büyüsüne Yolculuk</h3>
                     <p>7 ortak okulun büyüleyici Anadolu kültürel yolculuğu — 7 bölgeden 7 okul, Anadolu'nun eşsiz mirasını birlikte keşfediyor.</p>
                 </div>
-                <div class="project-card">
+                <div class="project-card journey-card-effect">
                     <div class="card-icon">
+                        <!-- Yolculuk (pusula) ikonu -->
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
-                            <path d="M2 17l10 5 10-5"></path>
-                            <path d="M2 12l10 5 10-5"></path>
+                            <circle cx="12" cy="12" r="10"/>
+                            <polygon points="12,2 15,9 12,12 9,9" fill="currentColor" opacity="0.6"/>
+                            <polygon points="12,22 9,15 12,12 15,15" fill="currentColor" opacity="0.3"/>
+                            <line x1="12" y1="2" x2="12" y2="4"/>
+                            <line x1="12" y1="20" x2="12" y2="22"/>
+                            <line x1="2" y1="12" x2="4" y2="12"/>
+                            <line x1="20" y1="12" x2="22" y2="12"/>
                         </svg>
                     </div>
                     <h3>4 Yıllık Kültürel Yolculuk</h3>
                     <p>2025-2029 yılları arasında gastronomi, müzik, halk oyunları ve sözlü gelenek</p>
+
+                    <!-- Yolculuk Rotası Animasyonu -->
+                    <div class="jroute-wrap">
+                        <svg viewBox="0 0 320 78" xmlns="http://www.w3.org/2000/svg" class="jroute-svg" aria-hidden="true">
+                            <defs>
+                                <filter id="jgr" x="-60%" y="-60%" width="220%" height="220%">
+                                    <feGaussianBlur stdDeviation="3" result="b"/>
+                                    <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+                                </filter>
+                                <filter id="jgp" x="-60%" y="-60%" width="220%" height="220%">
+                                    <feGaussianBlur stdDeviation="2.5" result="b"/>
+                                    <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+                                </filter>
+                                <filter id="jgg" x="-60%" y="-60%" width="220%" height="220%">
+                                    <feGaussianBlur stdDeviation="2" result="b"/>
+                                    <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+                                </filter>
+                            </defs>
+
+                            <!-- Harita ızgara çizgileri -->
+                            <line x1="80"  y1="0" x2="80"  y2="78" stroke="rgba(201,48,44,0.07)" stroke-width="0.8"/>
+                            <line x1="160" y1="0" x2="160" y2="78" stroke="rgba(201,48,44,0.07)" stroke-width="0.8"/>
+                            <line x1="240" y1="0" x2="240" y2="78" stroke="rgba(201,48,44,0.07)" stroke-width="0.8"/>
+                            <line x1="4"   y1="38" x2="316" y2="38" stroke="rgba(201,48,44,0.05)" stroke-width="0.8"/>
+
+                            <!-- Yol gölgesi (kalın, saydam) -->
+                            <path d="M8,38 Q80,10 160,38 Q240,66 312,38"
+                                  fill="none" stroke="rgba(201,48,44,0.09)" stroke-width="13" stroke-linecap="round"/>
+
+                            <!-- Ana yol — kayan kesik çizgi -->
+                            <path id="jrp" d="M8,38 Q80,10 160,38 Q240,66 312,38"
+                                  fill="none" stroke="rgba(201,48,44,0.38)" stroke-width="2.2"
+                                  stroke-dasharray="5 3" class="jroad-anim"/>
+
+                            <!-- Kilometre taşı: dış halka (nabız atıyor) -->
+                            <circle cx="8"   cy="38" r="6"   fill="none" stroke="#D76A6A" stroke-width="1.5" class="jring" style="animation-delay:0s"/>
+                            <circle cx="82"  cy="24" r="5"   fill="none" stroke="#C792EA" stroke-width="1.5" class="jring" style="animation-delay:0.6s"/>
+                            <circle cx="160" cy="38" r="5"   fill="none" stroke="#c9a020" stroke-width="1.5" class="jring" style="animation-delay:1.2s"/>
+                            <circle cx="238" cy="52" r="5"   fill="none" stroke="#FF9F4F" stroke-width="1.5" class="jring" style="animation-delay:1.8s"/>
+                            <circle cx="312" cy="38" r="6"   fill="none" stroke="#66BB6A" stroke-width="1.5" class="jring" style="animation-delay:2.4s"/>
+
+                            <!-- Kilometre taşı: iç dolgu noktası -->
+                            <circle cx="8"   cy="38" r="3"   fill="#D76A6A"/>
+                            <circle cx="82"  cy="24" r="2.5" fill="#C792EA"/>
+                            <circle cx="160" cy="38" r="2.5" fill="#c9a020"/>
+                            <circle cx="238" cy="52" r="2.5" fill="#FF9F4F"/>
+                            <circle cx="312" cy="38" r="3"   fill="#66BB6A"/>
+
+                            <!-- Yıl etiketleri + tema ikonları -->
+                            <text x="8"   y="55"  font-size="7.5" fill="#D76A6A" text-anchor="middle" font-family="Poppins,sans-serif" font-weight="700" opacity="0.9">2025</text>
+                            <text x="8"   y="63"  font-size="6.5" fill="#D76A6A" text-anchor="middle" font-family="sans-serif" opacity="0.7">🍽️</text>
+                            <text x="82"  y="15"  font-size="7.5" fill="#C792EA" text-anchor="middle" font-family="Poppins,sans-serif" font-weight="700" opacity="0.9">2026</text>
+                            <text x="82"  y="8"   font-size="6.5" fill="#C792EA" text-anchor="middle" font-family="sans-serif" opacity="0.7">🎵</text>
+                            <text x="160" y="55"  font-size="7.5" fill="#c9a020" text-anchor="middle" font-family="Poppins,sans-serif" font-weight="700" opacity="0.9">2027</text>
+                            <text x="160" y="63"  font-size="6.5" fill="#c9a020" text-anchor="middle" font-family="sans-serif" opacity="0.7">💃</text>
+                            <text x="238" y="68"  font-size="7.5" fill="#FF9F4F" text-anchor="middle" font-family="Poppins,sans-serif" font-weight="700" opacity="0.9">2028</text>
+                            <text x="238" y="76"  font-size="6.5" fill="#FF9F4F" text-anchor="middle" font-family="sans-serif" opacity="0.7">📖</text>
+                            <text x="312" y="55"  font-size="7.5" fill="#66BB6A" text-anchor="middle" font-family="Poppins,sans-serif" font-weight="700" opacity="0.9">2029</text>
+                            <text x="312" y="63"  font-size="6.5" fill="#66BB6A" text-anchor="middle" font-family="sans-serif" opacity="0.7">🏆</text>
+
+                            <!-- Hareket eden yolcular — 3 adet, farklı renk ve gecikme -->
+                            <circle r="6.5" fill="#D76A6A" filter="url(#jgr)">
+                                <animateMotion dur="4.5s" repeatCount="indefinite" begin="0s">
+                                    <mpath href="#jrp"/>
+                                </animateMotion>
+                                <animate attributeName="opacity" values="0;1;1;0"    keyTimes="0;0.07;0.87;1" dur="4.5s" repeatCount="indefinite" begin="0s"/>
+                                <animate attributeName="r"       values="2;6.5;6.5;2" keyTimes="0;0.07;0.87;1" dur="4.5s" repeatCount="indefinite" begin="0s"/>
+                            </circle>
+
+                            <circle r="5.5" fill="#C792EA" filter="url(#jgp)">
+                                <animateMotion dur="4.5s" repeatCount="indefinite" begin="1.5s">
+                                    <mpath href="#jrp"/>
+                                </animateMotion>
+                                <animate attributeName="opacity" values="0;0.9;0.9;0" keyTimes="0;0.07;0.87;1" dur="4.5s" repeatCount="indefinite" begin="1.5s"/>
+                                <animate attributeName="r"       values="2;5.5;5.5;2" keyTimes="0;0.07;0.87;1" dur="4.5s" repeatCount="indefinite" begin="1.5s"/>
+                            </circle>
+
+                            <circle r="5" fill="#FFD54F" filter="url(#jgg)">
+                                <animateMotion dur="4.5s" repeatCount="indefinite" begin="3s">
+                                    <mpath href="#jrp"/>
+                                </animateMotion>
+                                <animate attributeName="opacity" values="0;0.9;0.9;0" keyTimes="0;0.07;0.87;1" dur="4.5s" repeatCount="indefinite" begin="3s"/>
+                                <animate attributeName="r"       values="2;5;5;2"     keyTimes="0;0.07;0.87;1" dur="4.5s" repeatCount="indefinite" begin="3s"/>
+                            </circle>
+                        </svg>
+                    </div>
+                    <!-- /Yolculuk Rotası -->
                 </div>
             </div>
         </div>
@@ -1910,6 +2002,41 @@
         loadPerformanceData();
         loadLeagueTables();
     </script>
+
+    <!-- 🗺️ Yolculuk Rotası + ✨ Büyü Tozu Stilleri -->
+    <style>
+        /* ── Yolculuk Kartı ── */
+        .journey-card-effect {
+            overflow: visible !important;
+        }
+        .jroute-wrap {
+            margin-top: 14px;
+            width: 100%;
+        }
+        .jroute-svg {
+            width: 100%;
+            height: auto;
+            display: block;
+            overflow: visible;
+        }
+        /* Kayan kesik çizgi yol animasyonu */
+        .jroad-anim {
+            animation: jdashScroll 1.6s linear infinite;
+        }
+        @keyframes jdashScroll {
+            to { stroke-dashoffset: -8; }
+        }
+        /* Kilometre taşı nabız halkası */
+        .jring {
+            animation: jringPulse 2.4s ease-in-out infinite;
+            transform-box: fill-box;
+            transform-origin: center;
+        }
+        @keyframes jringPulse {
+            0%, 100% { opacity: 0.3; transform: scale(1);   }
+            50%       { opacity: 0.9; transform: scale(1.5); }
+        }
+    </style>
 
     <!-- ✨ Büyü Tozu Parçacıkları -->
     <style>
