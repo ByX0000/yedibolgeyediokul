@@ -925,14 +925,17 @@
                     <h3>7 Bölge, 7 Kültür, 7 Okul</h3>
                     <p>Anadolu'nun kültürel mirasını araştıran dört yıllık bir okul gelişim projesi</p>
                 </div>
-                <div class="project-card">
+                <div class="project-card magic-journey-card" id="magic-card">
                     <div class="card-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
+                        <!-- Büyü yıldızı ikonu -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                            <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
+                            <line x1="12" y1="2" x2="12" y2="5" stroke-width="1" opacity="0.5"/>
+                            <line x1="20.5" y1="7" x2="18.5" y2="8.2" stroke-width="1" opacity="0.5"/>
+                            <line x1="3.5" y1="7" x2="5.5" y2="8.2" stroke-width="1" opacity="0.5"/>
                         </svg>
                     </div>
-                    <h3>7 Ortak Okul</h3>
+                    <h3 class="magic-title">Anadolu'nun Büyüsüne Yolculuk</h3>
                     <p>7 ortak okulun büyüleyici Anadolu kültürel yolculuğu — 7 bölgeden 7 okul, Anadolu'nun eşsiz mirasını birlikte keşfediyor.</p>
                 </div>
                 <div class="project-card">
@@ -1906,6 +1909,110 @@
         // Sayfa hazır olduğunda tüm verileri yükle
         loadPerformanceData();
         loadLeagueTables();
+    </script>
+
+    <!-- ✨ Büyü Tozu Parçacıkları -->
+    <style>
+        .magic-journey-card {
+            position: relative;
+            overflow: visible !important;
+            z-index: 0;
+        }
+        .magic-journey-card .magic-title {
+            background: linear-gradient(135deg, #c9302c 0%, #e8a020 50%, #c9302c 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: magicTitleShimmer 3s linear infinite;
+        }
+        @keyframes magicTitleShimmer {
+            0%   { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+        .magic-dust {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10;
+            animation: magicFloat linear forwards;
+        }
+        .magic-dust.star {
+            border-radius: 0;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+        }
+        @keyframes magicFloat {
+            0% {
+                opacity: 0;
+                transform: translateY(0px) translateX(0px) scale(0.4) rotate(0deg);
+            }
+            15% {
+                opacity: 1;
+                transform: translateY(-10px) translateX(var(--dx)) scale(1) rotate(45deg);
+            }
+            80% {
+                opacity: 0.6;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(var(--dy)) translateX(calc(var(--dx) * 2)) scale(0.2) rotate(var(--rot));
+            }
+        }
+    </style>
+    <script>
+    (function () {
+        const card = document.getElementById('magic-card');
+        if (!card) return;
+
+        const palette = [
+            '#FFD700', '#FFC107', '#FF9F4F', '#FFEB3B',
+            '#E91E63', '#C792EA', '#D76A6A', '#FF7043',
+            '#81C4E8', '#A5D6A7', '#ffffff'
+        ];
+
+        function rand(min, max) { return Math.random() * (max - min) + min; }
+
+        function createDust() {
+            const p = document.createElement('span');
+            const isStar = Math.random() > 0.5;
+            p.className = 'magic-dust' + (isStar ? ' star' : '');
+
+            const size   = rand(3, isStar ? 9 : 7);
+            const color  = palette[Math.floor(Math.random() * palette.length)];
+            const dur    = rand(900, 2200);
+            const dx     = rand(-50, 50);
+            const dy     = rand(-90, -30);
+            const rot    = rand(-360, 360) + 'deg';
+            const left   = rand(-5, 105);   // % — kartın dışına taşabilir
+            const top    = rand(20, 90);
+
+            p.style.cssText = [
+                'width:'  + size + 'px',
+                'height:' + size + 'px',
+                'background:' + color,
+                'box-shadow: 0 0 ' + (size * 1.5) + 'px ' + color,
+                'left:' + left + '%',
+                'top:'  + top  + '%',
+                'animation-duration:' + dur + 'ms',
+                '--dx:' + dx + 'px',
+                '--dy:' + dy + 'px',
+                '--rot:' + rot
+            ].join(';');
+
+            card.appendChild(p);
+            setTimeout(() => p.remove(), dur + 50);
+        }
+
+        // Sürekli parçacık akışı
+        setInterval(createDust, 160);
+
+        // Hover'da patlama
+        card.addEventListener('mouseenter', () => {
+            for (let i = 0; i < 20; i++) {
+                setTimeout(createDust, i * 40);
+            }
+        });
+    })();
     </script>
 </body>
 </html>
