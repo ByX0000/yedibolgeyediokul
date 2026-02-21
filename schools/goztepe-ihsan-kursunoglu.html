@@ -1100,42 +1100,18 @@
 
         // Okul performansını yükle
         async function loadSchoolPerformance() {
-            // Şu an için demo veri, gerçek uygulamada API'den gelecek
-            const activities = Math.floor(Math.random() * 20) + 10;
-            const participants = Math.floor(Math.random() * 500) + 200;
-            const content = Math.floor(Math.random() * 50) + 20;
-
-            const activityScore = activities * 10;
-            const participantScore = Math.floor(participants / 10);
-            const contentScore = content * 5;
-            const coordinatorBonus = 50; // Bu okul koordinatör
-            const totalScore = activityScore + participantScore + contentScore + coordinatorBonus;
-
-            // Detaylı performans kartı
-            displaySchoolPerformanceDetail({
-                school: SCHOOL_NAME,
-                region: 'Marmara',
-                activities,
-                participants,
-                content,
-                totalScore,
-                activityScore,
-                participantScore,
-                contentScore,
-                coordinatorBonus
-            });
-
-            // Performans dağılımı
-            displayPerformanceBreakdown({
-                activityScore,
-                participantScore,
-                contentScore,
-                coordinatorBonus,
-                totalScore
-            });
-
-            // Bölgesel karşılaştırma
-            displayRegionalComparison(totalScore);
+            try {
+                const response = await fetch('../performance_handler.php');
+                const result = await response.json();
+                if (!result.success) throw new Error('API hatası');
+                const schoolData = result.data.find(s => s.school === SCHOOL_NAME);
+                if (!schoolData) throw new Error('Okul bulunamadı');
+                displaySchoolPerformanceDetail(schoolData);
+                displayPerformanceBreakdown(schoolData);
+                displayRegionalComparison(schoolData.totalScore, schoolData.region, result.data);
+            } catch (err) {
+                console.error('Performans verileri yüklenemedi:', err);
+            }
         }
 
         function displaySchoolPerformanceDetail(data) {
@@ -1271,19 +1247,13 @@
             `;
         }
 
-        function displayRegionalComparison(schoolScore) {
+        function displayRegionalComparison(schoolScore, thisRegion, allData) {
             const container = document.getElementById('regional-comparison');
-
-            // Diğer bölgelerin demo skorları
-            const regions = [
-                { name: 'Marmara (Bu Okul)', score: schoolScore, isThis: true },
-                { name: 'Ege', score: Math.floor(Math.random() * 200) + 300 },
-                { name: 'Akdeniz', score: Math.floor(Math.random() * 200) + 250 },
-                { name: 'İç Anadolu', score: Math.floor(Math.random() * 200) + 280 },
-                { name: 'Karadeniz', score: Math.floor(Math.random() * 200) + 270 },
-                { name: 'Doğu Anadolu', score: Math.floor(Math.random() * 200) + 260 },
-                { name: 'Güneydoğu Anadolu', score: Math.floor(Math.random() * 200) + 240 }
-            ];
+            const regions = (allData || []).map(s => ({
+                name: s.region + (s.school === SCHOOL_NAME ? ' (Bu Okul)' : ''),
+                score: s.totalScore,
+                isThis: s.school === SCHOOL_NAME
+            }));
 
             regions.sort((a, b) => b.score - a.score);
             const maxScore = regions[0].score;
