@@ -1080,16 +1080,53 @@
 
         // Okul bilgi içeriklerini yükle
         async function loadSchoolInfo() {
+            // info_type → HTML element id eşlemesi ('basari' → 'basarilar')
+            const ID_MAP = { basari: 'basarilar' };
+
+            function formatContent(infoType, content) {
+                try {
+                    const d = JSON.parse(content);
+                    const parts = [];
+                    switch (infoType) {
+                        case 'kurulus':
+                            if (d.yil)    parts.push(d.yil + ' yılında kuruldu');
+                            if (d.tur)    parts.push(d.tur);
+                            if (d.hikaye) parts.push(d.hikaye);
+                            break;
+                        case 'ogrenci':
+                            if (d.toplam) parts.push('Toplam: ' + d.toplam);
+                            if (d.kiz)    parts.push('Kız: ' + d.kiz);
+                            if (d.erkek)  parts.push('Erkek: ' + d.erkek);
+                            if (d.sinif)  parts.push('Sınıf sayısı: ' + d.sinif);
+                            break;
+                        case 'ogretmen':
+                            if (d.toplam) parts.push(d.toplam + ' öğretmen');
+                            if (d.mudur)  parts.push(d.mudur);
+                            if (d.brans)  parts.push(d.brans);
+                            break;
+                        case 'basari':
+                            if (d.akademik) parts.push(d.akademik);
+                            if (d.sportif)  parts.push(d.sportif);
+                            if (d.sosyal)   parts.push(d.sosyal);
+                            if (d.proje)    parts.push(d.proje);
+                            break;
+                    }
+                    return parts.join(' • ');
+                } catch (e) {
+                    return typeof content === 'string' ? content : '';
+                }
+            }
+
             try {
                 const response = await fetch(`../school_info_handler.php?school=${encodeURIComponent(SCHOOL_NAME)}`);
                 const result = await response.json();
 
                 if (result.success && result.data.length > 0) {
                     result.data.forEach(info => {
-                        // Sadece kartlardaki metni güncelle
-                        const textElement = document.getElementById(`info-${info.info_type}-text`);
-                        if (textElement && info.content) {
-                            textElement.textContent = info.content;
+                        const idKey = ID_MAP[info.info_type] || info.info_type;
+                        const el = document.getElementById(`info-${idKey}-text`);
+                        if (el) {
+                            el.textContent = formatContent(info.info_type, info.content);
                         }
                     });
                 }
