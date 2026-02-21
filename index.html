@@ -924,10 +924,19 @@
                     </div>
                     <h3>7 Bölge, 7 Kültür, 7 Okul</h3>
                     <p>Anadolu'nun kültürel mirasını araştıran dört yıllık bir okul gelişim projesi</p>
-                    <!-- Dinamik Türkiye Haritası -->
-                    <div class="turkey-map-wrap" id="turkey-map-wrap">
-                        <canvas id="turkey-map-canvas" class="turkey-map-canvas"></canvas>
-                        <div class="ankara-label" id="ankara-label">★ Ankara</div>
+                    <!-- Mozaik -->
+                    <div class="mosaic-wrap">
+                        <svg id="mosaic-svg" class="mosaic-svg" viewBox="0 0 300 130" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <filter id="mglow" x="-80%" y="-80%" width="260%" height="260%">
+                                    <feGaussianBlur stdDeviation="5" result="blur"/>
+                                    <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                                </filter>
+                            </defs>
+                            <rect width="300" height="130" fill="#0e0e1a"/>
+                            <g id="mosaic-tiles"></g>
+                            <g id="mosaic-glows"></g>
+                        </svg>
                     </div>
                 </div>
                 <div class="project-card magic-journey-card" id="magic-card">
@@ -1289,7 +1298,7 @@
                         <ul>
                             <li>Bölgesel Gastronomi Mirasını Araştırma</li>
                             <li>Yöresel Yemek Atölyeleri</li>
-                            <li>Çoklu Terf Kaşığı ve Bilge Sepeti</li>
+                            <li>Çoklu tarif kitapçığı</li>
                         </ul>
                     </div>
                 </div>
@@ -1335,7 +1344,7 @@
                         <h3>SÖZLÜ GELENEK & YAYIN</h3>
                         <p>Masal ve efsaneler derlenip proje kitabı basılarak kalıcı bir eser oluşturulacak.</p>
                         <ul>
-                            <li>Sözlü Gelenekler Derlenir (Masal/Hikaye)</li>
+                            <li>Sözlü Gelenekler Derlemesi (Masal/Hikaye)</li>
                             <li>Dijital Folklor ve Bilim Animasyonu</li>
                             <li>Çoklu Ders Yılı Proje Kitabının Yayımlanması (ISBN/ISSN)</li>
                         </ul>
@@ -1376,7 +1385,7 @@
                         </div>
                         <div class="info-item">
                             <div class="info-label">Genel Amaç</div>
-                            <div class="info-value">7 Bölge+7 Kültür Mirasını Araştırmak, Belgelemek ve Genç Kuşak</div>
+                            <div class="info-value">7 Bölge+7 Kültür Mirasını Araştırmak, Belgelemek ve Genç Kuşak Aktarmak</div>
                         </div>
                     </div>
                 </div>
@@ -1435,7 +1444,7 @@
                         <div class="theme-title">📖 Sözlü Gelenek & Yayın</div>
                         <div class="theme-content">
                             <ul class="theme-list">
-                                <li>Sözlü Gelenekler Derlenir (Masal/Hikaye)</li>
+                                <li>Sözlü Gelenekler Derlemesi (Masal/Hikaye)</li>
                                 <li>Dijital Folklor ve Bilim Animasyonu</li>
                                 <li><strong>Çıktı:</strong> Proje Kitabının Yayımlanması (ISBN/ISSN)</li>
                             </ul>
@@ -1999,35 +2008,40 @@
 
     <!-- 🗺️ Türkiye Haritası + Yolculuk Rotası + ✨ Büyü Tozu Stilleri -->
     <style>
-        /* ── Türkiye Harita Kartı ── */
+        /* ── Mozaik Kartı ── */
         .turkey-map-card {
             overflow: visible !important;
         }
-        .turkey-map-wrap {
+        .mosaic-wrap {
             position: relative;
             margin-top: 14px;
             width: 100%;
             border-radius: 10px;
             overflow: hidden;
-            background: rgba(201,48,44,0.04);
-            border: 1px solid rgba(201,48,44,0.12);
+            border: 1px solid rgba(201,48,44,0.18);
         }
-        .turkey-map-canvas {
+        .mosaic-svg {
             display: block;
             width: 100%;
             height: auto;
         }
-        .ankara-label {
-            position: absolute;
-            font-size: 9px;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
-            color: #FFD700;
-            text-shadow: 0 0 8px rgba(255,215,0,0.9), 0 0 16px rgba(255,215,0,0.5);
-            pointer-events: none;
-            white-space: nowrap;
-            transform: translate(-50%, -150%);
-            letter-spacing: 0.5px;
+        @keyframes mGlow {
+            0%,100% { opacity: 0.55; transform: scale(1);    }
+            50%      { opacity: 1;    transform: scale(1.18); }
+        }
+        @keyframes mRipple {
+            0%   { opacity: 0.6; transform: scale(0.8); }
+            100% { opacity: 0;   transform: scale(2.4); }
+        }
+        .mg-core {
+            transform-box: fill-box;
+            transform-origin: center;
+            animation: mGlow 2.5s ease-in-out infinite;
+        }
+        .mg-ring {
+            transform-box: fill-box;
+            transform-origin: center;
+            animation: mRipple 2.5s ease-out infinite;
         }
     </style>
 
@@ -2066,178 +2080,91 @@
         }
     </style>
 
-    <!-- 🗺️ Dinamik Türkiye Haritası - Canvas -->
+    <!-- 🎨 Mozaik + 7 Bölge Işık Noktaları -->
     <script>
     (function () {
-        const wrap   = document.getElementById('turkey-map-wrap');
-        const canvas = document.getElementById('turkey-map-canvas');
-        const label  = document.getElementById('ankara-label');
-        if (!canvas || !wrap) return;
+        'use strict';
+        const NS    = 'http://www.w3.org/2000/svg';
+        const tiles = document.getElementById('mosaic-tiles');
+        const glows = document.getElementById('mosaic-glows');
+        if (!tiles || !glows) return;
 
-        const ctx = canvas.getContext('2d');
-        const dpr = window.devicePixelRatio || 1;
+        const W = 300, H = 130, COLS = 12, ROWS = 7;
+        const tw = W / COLS, th = H / ROWS;
 
-        /* Koordinat sınırları (enlem/boylam) */
-        const LON0 = 25.6, LON1 = 45.3;
-        const LAT0 = 35.4, LAT1 = 42.6;
-
-        let W = 0, H = 0;
-
-        function resize() {
-            W = wrap.clientWidth;
-            H = Math.round(W * 0.37);
-            canvas.width  = W * dpr;
-            canvas.height = H * dpr;
-            canvas.style.width  = W + 'px';
-            canvas.style.height = H + 'px';
-            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        }
-        resize();
-        window.addEventListener('resize', resize);
-
-        /* Koordinat dönüştürücü */
-        function ll(lon, lat) {
-            return {
-                x: (lon - LON0) / (LON1 - LON0) * W,
-                y: (LAT1 - lat) / (LAT1 - LAT0) * H
-            };
-        }
-
-        /* Türkiye sınır noktaları [boylam, enlem] - basitleştirilmiş */
-        const OUTLINE = [
-            /* Trakya */
-            [26.5,41.6],[26.8,42.0],[27.5,42.1],[28.0,41.9],[28.3,41.6],
-            /* İstanbul / Marmara geçişi */
-            [28.9,41.1],[29.1,40.9],[29.5,41.2],
-            /* Karadeniz kıyısı (batıdan doğuya) */
-            [30.5,41.5],[31.5,41.7],[32.5,42.0],[34.5,42.0],
-            [36.5,42.1],[38.0,41.5],[39.5,41.0],[41.0,41.1],
-            /* Kuzeydoğu köşesi */
-            [41.5,40.8],[43.0,40.5],[44.5,39.5],
-            /* Doğu sınırı */
-            [44.8,38.0],[44.4,37.2],
-            /* Güneydoğu / Güney sınırı */
-            [42.5,37.1],[41.5,36.6],[40.8,36.5],[38.5,36.5],
-            [37.0,36.7],[36.5,36.1],[35.5,36.3],[34.0,36.2],
-            /* Akdeniz kıyısı (doğudan batıya) */
-            [32.5,36.4],[30.5,36.2],[29.0,36.4],[27.5,37.0],
-            /* Ege kıyısı */
-            [27.0,37.5],[27.2,37.9],[26.5,38.4],[26.2,39.0],
-            /* Çanakkale / Marmara geri dönüş */
-            [26.5,40.0],[27.0,40.4],[27.8,40.6],[28.3,40.5],
-            /* Kapanış - Trakya'ya dön */
-            [26.5,41.6]
+        /* Mozaik renk paleti — koyu, zengin tonlar */
+        const PAL = [
+            '#8b1e1e','#c9302c','#b5451b','#7a2d0e',
+            '#5a2d82','#7b4fa0','#2563a8','#1d4f7a',
+            '#1a6b5a','#2d8a70','#4a7a3d','#2d5a1e',
+            '#8b5e3c','#6b3d1e','#4a4a8a','#2d2d6a',
         ];
 
-        /* 7 Bölge noktaları */
-        const BOLGE = [
-            { lon:29.0,  lat:40.8,  c:'#D76A6A', r:3.8, label:'Marmara'      },
-            { lon:27.6,  lat:38.3,  c:'#C792EA', r:3.5, label:'Ege'           },
-            { lon:31.2,  lat:36.8,  c:'#FF9F4F', r:3.5, label:'Akdeniz'       },
-            { lon:35.5,  lat:41.2,  c:'#66BB6A', r:3.5, label:'Karadeniz'     },
-            { lon:40.5,  lat:39.7,  c:'#81C4E8', r:3.5, label:'Doğu Anadolu' },
-            { lon:37.8,  lat:37.3,  c:'#F06292', r:3.5, label:'Güneydoğu'    },
-        ];
-
-        /* Ankara — kalp */
-        const ANKARA = { lon: 32.86, lat: 39.93 };
-
-        let t = 0;
-
-        function drawFrame() {
-            if (W === 0) { requestAnimationFrame(drawFrame); return; }
-            ctx.clearRect(0, 0, W, H);
-            t += 0.022;
-
-            const ak = ll(ANKARA.lon, ANKARA.lat);
-
-            /* --- Türkiye dolgusu: Ankara'dan yayılan radyal ışık --- */
-            ctx.beginPath();
-            OUTLINE.forEach(([lon, lat], i) => {
-                const p = ll(lon, lat);
-                i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y);
-            });
-            ctx.closePath();
-
-            const grd = ctx.createRadialGradient(ak.x, ak.y, 2, ak.x, ak.y, W * 0.65);
-            grd.addColorStop(0,    'rgba(255,215,0,0.22)');
-            grd.addColorStop(0.25, 'rgba(201,48,44,0.14)');
-            grd.addColorStop(0.7,  'rgba(139,30,28,0.08)');
-            grd.addColorStop(1,    'rgba(30,10,10,0.04)');
-            ctx.fillStyle   = grd;
-            ctx.fill();
-            ctx.strokeStyle = 'rgba(201,48,44,0.55)';
-            ctx.lineWidth   = 1.5;
-            ctx.stroke();
-
-            /* --- Ankara: genişleyen ışık halkaları --- */
-            for (let i = 0; i < 4; i++) {
-                const phase = ((t * 1.1 + i * 1.57) % (Math.PI * 2));
-                const prog  = phase / (Math.PI * 2);
-                const r     = 5 + prog * 42;
-                const alpha = 0.75 * (1 - prog);
-                ctx.beginPath();
-                ctx.arc(ak.x, ak.y, r, 0, Math.PI * 2);
-                ctx.strokeStyle = `rgba(255,215,0,${alpha.toFixed(3)})`;
-                ctx.lineWidth   = 2.5 * (1 - prog * 0.7);
-                ctx.stroke();
-            }
-
-            /* --- Ankara: ışın demetleri --- */
-            for (let i = 0; i < 8; i++) {
-                const angle = (i / 8) * Math.PI * 2 + t * 0.12;
-                const len   = 12 + Math.sin(t * 2.2 + i * 0.78) * 6;
-                const alpha = 0.2 + Math.abs(Math.sin(t * 1.6 + i)) * 0.3;
-                ctx.beginPath();
-                ctx.moveTo(ak.x + Math.cos(angle) * 7,   ak.y + Math.sin(angle) * 7);
-                ctx.lineTo(ak.x + Math.cos(angle) * len, ak.y + Math.sin(angle) * len);
-                ctx.strokeStyle = `rgba(255,210,0,${alpha.toFixed(3)})`;
-                ctx.lineWidth   = 1.3;
-                ctx.stroke();
-            }
-
-            /* --- Ankara: kalp atışı (nokta) --- */
-            const beat = 1 + Math.sin(t * 3.0) * 0.32;
-            ctx.save();
-            ctx.shadowColor = '#FFD700';
-            ctx.shadowBlur  = 18;
-            ctx.beginPath();
-            ctx.arc(ak.x, ak.y, 5.5 * beat, 0, Math.PI * 2);
-            ctx.fillStyle = '#FFD700';
-            ctx.fill();
-            ctx.restore();
-
-            /* Beyaz merkez */
-            ctx.beginPath();
-            ctx.arc(ak.x, ak.y, 2.2, 0, Math.PI * 2);
-            ctx.fillStyle = '#ffffff';
-            ctx.fill();
-
-            /* --- 7 Bölge noktaları --- */
-            BOLGE.forEach((b, i) => {
-                const p     = ll(b.lon, b.lat);
-                const pulse = 1 + Math.sin(t * 1.7 + i * 1.05) * 0.22;
-                ctx.save();
-                ctx.shadowColor = b.c;
-                ctx.shadowBlur  = 7;
-                ctx.globalAlpha = 0.88;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, b.r * pulse, 0, Math.PI * 2);
-                ctx.fillStyle = b.c;
-                ctx.fill();
-                ctx.restore();
-            });
-
-            /* --- Ankara etiketini konumlandır --- */
-            if (label) {
-                label.style.left = ak.x + 'px';
-                label.style.top  = ak.y + 'px';
-            }
-
-            requestAnimationFrame(drawFrame);
+        function h(a, b) {
+            let v = Math.sin(a * 127.1 + b * 311.7) * 43758.5453;
+            return v - Math.floor(v);
+        }
+        function mk(tag, attrs) {
+            const el = document.createElementNS(NS, tag);
+            for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
+            return el;
         }
 
-        drawFrame();
+        /* Mozaik üçgen tile'ları */
+        for (let row = 0; row < ROWS; row++) {
+            for (let col = 0; col < COLS; col++) {
+                const x  = +(col * tw).toFixed(1), y  = +(row * th).toFixed(1);
+                const xr = +(x + tw).toFixed(1),   yb = +(y + th).toFixed(1);
+                const h1 = h(row * 100 + col, 7),  o1 = (.26 + h1 * .40).toFixed(2);
+                const h2 = h(row * 100 + col, 13), o2 = (.26 + h2 * .40).toFixed(2);
+                const c1 = PAL[Math.floor(h1 * PAL.length)];
+                const c2 = PAL[Math.floor(h2 * PAL.length)];
+                tiles.appendChild(mk('polygon', { points:`${x},${y} ${xr},${y} ${x},${yb}`,   fill:c1, opacity:o1 }));
+                tiles.appendChild(mk('polygon', { points:`${xr},${y} ${xr},${yb} ${x},${yb}`, fill:c2, opacity:o2 }));
+                tiles.appendChild(mk('line', { x1:xr, y1:y, x2:x, y2:yb, stroke:'rgba(255,255,255,0.07)', 'stroke-width':'0.5' }));
+            }
+        }
+        /* Izgara çizgileri */
+        for (let i = 0; i <= COLS; i++) {
+            const x = +(i * tw).toFixed(1);
+            tiles.appendChild(mk('line', { x1:x, y1:0, x2:x, y2:H, stroke:'rgba(255,255,255,0.07)', 'stroke-width':'0.5' }));
+        }
+        for (let i = 0; i <= ROWS; i++) {
+            const y = +(i * th).toFixed(1);
+            tiles.appendChild(mk('line', { x1:0, y1:y, x2:W, y2:y, stroke:'rgba(255,255,255,0.07)', 'stroke-width':'0.5' }));
+        }
+
+        /* 7 Bölge ışık noktaları */
+        const BOLGELER = [
+            { cx:45,  cy:38,  color:'#e63946', delay:'0s'    },  /* Marmara      */
+            { cx:22,  cy:82,  color:'#a29bfe', delay:'0.35s' },  /* Ege          */
+            { cx:88,  cy:112, color:'#fd9f4a', delay:'0.7s'  },  /* Akdeniz      */
+            { cx:148, cy:15,  color:'#6bcb77', delay:'1.05s' },  /* Karadeniz    */
+            { cx:152, cy:70,  color:'#ffd166', delay:'1.4s'  },  /* İç Anadolu   */
+            { cx:248, cy:50,  color:'#4ecdc4', delay:'1.75s' },  /* Doğu Anadolu */
+            { cx:208, cy:107, color:'#ff6b9d', delay:'2.1s'  },  /* Güneydoğu    */
+        ];
+
+        BOLGELER.forEach(b => {
+            /* 3 kademeli ripple halkası */
+            [0, 0.83, 1.66].forEach(extra => {
+                const ring = mk('circle', {
+                    cx:b.cx, cy:b.cy, r:'7',
+                    fill:'none', stroke:b.color, 'stroke-width':'1.2', opacity:'0'
+                });
+                ring.classList.add('mg-ring');
+                ring.style.animationDelay = `calc(${b.delay} + ${extra}s)`;
+                glows.appendChild(ring);
+            });
+            /* Parlayan merkez */
+            const core = mk('circle', { cx:b.cx, cy:b.cy, r:'4.5', fill:b.color, filter:'url(#mglow)' });
+            core.classList.add('mg-core');
+            core.style.animationDelay = b.delay;
+            glows.appendChild(core);
+            /* Beyaz iç nokta */
+            glows.appendChild(mk('circle', { cx:b.cx, cy:b.cy, r:'1.8', fill:'#fff', opacity:'0.92' }));
+        });
+
     })();
     </script>
 
