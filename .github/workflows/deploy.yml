@@ -1,4 +1,4 @@
-name: Deploy to FTP
+name: Deploy to Hetzner
 
 on:
   push:
@@ -6,36 +6,50 @@ on:
       - master
   workflow_dispatch:
 
+concurrency:
+  group: deploy-hetzner
+  cancel-in-progress: false
+
 jobs:
-  ftp-deploy:
-    name: FTP Deploy
+  deploy:
+    name: rsync over SSH
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Sync files to server via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: ${{ secrets.FTP_SERVER_DIR }}
-          protocol: ${{ secrets.FTP_PROTOCOL || 'ftps' }}
-          port: ${{ secrets.FTP_PORT || 21 }}
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/.github/**
-            **/node_modules/**
-            **/logs/**
-            **/uploads/**
-            **/.env
-            **/.env.*
-            **/docker/**
-            Dockerfile
-            docker-compose.yml
-            .dockerignore
-            KURULUM.md
-            README.md
-            create_database.php
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          PORT="${{ secrets.SSH_PORT }}"
+          PORT="${PORT:-22}"
+          ssh-keyscan -p "$PORT" -H "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts 2>/dev/null
+
+      - name: Deploy with rsync
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+          REMOTE_DIR: ${{ secrets.REMOTE_DIR }}
+        run: |
+          PORT="${SSH_PORT:-22}"
+          rsync -avz --delete \
+            --exclude='.git/' \
+            --exclude='.github/' \
+            --exclude='node_modules/' \
+            --exclude='logs/' \
+            --exclude='uploads/' \
+            --exclude='.env' \
+            --exclude='.env.*' \
+            --exclude='docker/' \
+            --exclude='Dockerfile' \
+            --exclude='docker-compose.yml' \
+            --exclude='.dockerignore' \
+            --exclude='KURULUM.md' \
+            --exclude='DEPLOY.md' \
+            --exclude='README.md' \
+            --exclude='create_database.php' \
+            -e "ssh -p $PORT -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=accept-new" \
+            ./ "$SSH_USER@$SSH_HOST:$REMOTE_DIR"
