@@ -850,6 +850,7 @@
                 <li><a href="#schools">Okullar</a></li>
                 <li><a href="#performance">Performans Göstergeleri</a></li>
                 <li><a href="#leagues">Ligler</a></li>
+                <li><a href="#forum" class="nav-forum-link">EN Forum</a></li>
                 <li><a href="#contact">İletişim</a></li>
             </ul>
             <div class="hamburger">
@@ -1587,6 +1588,96 @@
     </section>
 
     <!-- Contact Section -->
+    <!-- EN Forum Bölümü -->
+    <section id="forum" class="forum-section">
+        <div class="container">
+            <div class="section-header">
+                <h2><span class="forum-badge">EN</span> Forum</h2>
+                <div class="underline"></div>
+                <p>Projemizin "en"lerini birlikte konuşalım: en iyi okul, en güzel etkinlik, en başarılı proje, en unutulmaz an... Sen de fikrini paylaş!</p>
+            </div>
+
+            <div class="forum-wrapper">
+                <!-- Sol panel: Yeni konu ve filtreler -->
+                <aside class="forum-sidebar">
+                    <div class="forum-card">
+                        <h3>🏆 Yeni Konu Aç</h3>
+                        <form id="forum-topic-form">
+                            <div class="form-group">
+                                <input type="text" id="forum-author" placeholder="Adınız Soyadınız" maxlength="100" required>
+                            </div>
+                            <div class="form-group">
+                                <select id="forum-school">
+                                    <option value="">Okul (opsiyonel)</option>
+                                    <option>Göztepe İhsan Kurşunoğlu Anadolu Lisesi</option>
+                                    <option>TEB Ataşehir Anadolu Lisesi</option>
+                                    <option>Atatürk Fen Lisesi</option>
+                                    <option>Kadir Has Anadolu Lisesi</option>
+                                    <option>Kadıköy Anadolu Lisesi</option>
+                                    <option>Erenköy Kız Anadolu Lisesi</option>
+                                    <option>Hayrullah Kefoğlu Anadolu Lisesi</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select id="forum-category">
+                                    <option value="Genel">Genel</option>
+                                    <option value="En İyi Okul">En İyi Okul</option>
+                                    <option value="En İyi Etkinlik">En İyi Etkinlik</option>
+                                    <option value="En İyi Proje">En İyi Proje</option>
+                                    <option value="En İyi Bölge">En İyi Bölge</option>
+                                    <option value="En Unutulmaz An">En Unutulmaz An</option>
+                                    <option value="Tartışma">Tartışma</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="forum-title" placeholder="Konu başlığı" maxlength="255" required>
+                            </div>
+                            <div class="form-group">
+                                <textarea id="forum-content" placeholder="Düşüncenizi yazın... (örn: Bence en iyi etkinlik ...)" rows="4" maxlength="5000" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary forum-btn">Konuyu Paylaş</button>
+                        </form>
+                        <div id="forum-topic-status" class="forum-status"></div>
+                    </div>
+
+                    <div class="forum-card">
+                        <h3>🔎 Kategori</h3>
+                        <div class="forum-filters">
+                            <button class="forum-chip active" data-cat="all">Tümü</button>
+                            <button class="forum-chip" data-cat="En İyi Okul">En İyi Okul</button>
+                            <button class="forum-chip" data-cat="En İyi Etkinlik">En İyi Etkinlik</button>
+                            <button class="forum-chip" data-cat="En İyi Proje">En İyi Proje</button>
+                            <button class="forum-chip" data-cat="En İyi Bölge">En İyi Bölge</button>
+                            <button class="forum-chip" data-cat="En Unutulmaz An">En Unutulmaz An</button>
+                            <button class="forum-chip" data-cat="Tartışma">Tartışma</button>
+                            <button class="forum-chip" data-cat="Genel">Genel</button>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Sağ panel: Konular -->
+                <div class="forum-main">
+                    <div class="forum-toolbar">
+                        <h3 id="forum-list-title">Tüm Konular</h3>
+                        <button id="forum-refresh" class="forum-refresh" title="Yenile">⟳ Yenile</button>
+                    </div>
+                    <div id="forum-topics-list" class="forum-topics-list">
+                        <div class="forum-empty">Konular yükleniyor...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Forum Konu Detay Modal -->
+    <div id="forum-modal" class="forum-modal" aria-hidden="true">
+        <div class="forum-modal-backdrop"></div>
+        <div class="forum-modal-content">
+            <button class="forum-modal-close" aria-label="Kapat">&times;</button>
+            <div id="forum-modal-body"></div>
+        </div>
+    </div>
+
     <section id="contact" class="contact-section">
         <div class="container">
             <div class="section-header">
@@ -2269,6 +2360,237 @@
                 setTimeout(createDust, i * 40);
             }
         });
+    })();
+    </script>
+
+    <!-- EN Forum Script -->
+    <script>
+    (function() {
+        const FORUM_API = 'forum_handler.php';
+        let currentCategory = 'all';
+
+        const listEl = document.getElementById('forum-topics-list');
+        const listTitle = document.getElementById('forum-list-title');
+        const topicForm = document.getElementById('forum-topic-form');
+        const topicStatus = document.getElementById('forum-topic-status');
+        const refreshBtn = document.getElementById('forum-refresh');
+        const modal = document.getElementById('forum-modal');
+        const modalBody = document.getElementById('forum-modal-body');
+        const modalClose = modal.querySelector('.forum-modal-close');
+        const modalBackdrop = modal.querySelector('.forum-modal-backdrop');
+
+        function escapeHtml(s) {
+            return String(s == null ? '' : s)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function timeAgo(dateStr) {
+            if (!dateStr) return '';
+            const d = new Date(dateStr.replace(' ', 'T'));
+            const diff = (Date.now() - d.getTime()) / 1000;
+            if (isNaN(diff)) return escapeHtml(dateStr);
+            if (diff < 60) return 'az önce';
+            if (diff < 3600) return Math.floor(diff/60) + ' dk önce';
+            if (diff < 86400) return Math.floor(diff/3600) + ' saat önce';
+            if (diff < 2592000) return Math.floor(diff/86400) + ' gün önce';
+            return d.toLocaleDateString('tr-TR');
+        }
+
+        function showStatus(el, type, msg) {
+            el.className = 'forum-status ' + type;
+            el.textContent = msg;
+            el.style.display = 'block';
+            clearTimeout(el._t);
+            el._t = setTimeout(() => { el.style.display = 'none'; }, 5000);
+        }
+
+        async function loadTopics() {
+            listEl.innerHTML = '<div class="forum-empty">Konular yükleniyor...</div>';
+            try {
+                const url = FORUM_API + '?resource=topics' + (currentCategory !== 'all' ? '&category=' + encodeURIComponent(currentCategory) : '');
+                const res = await fetch(url);
+                const json = await res.json();
+                if (!json.success) throw new Error(json.message || 'Hata');
+                renderTopics(json.data || []);
+            } catch (e) {
+                listEl.innerHTML = '<div class="forum-empty">Konular yüklenemedi. Lütfen daha sonra tekrar deneyin.</div>';
+            }
+        }
+
+        function renderTopics(topics) {
+            if (!topics.length) {
+                listEl.innerHTML = '<div class="forum-empty">Henüz konu yok. İlk sen aç! 🏆</div>';
+                return;
+            }
+            listEl.innerHTML = topics.map(t => `
+                <article class="forum-topic" data-id="${t.id}">
+                    <div class="forum-topic-head">
+                        <span class="forum-cat">${escapeHtml(t.category || 'Genel')}</span>
+                        <span class="forum-time">${escapeHtml(timeAgo(t.updated_at || t.created_at))}</span>
+                    </div>
+                    <h4 class="forum-topic-title">${escapeHtml(t.title)}</h4>
+                    <p class="forum-topic-excerpt">${escapeHtml((t.content || '').slice(0, 180))}${(t.content||'').length > 180 ? '…' : ''}</p>
+                    <div class="forum-topic-foot">
+                        <span class="forum-author">👤 ${escapeHtml(t.author)}${t.school ? ' · ' + escapeHtml(t.school) : ''}</span>
+                        <span class="forum-replies">💬 ${parseInt(t.reply_count || 0, 10)} cevap</span>
+                    </div>
+                </article>
+            `).join('');
+
+            listEl.querySelectorAll('.forum-topic').forEach(el => {
+                el.addEventListener('click', () => openTopic(el.dataset.id));
+            });
+        }
+
+        async function openTopic(id) {
+            modalBody.innerHTML = '<div class="forum-empty">Yükleniyor...</div>';
+            modal.classList.add('open');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+
+            try {
+                const res = await fetch(FORUM_API + '?resource=topics&id=' + encodeURIComponent(id));
+                const json = await res.json();
+                if (!json.success) throw new Error(json.message || 'Hata');
+                renderTopicDetail(json.data);
+            } catch (e) {
+                modalBody.innerHTML = '<div class="forum-empty">Konu yüklenemedi.</div>';
+            }
+        }
+
+        function renderTopicDetail(t) {
+            const replies = (t.replies || []).map(r => `
+                <div class="forum-reply">
+                    <div class="forum-reply-head">
+                        <strong>${escapeHtml(r.author)}</strong>
+                        ${r.school ? '<span class="forum-reply-school">· ' + escapeHtml(r.school) + '</span>' : ''}
+                        <span class="forum-time">${escapeHtml(timeAgo(r.created_at))}</span>
+                    </div>
+                    <div class="forum-reply-body">${escapeHtml(r.content).replace(/\n/g, '<br>')}</div>
+                </div>
+            `).join('');
+
+            modalBody.innerHTML = `
+                <div class="forum-detail">
+                    <div class="forum-topic-head">
+                        <span class="forum-cat">${escapeHtml(t.category || 'Genel')}</span>
+                        <span class="forum-time">${escapeHtml(timeAgo(t.created_at))}</span>
+                    </div>
+                    <h3 class="forum-detail-title">${escapeHtml(t.title)}</h3>
+                    <div class="forum-detail-meta">👤 ${escapeHtml(t.author)}${t.school ? ' · ' + escapeHtml(t.school) : ''}</div>
+                    <div class="forum-detail-body">${escapeHtml(t.content).replace(/\n/g, '<br>')}</div>
+
+                    <div class="forum-replies-wrap">
+                        <h4>💬 Cevaplar (${(t.replies || []).length})</h4>
+                        <div class="forum-replies-list">
+                            ${replies || '<div class="forum-empty small">Henüz cevap yok. İlk cevabı sen yaz!</div>'}
+                        </div>
+                    </div>
+
+                    <form id="forum-reply-form" class="forum-reply-form">
+                        <h4>Cevap Yaz</h4>
+                        <div class="form-group">
+                            <input type="text" id="forum-reply-author" placeholder="Adınız" maxlength="100" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="forum-reply-school" placeholder="Okul (opsiyonel)" maxlength="255">
+                        </div>
+                        <div class="form-group">
+                            <textarea id="forum-reply-content" placeholder="Cevabınız..." rows="3" maxlength="3000" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary forum-btn">Cevap Gönder</button>
+                        <div id="forum-reply-status" class="forum-status"></div>
+                    </form>
+                </div>
+            `;
+
+            const replyForm = document.getElementById('forum-reply-form');
+            replyForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const status = document.getElementById('forum-reply-status');
+                const payload = {
+                    topic_id: t.id,
+                    author: document.getElementById('forum-reply-author').value.trim(),
+                    school: document.getElementById('forum-reply-school').value.trim(),
+                    content: document.getElementById('forum-reply-content').value.trim()
+                };
+                if (!payload.author || !payload.content) {
+                    showStatus(status, 'error', 'Ad ve içerik zorunlu.');
+                    return;
+                }
+                try {
+                    const res = await fetch(FORUM_API + '?resource=replies', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const json = await res.json();
+                    if (!json.success) throw new Error(json.message || 'Hata');
+                    showStatus(status, 'success', 'Cevap eklendi!');
+                    replyForm.reset();
+                    openTopic(t.id);
+                    loadTopics();
+                } catch (err) {
+                    showStatus(status, 'error', 'Gönderilemedi: ' + err.message);
+                }
+            });
+        }
+
+        function closeModal() {
+            modal.classList.remove('open');
+            modal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+        modalClose.addEventListener('click', closeModal);
+        modalBackdrop.addEventListener('click', closeModal);
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
+
+        topicForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const payload = {
+                title: document.getElementById('forum-title').value.trim(),
+                author: document.getElementById('forum-author').value.trim(),
+                school: document.getElementById('forum-school').value.trim(),
+                category: document.getElementById('forum-category').value,
+                content: document.getElementById('forum-content').value.trim()
+            };
+            if (!payload.title || !payload.author || !payload.content) {
+                showStatus(topicStatus, 'error', 'Başlık, yazar ve içerik zorunlu.');
+                return;
+            }
+            try {
+                const res = await fetch(FORUM_API + '?resource=topics', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const json = await res.json();
+                if (!json.success) throw new Error(json.message || 'Hata');
+                showStatus(topicStatus, 'success', 'Konu paylaşıldı!');
+                topicForm.reset();
+                loadTopics();
+            } catch (err) {
+                showStatus(topicStatus, 'error', 'Gönderilemedi: ' + err.message);
+            }
+        });
+
+        document.querySelectorAll('.forum-chip').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.forum-chip').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentCategory = btn.dataset.cat;
+                listTitle.textContent = currentCategory === 'all' ? 'Tüm Konular' : currentCategory;
+                loadTopics();
+            });
+        });
+
+        refreshBtn.addEventListener('click', loadTopics);
+
+        loadTopics();
     })();
     </script>
 </body>
