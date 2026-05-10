@@ -49,6 +49,35 @@ try {
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
     echo "✅ Tablo 'school_info' oluşturuldu.\n";
 
+    // forum_topics tablosu
+    $pdo->exec("CREATE TABLE IF NOT EXISTS `forum_topics` (
+        `id` INT AUTO_INCREMENT PRIMARY KEY,
+        `title` VARCHAR(255) NOT NULL,
+        `author` VARCHAR(100) NOT NULL,
+        `school` VARCHAR(255) DEFAULT NULL,
+        `category` VARCHAR(100) DEFAULT 'Genel',
+        `content` TEXT NOT NULL,
+        `reply_count` INT DEFAULT 0,
+        `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        INDEX `idx_category` (`category`),
+        INDEX `idx_created_at` (`created_at`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+    echo "✅ Tablo 'forum_topics' oluşturuldu.\n";
+
+    // forum_replies tablosu
+    $pdo->exec("CREATE TABLE IF NOT EXISTS `forum_replies` (
+        `id` INT AUTO_INCREMENT PRIMARY KEY,
+        `topic_id` INT NOT NULL,
+        `author` VARCHAR(100) NOT NULL,
+        `school` VARCHAR(255) DEFAULT NULL,
+        `content` TEXT NOT NULL,
+        `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        INDEX `idx_topic_id` (`topic_id`),
+        FOREIGN KEY (`topic_id`) REFERENCES `forum_topics`(`id`) ON DELETE CASCADE
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+    echo "✅ Tablo 'forum_replies' oluşturuldu.\n";
+
     // contact_messages tablosu
     $pdo->exec("CREATE TABLE IF NOT EXISTS `contact_messages` (
         `id` INT AUTO_INCREMENT PRIMARY KEY,
@@ -82,6 +111,8 @@ try {
     echo "\n📋 Oluşturulan Tablolar:\n";
     echo "   - schools (Okul bilgileri)\n";
     echo "   - school_info (Okul detay bilgileri)\n";
+    echo "   - forum_topics (EN Forum konuları)\n";
+    echo "   - forum_replies (EN Forum cevapları)\n";
     echo "   - contact_messages (İletişim mesajları)\n";
 
 } catch(PDOException $e) {

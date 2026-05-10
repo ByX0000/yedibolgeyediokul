@@ -67,6 +67,33 @@ CREATE TABLE IF NOT EXISTS gallery (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_turkish_ci;
 
+-- EN Forum - Konular tablosu
+CREATE TABLE IF NOT EXISTS forum_topics (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    author VARCHAR(100) NOT NULL,
+    school VARCHAR(255) DEFAULT NULL,
+    category VARCHAR(100) DEFAULT 'Genel' COMMENT 'En iyi okul, En iyi etkinlik, En iyi proje, vb.',
+    content TEXT NOT NULL,
+    reply_count INT DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_category (category),
+    INDEX idx_created_at (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_turkish_ci;
+
+-- EN Forum - Cevaplar tablosu
+CREATE TABLE IF NOT EXISTS forum_replies (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    topic_id INT NOT NULL,
+    author VARCHAR(100) NOT NULL,
+    school VARCHAR(255) DEFAULT NULL,
+    content TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_topic_id (topic_id),
+    FOREIGN KEY (topic_id) REFERENCES forum_topics(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_turkish_ci;
+
 -- İletişim mesajları tablosu
 CREATE TABLE IF NOT EXISTS contact_messages (
     id INT AUTO_INCREMENT PRIMARY KEY,
