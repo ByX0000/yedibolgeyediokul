@@ -19,7 +19,7 @@ Türkiye'nin yedi coğrafi bölgesinden birer lise ile gerçekleştirilen kapsam
 | **Marmara**      | Göztepe İhsan Kurşunoğlu Anadolu Lisesi | Bilecik   | 500     | `#D76A6A`  |
 | **Ege**          | TEB Ataşehir Anadolu Lisesi             | İzmir     | 450     | `#C792EA`  |
 | **Akdeniz**      | Atatürk Fen Lisesi                      | Antalya   | 600     | `#FFD54F`  |
-| **İç Anadolu**   | Kadir Has Anadolu Lisesi                | Ankara    | 550     | `#FF9F4F`  |
+| **İç Anadolu**   | Kadir Has Anadolu Lisesi                | Sivas     | 550     | `#FF9F4F`  |
 | **Karadeniz**    | Kadıköy Anadolu Lisesi                  | Trabzon   | 400     | `#66BB6A`  |
 | **Doğu Anadolu** | Erenköy Kız Anadolu Lisesi              | Elazığ    | 350     | `#81C4E8`  |
 | **Güneydoğu**    | Hayrullah Kefoğlu Anadolu Lisesi        | Gaziantep | 480     | `#BC8F8F`  |

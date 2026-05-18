@@ -122,7 +122,7 @@ const regionData = {
     'ic-anadolu': {
         name: 'İç Anadolu Bölgesi',
         school: 'Kadir Has Anadolu Lisesi',
-        location: 'Ankara',
+        location: 'Sivas',
         coordinator: false,
         description: 'İç Anadolu, Türkiye\'nin merkezi bölgesidir. Ankara başta olmak üzere Konya, Kayseri gibi tarihi şehirleri barındırır. Bozkır kültürü ve zengin mutfak geleneği vardır.',
         activities: [
