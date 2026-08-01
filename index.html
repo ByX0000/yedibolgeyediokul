@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Anadolu'nun Mirası - 7 Bölge, 7 Okul, 4 Yıllık Kültür Yolculuğu</title>
-    <link rel="stylesheet" href="styles.css?v=2.2">
+    <link rel="stylesheet" href="styles.css?v=2.3">
     <link rel="stylesheet" href="performance-styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1683,6 +1683,12 @@
         #ziptide .zt-links{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:2.5rem}
         #ziptide .zt-note{text-align:center;margin-top:1.6rem;color:var(--accent-color);font-size:.9rem;letter-spacing:.5px}
         #ziptide .zt-disclaimer{max-width:820px;margin:2rem auto 0;padding:1rem 1.25rem;border-left:3px solid var(--accent-color);background:rgba(212,165,116,.08);border-radius:6px;color:var(--text-light);font-size:.95rem;line-height:1.6}
+        /* Bilimsel katman vurgusu: iGEM/ZipTide bölümlerinde dashboard yeşili */
+        #ziptide .card-icon,#araclar .card-icon{background:linear-gradient(135deg,#1d9e75,#0f6e56)}
+        #ziptide .underline,#araclar .underline{background:linear-gradient(90deg,#1d9e75,var(--accent-color))}
+        #ziptide .project-card h3,#araclar .project-card h3{color:#0f6e56}
+        #ziptide .btn-primary,#araclar .btn-primary{color:#0f6e56}
+        #ziptide .btn-primary:hover,#araclar .btn-primary:hover{background:#1d9e75;color:var(--white)}
     </style>
     <section id="ziptide" class="project-overview">
         <div class="container">
@@ -1717,7 +1723,7 @@
                         </svg>
                     </div>
                     <h3>Keşif araçları</h3>
-                    <p>Aynı 49-tarif verisinden bir etkileşimli gösterge paneli, bir Türkiye haritası ve bir strateji oyunu doğdu. Bu araçlar tarifleri hem sağlık hem gezegen açısından keşfetmeyi sağlıyor; yakında burada, platformumuzda yaşayacaklar.</p>
+                    <p>Aynı 49-tarif verisinden bir etkileşimli gösterge paneli ve bir Türkiye haritası doğdu. Bu araçlar tarifleri hem sağlık hem gezegen açısından keşfetmeyi sağlıyor ve platformumuzda yaşıyorlar.</p>
                 </div>
                 <div class="project-card">
                     <div class="card-icon">
@@ -1754,7 +1760,7 @@
             <div class="section-header">
                 <h2>ZipTide Keşif Araçları</h2>
                 <div class="underline"></div>
-                <p class="zt-subtitle">49 geleneksel tarifi bağırsak sağlığı ve sürdürülebilirlik açısından keşfet. Aynı veriden bir gösterge paneli, bir harita ve (yakında) bir strateji oyunu.</p>
+                <p class="zt-subtitle">49 geleneksel tarifi bağırsak sağlığı ve sürdürülebilirlik açısından keşfet. Aynı veriden doğan etkileşimli gösterge paneli ve Türkiye haritası burada.</p>
             </div>
 
             <figure class="zt-fig">
@@ -1778,14 +1784,6 @@
                     <h3>Bölgesel Harita</h3>
                     <p>7 bölgenin gut-destek ve sürdürülebilirlik ortalamaları, Türkiye haritası üzerinde.</p>
                     <a href="./ziptide/harita.png" target="_blank" rel="noopener" class="btn btn-primary">Tam Boyut</a>
-                </div>
-                <div class="project-card">
-                    <div class="card-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"></rect><path d="M6 12h4"></path><path d="M8 10v4"></path><circle cx="16" cy="11" r="1"></circle><circle cx="18" cy="14" r="1"></circle></svg>
-                    </div>
-                    <h3>Strateji Oyunu — Kültür Köprüsü</h3>
-                    <p>Bölgeleri gez, topladığın tariflerle bağırsak bariyerini onarırken gezegeni koru. Fable 5 ile geliştiriliyor.</p>
-                    <span class="btn btn-primary" style="opacity:.5;pointer-events:none">Yakında</span>
                 </div>
             </div>
 
