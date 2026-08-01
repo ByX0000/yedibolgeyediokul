@@ -41,19 +41,25 @@ her link bir bölüme (`#id`) kaydırır. Bölümler (sıra önemli — nav sır
 |---|---|---|
 | `home` | Ana Sayfa | Hero |
 | `project` | Proje Hakkında | Künye, ortaklar |
-| `ziptide` | iGEM & ZipTide | **Bilimsel dönüşüm (yeni; §6 kurallarına tabi)** |
 | `regions` | Bölgeler | 7 bölge yol haritası |
 | `journey` | Kültürel Yolculuk | — |
 | `schools` | Okullar | Katılan okullar |
+| `international` | International Bridge | Almanya + Bosna Hersek katılımı |
 | `performance` | Performans Göstergeleri | — |
 | `leagues` | Ligler | Okullar-arası lig |
-| `forum` | EN Forum | Forum (DB'li) |
-| `contact` | İletişim | — |
+| `ziptide` | iGEM & ZipTide | **Bilimsel dönüşüm (§6 kurallarına tabi)** |
+| `araclar` | ZipTide Araçları | Dashboard + harita (§6 kurallarına tabi) |
+
+Nav'ın en sonunda **EN/TR dil düğmesi** (`#lang-toggle`) durur — bölüm linki değildir.
+**Kaldırılan bölümler:** `forum` (arka uç `forum_handler.php` + DB duruyor, yalnız sayfadan çıkarıldı)
+ve `contact` (iletişim bilgileri footer'da yaşıyor). Geri eklemek istersen git geçmişinde (`6f3b9ad` öncesi).
 
 **Dosya haritası (kaba):**
 - `index.html` · `admin.html` — sayfalar
 - `styles.css` (ana), `performance-styles.css` — stiller
 - `script.js` — nav, hamburger menü, etkileşimler
+- `i18n.js` — TR/EN dil desteği (metin sözlüğü; aşağıda §5-D)
+- `ziptide/` — `dashboard.html` (49 tarifin etkileşimli paneli, Chart.js CDN), `harita.png` (bölgesel harita)
 - `*_handler.php` (forum, gallery, activities, league, regions, schools, performance, school_info) — AJAX uç noktaları
 - `admin_login.php`, `upload.php` — kimlik/dosya yükleme
 - `db_config.php`, `database.sql`, `create_database.php` — veritabanı
@@ -98,6 +104,14 @@ her link bir bölüme (`#id`) kaydırır. Bölümler (sıra önemli — nav sır
 ```
 İkonlar için Lucide stili (stroke, 24×24) tercih et — sitenin geri kalanıyla tutarlı olur.
 
+**Bilimsel katman yeşili:** `#ziptide` ve `#araclar` bölümlerinde kart ikonları, başlıklar,
+underline ve butonlar **dashboard yeşili** (#1d9e75 / koyu #0f6e56) kullanır (scoped CSS,
+`#ziptide` style bloğunda). Kırmızı = kültürel katman, yeşil = bilimsel katman. Bu ayrımı koru;
+yeşili site geneline yayma.
+
+**Navbar:** `max-width: 1800px`, linkler `white-space: nowrap` — geniş ekranda tek sıra,
+dar ekranda düzgün sarar. Logo (`Anadolu'nun Mirası`) tek satırdır.
+
 ---
 
 ## 5. Yaygın değişiklikler — adım adım
@@ -110,9 +124,18 @@ her link bir bölüme (`#id`) kaydırır. Bölümler (sıra önemli — nav sır
 4. Not: nav bazı linkleri **footer'da tekrar** eder; ana nav `<nav class="navbar">` altındakidir.
 
 **B. Metin/içerik düzenlemek:** ilgili `#id` bölümünü bul, metni değiştir. Türkçe yaz.
+**Sonra `i18n.js`'i güncelle** (bkz. D) — yoksa yeni metin EN modunda Türkçe kalır.
 
 **C. Görsel eklemek:** `uploads/` veya uygun klasöre koy, göreli yolla (`./uploads/...`) referansla.
 `uploads/` deploy'da **korunur** (silinmez).
+
+**D. Dil desteği (`i18n.js`):** Site TR/EN'dir; nav sonundaki EN/TR düğmesi metin düğümlerini
+`i18n.js`'teki `PAIRS` sözlüğüyle yerinde çevirir (localStorage'da kalıcı, dinamik içerik için
+MutationObserver var). Kurallar:
+- Sayfaya **metin eklediğinde/değiştirdiğinde** `PAIRS`'e `["Türkçesi", "İngilizcesi"]` çifti ekle.
+- Anahtar, sayfadaki metnin **trim edilmiş haliyle birebir aynı** olmalı (satır içi `<strong>` gibi
+  etiketler metni böler; her parça ayrı anahtar olur).
+- Özel isimler (okul adları, şehirler) çevrilmez; dashboard zaten İngilizce'dir.
 
 ---
 
@@ -168,3 +191,27 @@ her link bir bölüme (`#id`) kaydırır. Bölümler (sıra önemli — nav sır
 - Mutlak asset yolu (`/uploads/..`) yerine **göreli** (`./uploads/..`) kullan.
 - Büyük dosya yükleme = repo şişer; medyayı mümkünse `uploads/` (deploy'da korunan) üzerinden yönet.
 - Değişiklikten sonra **Actions'ı kontrol et**; yeşil değilse canlı güncellenmemiştir.
+- **CSS değiştirince** `index.html`'deki `styles.css?v=X.Y` sürümünü artır (önbellek kırma; şu an v=2.5).
+- **Metin değiştirince** `i18n.js` sözlüğünü senkron tut (§5-D) — anahtarlar birebir eşleşmezse çeviri sessizce atlanır.
+- **GitHub web'den dosya yüklerken** tarayıcı indirmeleri `ad (1).uzantı` diye yeniden adlandırır —
+  yüklemeden önce adı düzelt (daha önce `index (1).html` ve `harita (1).png` böyle geldi).
+- VS Code Source Control'ün yarım kalmış değişiklikleri commit'lemesine dikkat; push = anında canlı.
+
+---
+
+## 11. Değişiklik günlüğü
+
+**01.08.2026 — büyük yenileme (Claude ile):**
+- Yeni ana sayfa yayına alındı (`index (1).html` → `index.html`).
+- Deploy hariç-tutmaları `*.md` kalıbına çevrildi (CLAUDE.md sunucuya gitmez).
+- **ZipTide Araçları** sekmesi eklendi: `ziptide/dashboard.html` (49 tarif, gömülü veri, Chart.js CDN)
+  + `ziptide/harita.png`. Strateji oyunu kartı şimdilik çıkarıldı — oyun hazır olunca
+  `ziptide/game/` altına build edilip `#araclar`'a üçüncü kart olarak bağlanacak (statik build,
+  `base: './'` ile).
+- **Navbar yenilendi:** ZipTide sekmeleri sona taşındı, genişlik 1800px, tek sıra düzen,
+  etiketlerde `nowrap`.
+- **Kaldırılanlar:** EN Forum (bölüm + script; arka uç duruyor), İletişim bölümü (bilgiler footer'da).
+- **Yeşil bilim vurgusu:** `#ziptide` + `#araclar` ikon/başlık/buton/underline dashboard yeşili.
+- **TR/EN dil desteği:** `i18n.js` + nav'da EN/TR düğmesi (bkz. §5-D).
+- **International Bridge** sekmesi eklendi (`#international`): Almanya 🇩🇪 ve Bosna Hersek 🇧🇦
+  projeye katıldı. Ortak okulların adları henüz girilmedi — isimler netleşince kartlara eklenecek.
