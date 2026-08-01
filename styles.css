@@ -424,6 +424,14 @@ body::before {
     box-shadow: 0 4px 12px rgba(201, 48, 44, 0.25);
 }
 
+.nav-menu a.lang-toggle {
+    border: 1.5px solid var(--primary-color);
+    color: var(--primary-color);
+    font-weight: 700;
+    padding: 8px 12px;
+    letter-spacing: 0.5px;
+}
+
 .hamburger {
     display: none;
     flex-direction: column;
