@@ -363,8 +363,11 @@ body::before {
 
 .nav-menu {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    row-gap: 4px;
     list-style: none;
-    gap: 0.5rem;
+    gap: 0.25rem;
 }
 
 .nav-menu li {
@@ -376,8 +379,9 @@ body::before {
     text-decoration: none;
     color: var(--text-dark);
     font-weight: 600;
-    font-size: 0.95rem;
-    padding: 12px 24px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    padding: 10px 14px;
     border-radius: 12px;
     transition: all 0.3s ease;
     position: relative;
@@ -1586,6 +1590,7 @@ section {
         position: fixed;
         left: -100%;
         top: 70px;
+        justify-content: flex-start;
         flex-direction: column;
         background: var(--white);
         width: 100%;
