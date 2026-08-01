@@ -850,7 +850,6 @@
                 <li><a href="#schools">Okullar</a></li>
                 <li><a href="#performance">Performans Göstergeleri</a></li>
                 <li><a href="#leagues">Ligler</a></li>
-                <li><a href="#contact">İletişim</a></li>
                 <li><a href="#ziptide">iGEM &amp; ZipTide</a></li>
                 <li><a href="#araclar">ZipTide Araçları</a></li>
             </ul>
@@ -1588,7 +1587,6 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
     <!-- EN Forum Bölümü -->
     <section id="forum" class="forum-section">
         <div class="container">
@@ -1678,55 +1676,6 @@
             <div id="forum-modal-body"></div>
         </div>
     </div>
-
-    <section id="contact" class="contact-section">
-        <div class="container">
-            <div class="section-header">
-                <h2>İletişim</h2>
-                <div class="underline"></div>
-                <p>Proje hakkında daha fazla bilgi almak için bizimle iletişime geçin</p>
-            </div>
-
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <div class="contact-icon">📍</div>
-                        <h4>Adres</h4>
-                        <p>Göztepe İhsan Kurşunoğlu Anadolu Lisesi<br>Tanzimat Sok. No. 55<br>Göztepe, Kadıköy / İstanbul</p>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">📞</div>
-                        <h4>Telefon</h4>
-                        <p>0216 355 56 69</p>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">🌐</div>
-                        <h4>Web Sitesi</h4>
-                        <p><a href="https://gikal.meb.k12.tr/" target="_blank" style="color: #c9302c; text-decoration: none;">gikal.meb.k12.tr</a></p>
-                    </div>
-                </div>
-
-                <div class="contact-form">
-                    <form id="contact-form">
-                        <div class="form-group">
-                            <input type="text" id="contact-name" placeholder="Adınız Soyadınız" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" id="contact-email" placeholder="E-posta Adresiniz" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" id="contact-subject" placeholder="Konu" required>
-                        </div>
-                        <div class="form-group">
-                            <textarea id="contact-message" placeholder="Mesajınız" rows="5" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Gönder</button>
-                    </form>
-                    <div id="contact-status" style="margin-top: 15px; padding: 15px; border-radius: 8px; display: none;"></div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- ===== iGEM & ZipTide: Bilimsel Dönüşüm (yeni sekme) ===== -->
     <style>
@@ -1879,59 +1828,6 @@
 
     <script src="script.js"></script>
     <script>
-        // İletişim formu
-        document.getElementById('contact-form').addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-            const name = document.getElementById('contact-name').value;
-            const email = document.getElementById('contact-email').value;
-            const subject = document.getElementById('contact-subject').value;
-            const message = document.getElementById('contact-message').value;
-            const statusDiv = document.getElementById('contact-status');
-
-            try {
-                const response = await fetch('upload.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        action: 'contact',
-                        name: name,
-                        email: email,
-                        subject: subject,
-                        message: message
-                    })
-                });
-
-                const result = await response.json();
-
-                if (result.success) {
-                    statusDiv.style.display = 'block';
-                    statusDiv.style.background = '#d4edda';
-                    statusDiv.style.color = '#155724';
-                    statusDiv.style.border = '1px solid #c3e6cb';
-                    statusDiv.innerHTML = '✅ Mesajınız başarıyla gönderildi! En kısa sürede size dönüş yapacağız.';
-
-                    // Formu temizle
-                    document.getElementById('contact-form').reset();
-
-                    // 5 saniye sonra mesajı gizle
-                    setTimeout(() => {
-                        statusDiv.style.display = 'none';
-                    }, 5000);
-                } else {
-                    throw new Error(result.message || 'Bir hata oluştu');
-                }
-            } catch (error) {
-                statusDiv.style.display = 'block';
-                statusDiv.style.background = '#f8d7da';
-                statusDiv.style.color = '#721c24';
-                statusDiv.style.border = '1px solid #f5c6cb';
-                statusDiv.innerHTML = '❌ Mesaj gönderilemedi: ' + error.message;
-            }
-        });
-
         // Logo Tıklama Efekti
         document.addEventListener('DOMContentLoaded', function() {
             const logo = document.querySelector('.nav-logo');
