@@ -172,6 +172,15 @@
         ["Tam Boyut", "Full Size"],
         ["GİKAL · iGEM 2026 · Team #6490 · ZipTide × 7 Bölge 7 Okul — skorlar keşifsel bir çerçevedir, tıbbi tavsiye değildir.", "GİKAL · iGEM 2026 · Team #6490 · ZipTide × 7 Regions 7 Schools — scores are an exploratory framework, not medical advice."],
 
+        // International Bridge
+        ["7 Bölge 7 Okul artık uluslararası bir kültür köprüsü: Almanya ve Bosna Hersek'ten ortak okullar projeye katıldı.", "7 Regions 7 Schools is now an international cultural bridge: partner schools from Germany and Bosnia and Herzegovina have joined the project."],
+        ["🇩🇪 Almanya", "🇩🇪 Germany"],
+        ["Almanya'dan ortaklarımız 7 Bölge 7 Okul ailesine katıldı; Anadolu'nun kültürel mirası artık Avrupa'da da keşfediliyor.", "Our partners from Germany have joined the 7 Regions 7 Schools family; Anatolia's cultural heritage is now being explored in Europe as well."],
+        ["🇧🇦 Bosna Hersek", "🇧🇦 Bosnia and Herzegovina"],
+        ["Bosna Hersek'ten ortaklarımızla paylaştığımız köklü tarihî ve kültürel bağlar, projeye yeni bir derinlik katıyor.", "The deep historical and cultural ties we share with our partners from Bosnia and Herzegovina add a new depth to the project."],
+        ["Kültür Köprüsü", "Cultural Bridge"],
+        ["Ulusal bir kültür yolculuğu, uluslararası bir buluşmaya dönüşüyor: ortak etkinlikler, karşılıklı öğrenme ve kültür paylaşımı.", "A national cultural journey is becoming an international meeting point: joint events, mutual learning and cultural exchange."],
+
         // Footer
         ["Hızlı Linkler", "Quick Links"],
         ["İletişim", "Contact"],

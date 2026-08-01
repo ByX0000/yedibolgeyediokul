@@ -88,7 +88,7 @@ body::before {
     left: 50%;
     transform: translateX(-50%);
     width: 95%;
-    max-width: 1680px;
+    max-width: 1800px;
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
     box-shadow: 0 8px 32px rgba(201, 48, 44, 0.15);
