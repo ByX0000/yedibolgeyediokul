@@ -228,9 +228,20 @@
         }
     }
 
+    // Dile göre değişen görsel/bağlantı (ör. ZipTide bölgesel haritası TR/EN sürümü)
+    function swapAssets(target) {
+        document.querySelectorAll("[data-src-tr],[data-href-tr]").forEach(function (el) {
+            var src = el.getAttribute("data-src-" + target);
+            if (src) el.setAttribute("src", src);
+            var href = el.getAttribute("data-href-" + target);
+            if (href) el.setAttribute("href", href);
+        });
+    }
+
     function apply(target) {
         var map = target === "en" ? TR2EN : EN2TR;
         swapTree(document.body, map);
+        swapAssets(target);
         document.documentElement.lang = target;
         document.title = TITLES[target] || document.title;
         lang = target;

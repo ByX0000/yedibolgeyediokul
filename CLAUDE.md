@@ -201,6 +201,18 @@ MutationObserver var). Kurallar:
 
 ## 11. Değişiklik günlüğü
 
+**20.09.2026 — ZipTide veri güncellemesi:**
+- `ziptide/dashboard.html` yeni sürümle değiştirildi: 49 tarif 0–100 ölçeğine taşındı,
+  sürdürülebilirlik modeli 4 maddeye oturtuldu (bitkisel 40 / atık 30 / saklama 20 / mevsimsellik 10),
+  duyarlılık analizi tablosu eklendi. Panel kendi içinde TR/EN; gömülü fontlar (Fraunces + Inter),
+  Chart.js CDN bağımlılığı kalktı. Tarif başına okul adı artık panelde gösterilmiyor.
+- Bölge ortalamaları: Ege 45/31 · Marmara 42.5/42.4 · Doğu Anadolu 41.4/33.8 ·
+  Güneydoğu Anadolu 40.7/29.1 · İç Anadolu 40/22.4 · Akdeniz 31.8/19.1 · Karadeniz 25/36.7
+  (bağırsak / sürdürülebilirlik).
+- Harita iki dilli: `ziptide/harita.png` (TR) + `ziptide/harita-en.png` (EN).
+  `i18n.js`'e `swapAssets()` eklendi — `data-src-tr/en` ve `data-href-tr/en` taşıyan
+  öğelerin `src`/`href`'i dil düğmesiyle değişiyor. Görsel/panel bağlantılarına `?v=2` önbellek kırıcı.
+
 **01.08.2026 — büyük yenileme (Claude ile):**
 - Yeni ana sayfa yayına alındı (`index (1).html` → `index.html`).
 - Deploy hariç-tutmaları `*.md` kalıbına çevrildi (CLAUDE.md sunucuya gitmez).
