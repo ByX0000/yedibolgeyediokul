@@ -1461,6 +1461,12 @@
     <!-- ===== International Bridge: Uluslararası Ortaklar ===== -->
     <style>
         #international .ib-subtitle{max-width:780px;margin:1rem auto 0;color:var(--text-light);font-size:1.05rem;line-height:1.65;text-align:center}
+        #international .ib-globe{max-width:1100px;margin:2.5rem auto 0;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:28px 34px;border-radius:20px;background:radial-gradient(circle at 88% 50%,#24497f 0%,#0b1320 62%);color:#fff;box-shadow:0 14px 40px rgba(11,19,32,.25)}
+        #international .ib-globe h3{margin:0 0 6px;color:#fff;font-size:1.35rem}
+        #international .ib-globe p{margin:0;color:rgba(255,255,255,.82);line-height:1.6}
+        #international .ib-globe .btn{white-space:nowrap;flex:none;background:var(--primary-color);color:#fff;border:none}
+        #international .ib-globe .btn:hover{background:var(--accent-color);color:#0b1320}
+        @media (max-width:700px){#international .ib-globe{flex-direction:column;align-items:flex-start;padding:24px}}
     </style>
     <section id="international" class="project-overview">
         <div class="container">
@@ -1491,6 +1497,13 @@
                     <h3>Kültür Köprüsü</h3>
                     <p>Ulusal bir kültür yolculuğu, uluslararası bir buluşmaya dönüşüyor: ortak etkinlikler, karşılıklı öğrenme ve kültür paylaşımı.</p>
                 </div>
+            </div>
+            <div class="ib-globe">
+                <div>
+                    <h3>3B Kültür Küresi</h3>
+                    <p>7 bölgeyi, 49 tarifi ve uluslararası ortaklarımızı dönen bir dünya üzerinde keşfet.</p>
+                </div>
+                <a href="./kure/index.html" class="btn btn-primary">Küreyi Aç</a>
             </div>
         </div>
     </section>
@@ -1775,7 +1788,7 @@
     </footer>
 
     <script src="script.js"></script>
-    <script src="i18n.js?v=1"></script>
+    <script src="i18n.js?v=2"></script>
     <script>
         // Logo Tıklama Efekti
         document.addEventListener('DOMContentLoaded', function() {

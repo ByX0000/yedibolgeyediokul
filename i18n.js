@@ -180,6 +180,9 @@
         ["Bosna Hersek'ten ortaklarımızla paylaştığımız köklü tarihî ve kültürel bağlar, projeye yeni bir derinlik katıyor.", "The deep historical and cultural ties we share with our partners from Bosnia and Herzegovina add a new depth to the project."],
         ["Kültür Köprüsü", "Cultural Bridge"],
         ["Ulusal bir kültür yolculuğu, uluslararası bir buluşmaya dönüşüyor: ortak etkinlikler, karşılıklı öğrenme ve kültür paylaşımı.", "A national cultural journey is becoming an international meeting point: joint events, mutual learning and cultural exchange."],
+        ["3B Kültür Küresi", "3D Culture Globe"],
+        ["7 bölgeyi, 49 tarifi ve uluslararası ortaklarımızı dönen bir dünya üzerinde keşfet.", "Explore the 7 regions, 49 recipes and our international partners on a spinning globe."],
+        ["Küreyi Aç", "Open the Globe"],
 
         // Footer
         ["Hızlı Linkler", "Quick Links"],

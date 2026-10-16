@@ -201,6 +201,15 @@ MutationObserver var). Kurallar:
 
 ## 11. Değişiklik günlüğü
 
+**16.10.2026 — 3B Kültür Küresi:**
+- Yeni sayfa `kure/index.html`: CesiumJS (CDN, 1.146.0) ile 3B dünya. Katmanlar: 7 bölge + araştırılan il + okul
+  (GİKAL'den yaylar), Bilecik saha gezisi (Gölpazarı, Pazaryeri), uluslararası köprü (Aachen, Žepče).
+  Bölge panelinde 4 yıllık temalar, kitaptaki 7 tarif ve ZipTide bölge ortalaması (§6 disclaimer'ıyla, yeşil bilim katmanı).
+  Veriler `index.html` yol haritasından ve `ziptide/dashboard.html`'den alındı; değişirse sayfadaki `REGIONS` dizisini güncelle.
+- Harita: CARTO Voyager (OSM). API anahtarı yok. Sayfa kendi içinde TR/EN; `site_lang` localStorage anahtarını paylaşır.
+- `#international` altına tam genişlikte "3B Kültür Küresi" bandı eklendi (scoped CSS). `i18n.js`'e 3 çift eklendi, `i18n.js?v=2`.
+- Tasarım fikri: God's Eye View (MIT) projesinden esinlenildi; kod sıfırdan yazıldı.
+
 **20.09.2026 — ZipTide veri güncellemesi:**
 - `ziptide/dashboard.html` yeni sürümle değiştirildi: 49 tarif 0–100 ölçeğine taşındı,
   sürdürülebilirlik modeli 4 maddeye oturtuldu (bitkisel 40 / atık 30 / saklama 20 / mevsimsellik 10),

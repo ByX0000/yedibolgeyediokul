@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kültür Küresi — 7 Bölge 7 Okul</title>
+<meta name="description" content="7 Bölge 7 Okul projesinin bölgelerini, tariflerini ve uluslararası ortaklarını 3B dünya üzerinde keşfedin.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/cesium@1.146.0/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+<style>
+  :root{
+    --primary:#c9302c; --secondary:#8b1e1e; --accent:#d4a574;
+    --ink:#2c3e50; --muted:#7f8c8d; --paper:#fffaf3; --line:rgba(44,62,80,.12);
+    --sci:#1d9e75; --sci-dark:#0f6e56;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;overflow:hidden;background:#0b1320;font-family:'Poppins',sans-serif;color:var(--ink)}
+  #globe{position:absolute;inset:0}
+  .cesium-viewer-bottom{opacity:.75}
+  .cesium-widget-credits{font-size:10px!important}
+
+  /* Top bar */
+  .topbar{position:absolute;top:0;left:0;right:0;display:flex;align-items:center;gap:12px;padding:12px 16px;
+    background:linear-gradient(180deg,rgba(11,19,32,.85),rgba(11,19,32,0));color:#fff;z-index:5;pointer-events:none}
+  .topbar>*{pointer-events:auto}
+  .back{color:#fff;text-decoration:none;font-size:.85rem;opacity:.85;white-space:nowrap;border:1px solid rgba(255,255,255,.3);padding:6px 12px;border-radius:999px}
+  .back:hover{opacity:1;border-color:var(--accent)}
+  .brand{flex:1;min-width:0}
+  .brand h1{margin:0;font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:700;letter-spacing:.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .brand p{margin:2px 0 0;font-size:.78rem;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .lang{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:6px 12px;font:600 .8rem 'Poppins',sans-serif;cursor:pointer}
+  .lang:hover{border-color:var(--accent)}
+
+  /* Layer chips */
+  .chips{position:absolute;top:70px;left:16px;display:flex;flex-wrap:wrap;gap:8px;z-index:5;max-width:calc(100% - 32px)}
+  .chip{display:inline-flex;align-items:center;gap:7px;background:rgba(255,250,243,.92);border:1px solid var(--line);
+    color:var(--ink);border-radius:999px;padding:6px 12px;font:500 .8rem 'Poppins',sans-serif;cursor:pointer;backdrop-filter:blur(6px)}
+  .chip .dot{width:9px;height:9px;border-radius:50%}
+  .chip[aria-pressed="false"]{opacity:.55}
+  .chip.home{background:var(--primary);color:#fff;border-color:var(--primary)}
+
+  /* Panel */
+  .panel{position:absolute;top:118px;right:16px;bottom:24px;width:360px;max-width:calc(100% - 32px);
+    background:var(--paper);border-radius:16px;box-shadow:0 18px 50px rgba(0,0,0,.35);z-index:6;display:flex;flex-direction:column;overflow:hidden}
+  .panel-head{padding:18px 20px 12px;border-bottom:1px solid var(--line);position:relative}
+  .panel-head .kicker{font-size:.7rem;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted);font-weight:600}
+  .panel-head h2{margin:4px 0 0;font-family:'Playfair Display',serif;font-size:1.45rem;color:var(--secondary);line-height:1.2}
+  .panel-head .underline{width:46px;height:3px;background:var(--accent);border-radius:2px;margin-top:10px}
+  .panel-close{position:absolute;top:14px;right:14px;border:none;background:transparent;font-size:1.4rem;line-height:1;color:var(--muted);cursor:pointer;display:none}
+  .panel-body{padding:14px 20px 20px;overflow-y:auto;font-size:.9rem;line-height:1.6}
+  .panel-body p{margin:0 0 12px}
+  .reg-list{list-style:none;margin:6px 0 14px;padding:0;display:grid;gap:6px}
+  .reg-list button{width:100%;display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:10px;
+    padding:9px 12px;font:500 .88rem 'Poppins',sans-serif;color:var(--ink);cursor:pointer;text-align:left}
+  .reg-list button:hover{border-color:var(--accent);transform:translateX(2px)}
+  .reg-list .dot{width:10px;height:10px;border-radius:50%;flex:none}
+  .reg-list small{margin-left:auto;color:var(--muted);font-size:.78rem}
+  .meta{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:2px 0 14px;font-size:.86rem}
+  .meta dt{color:var(--muted)} .meta dd{margin:0;font-weight:500}
+  .meta a{color:var(--primary);text-decoration:none;font-weight:600} .meta a:hover{text-decoration:underline}
+  h3.sub{font-size:.78rem;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin:16px 0 8px;font-weight:600}
+  .themes{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+  .themes span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:.78rem}
+  .recipes{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+  .recipes li{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px dashed var(--line);font-size:.86rem}
+  .recipes li span:last-child{color:var(--muted);font-size:.76rem;white-space:nowrap}
+  .sci{margin-top:16px;border:1px solid rgba(29,158,117,.35);background:rgba(29,158,117,.06);border-radius:12px;padding:12px 14px}
+  .sci h4{margin:0 0 8px;color:var(--sci-dark);font-size:.82rem;letter-spacing:.4px}
+  .bar{display:grid;grid-template-columns:118px 1fr 34px;align-items:center;gap:8px;font-size:.8rem;margin:5px 0}
+  .bar .track{height:7px;background:rgba(15,110,86,.12);border-radius:4px;overflow:hidden}
+  .bar .fill{height:100%;background:var(--sci);border-radius:4px}
+  .bar b{text-align:right;color:var(--sci-dark)}
+  .sci .note{font-size:.74rem;color:var(--muted);margin:8px 0 0;line-height:1.5}
+  .btn{display:inline-block;background:var(--primary);color:#fff;text-decoration:none;border-radius:999px;padding:8px 16px;font-weight:600;font-size:.84rem;margin-top:6px}
+  .btn:hover{background:var(--secondary)}
+  .btn.sci-btn{background:var(--sci)} .btn.sci-btn:hover{background:var(--sci-dark)}
+  .credit{font-size:.7rem;color:var(--muted);border-top:1px solid var(--line);padding:10px 20px;line-height:1.5}
+  .credit a{color:var(--muted)}
+
+  .fallback{position:absolute;inset:0;display:none;align-items:center;justify-content:center;text-align:center;color:#fff;padding:24px;z-index:4}
+  .fallback a{color:var(--accent)}
+  .loading{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:#fff;opacity:.8;font-size:.9rem;z-index:3}
+
+  @media (max-width:760px){
+    .brand p{display:none}
+    .brand h1{font-size:1.1rem}
+    .chips{top:58px;left:12px;gap:6px}
+    .chip{padding:5px 10px;font-size:.74rem}
+    .panel{top:auto;left:12px;right:12px;bottom:12px;width:auto;max-width:none;max-height:46vh;border-radius:14px}
+    .panel.collapsed .panel-body,.panel.collapsed .credit{display:none}
+    .panel-close{display:block}
+    .credit{font-size:.62rem;padding:8px 14px}
+  }
+</style>
+</head>
+<body>
+<div id="globe"></div>
+<div class="loading" id="loading">Küre yükleniyor…</div>
+<div class="fallback" id="fallback">
+  <div>
+    <p data-i18n="fallback">Tarayıcınız 3B küreyi gösteremiyor (WebGL kapalı olabilir).</p>
+    <p><a href="../ziptide/harita.png?v=2" data-i18n="fallbackLink">Bölgesel haritayı aç</a></p>
+  </div>
+</div>
+
+<header class="topbar">
+  <a class="back" href="../index.html" data-i18n="back">← Ana sayfa</a>
+  <div class="brand">
+    <h1 data-i18n="title">Kültür Küresi</h1>
+    <p data-i18n="subtitle">7 bölge, 7 okul, 49 tarif ve uluslararası köprü — dünya üzerinde</p>
+  </div>
+  <button class="lang" id="lang" type="button">EN</button>
+</header>
+
+<nav class="chips" aria-label="Katmanlar">
+  <button class="chip" data-layer="regions" aria-pressed="true"><span class="dot" style="background:#c9302c"></span><span data-i18n="layerRegions">7 Bölge</span></button>
+  <button class="chip" data-layer="trip" aria-pressed="true"><span class="dot" style="background:#d4a574"></span><span data-i18n="layerTrip">Bilecik Gezisi</span></button>
+  <button class="chip" data-layer="intl" aria-pressed="true"><span class="dot" style="background:#5b8def"></span><span data-i18n="layerIntl">Uluslararası Köprü</span></button>
+  <button class="chip home" id="homeBtn" type="button" data-i18n="home">Türkiye'ye dön</button>
+</nav>
+
+<aside class="panel" id="panel">
+  <div class="panel-head">
+    <div class="kicker" id="pKicker"></div>
+    <h2 id="pTitle"></h2>
+    <div class="underline"></div>
+    <button class="panel-close" id="pToggle" aria-label="Paneli daralt">–</button>
+  </div>
+  <div class="panel-body" id="pBody"></div>
+  <div class="credit" id="credit"></div>
+</aside>
+
+<script>window.CESIUM_BASE_URL = 'https://cdn.jsdelivr.net/npm/cesium@1.146.0/Build/Cesium/';</script>
+<script src="https://cdn.jsdelivr.net/npm/cesium@1.146.0/Build/Cesium/Cesium.js"></script>
+<script>
+(function(){
+'use strict';
+
+/* ---------- Veri (kaynak: index.html yol haritası + ziptide/dashboard.html) ---------- */
+var HUB = { name:'GİKAL', lat:40.9768, lon:29.0622 }; // Koordinatör okul, Göztepe/Kadıköy
+
+var THEMES = [
+  {tr:'🍽️ Gastronomi · 2025-26', en:'🍽️ Gastronomy · 2025-26'},
+  {tr:'🎵 Müzik · 2026-27', en:'🎵 Music · 2026-27'},
+  {tr:'💃 Halk Oyunları · 2027-28', en:'💃 Folk Dances · 2027-28'},
+  {tr:'📖 Sözlü Gelenek & Yayın · 2028-29', en:'📖 Oral Tradition & Publishing · 2028-29'}
+];
+
+var REGIONS = [
+  {id:'marmara', tr:'Marmara', en:'Marmara', color:'#c9302c', province:'Bilecik', lat:40.1426, lon:29.9793,
+   school:'Göztepe İhsan Kurşunoğlu Anadolu Lisesi', url:'../schools/goztepe-ihsan-kursunoglu.html', g:42.5, s:42.4,
+   recipes:[['Nohutlu Mantı','hamur işi'],['Gök Fasille','ana yemek'],['Linga Tatlısı','tatlı'],['Bıldırcın Kebabı','ana yemek'],['El Açması Büzme Baklava','tatlı'],['Dağ Eriği Ekşili Kesme Çorbası','çorba'],['Zırz','hamur işi']]},
+  {id:'ege', tr:'Ege', en:'Aegean', color:'#2f80b7', province:'İzmir', lat:38.4237, lon:27.1428,
+   school:'TEB Ataşehir Anadolu Lisesi', url:'../schools/teb-atasehir.html', g:45.0, s:31.0,
+   recipes:[['Ekmek Dolması','ana yemek'],['Çığırtma','ana yemek'],['Etli Şevketi Bostan','ana yemek'],['İzmir Köfte','ana yemek'],['Börülce Ekşitmesi','meze'],['Enginar Dolması','ana yemek'],['Şambali','tatlı']]},
+  {id:'akdeniz', tr:'Akdeniz', en:'Mediterranean', color:'#e08a1e', province:'Antalya', lat:36.8969, lon:30.7133,
+   school:'Atatürk Fen Lisesi', url:'../schools/ataturk-fen.html', g:31.8, s:19.1,
+   recipes:[['Tepsi Kebabı','ana yemek'],['Belen Tava','ana yemek'],['Oruk','ana yemek'],['Mahluta Çorbası','çorba'],['Humus','meze'],['Künefe','tatlı'],['Kömbe','tatlı']]},
+  {id:'ic-anadolu', tr:'İç Anadolu', en:'Central Anatolia', color:'#b8913a', province:'Sivas', lat:39.7477, lon:37.0179,
+   school:'Kadir Has Anadolu Lisesi', url:'../schools/kadir-has.html', g:40.0, s:22.4,
+   recipes:[['Kesme Aşı Çorbası','çorba'],['Kalburabastı','tatlı'],['Çirli Et','ana yemek'],['Hıngel','hamur işi'],['Divriği Pilavı','ana yemek'],['Evelik Sarması','ana yemek'],['Üzümleme','ana yemek']]},
+  {id:'karadeniz', tr:'Karadeniz', en:'Black Sea', color:'#3d7a3d', province:'Trabzon', lat:41.0027, lon:39.7168,
+   school:'Kadıköy Anadolu Lisesi', url:'../schools/kadikoy.html', g:25.0, s:36.7,
+   recipes:[['Kuymak','kahvaltı'],['Hamsili Pilav','ana yemek'],['Lahana Çorbası','çorba'],['Hamsiköy Sütlacı','tatlı'],['Turşu Kavurması','ana yemek'],['Mısır Ekmeği','hamur işi'],['Laz Böreği','tatlı']]},
+  {id:'dogu-anadolu', tr:'Doğu Anadolu', en:'Eastern Anatolia', color:'#7a4fa0', province:'Elazığ', lat:38.6810, lon:39.2264,
+   school:'Erenköy Kız Anadolu Lisesi', url:'../schools/erenkoy-kiz.html', g:41.4, s:33.8,
+   recipes:[['Mukaşerli Erişte Çorbası','çorba'],['Künce Ezmeli Hamur Sarması','hamur işi'],['Gulik Yemeği','ana yemek'],['Elazığ Usulü Tirit','ana yemek'],['Harput Köftesi','ana yemek'],['Pestil Kavurması','tatlı'],['Bezirgan Helvası','tatlı']]},
+  {id:'guneydogu-anadolu', tr:'Güneydoğu Anadolu', en:'Southeastern Anatolia', color:'#a0522d', province:'Gaziantep', lat:37.0662, lon:37.3833,
+   school:'Hayrullah Kefoğlu Anadolu Lisesi', url:'../schools/hayrullah-kefoglu.html', g:40.7, s:29.1,
+   recipes:[['Meyir Çorbası','çorba'],['Adıyaman Çiğ Köftesi','meze'],['Semsek Pide','hamur işi'],['Adıyaman Tavası','ana yemek'],['Pirpirim Cacığı','meze'],['Buhara Pilavı','ana yemek'],['Tene Helvası','tatlı']]}
+];
+
+var TRIP = { id:'trip', lat:40.2837, lon:30.3176, place:'Gölpazarı, Bilecik' };
+var TRIP2 = { lat:39.9970, lon:29.9090, place:'Pazaryeri, Bilecik' };
+
+var INTL = [
+  {id:'de', flag:'🇩🇪', tr:'Almanya', en:'Germany', city:'Aachen', lat:50.7753, lon:6.0839},
+  {id:'ba', flag:'🇧🇦', tr:'Bosna Hersek', en:'Bosnia and Herzegovina', city:'Žepče', lat:44.4267, lon:18.0378}
+];
+
+var KIND_EN = {'hamur işi':'dough dish','ana yemek':'main course','tatlı':'dessert','çorba':'soup','meze':'meze','kahvaltı':'breakfast'};
+
+/* ---------- Dil ---------- */
+var T = {
+  tr:{ title:'Kültür Küresi', subtitle:'7 bölge, 7 okul, 49 tarif ve uluslararası köprü — dünya üzerinde',
+    back:'← Ana sayfa', layerRegions:'7 Bölge', layerTrip:'Bilecik Gezisi', layerIntl:'Uluslararası Köprü', home:"Türkiye'ye dön",
+    loading:'Küre yükleniyor…', fallback:'Tarayıcınız 3B küreyi gösteremiyor (WebGL kapalı olabilir).', fallbackLink:'Bölgesel haritayı aç',
+    introKicker:'7 Bölge 7 Okul', introTitle:"Anadolu'nun mirası, tek bir kürede",
+    introText:"Yedi okul, Türkiye'nin yedi coğrafi bölgesini dört yıl boyunca araştırıyor. Bir bölgeye dokun: araştırılan ili, okulu ve kitaptaki yedi tarifi gör.",
+    introIntl:'Mavi yaylar, projeye katılan Almanya ve Bosna Hersek\'teki ortaklara uzanan kültür köprüsünü gösterir.',
+    regionsHead:'Bölgeler', regionKicker:'Bölge', province:'Araştırılan il', school:'Okul', schoolLink:'Okul sayfası →',
+    themes:'Dört yıllık temalar', recipes:'Kitaptaki 7 tarif', sciTitle:'ZipTide bölge ortalaması (0–100)',
+    gut:'Bağırsak-destek', sus:'Sürdürülebilirlik',
+    sciNote:'Skorlar keşifsel bir çerçevedir; tıbbi tavsiye değildir. Bölge ortalaması tarifleri anlatır, orada yaşayanların sağlığı hakkında bir şey söylemez.',
+    dashboard:'Gösterge panelini aç', all:'← Tüm bölgeler',
+    tripKicker:'Saha çalışması', tripTitle:'Bilecik Saha Gezisi',
+    tripText:'17–18 Mayıs 2026\'da Bilecik\'in Gölpazarı ve Pazaryeri ilçelerine yapılan saha gezisi, "Zamanın Serenadı" belgeseline dönüştü. Zırz, linga tatlısı ve bıldırcın kebabı gibi yöresel tarifler bu bölgeden kitaba girdi.',
+    intlKicker:'Uluslararası köprü', intlText:'7 Bölge 7 Okul, ulusal bir kültür yolculuğundan uluslararası bir buluşmaya dönüşüyor. Bu ülkeden ortaklarımız projeye katıldı.',
+    city:'Şehir', hubKicker:'Koordinatör okul', hubText:'Projenin koordinasyonu Göztepe İhsan Kurşunoğlu Anadolu Lisesi\'nden yürütülüyor. Kırmızı yaylar koordinasyon merkezinden araştırılan yedi ile uzanır.',
+    credit:'Harita verisi © OpenStreetMap katkıcıları, © CARTO · 3B motor: CesiumJS · Tasarım fikri: <a href="https://github.com/bilawalsidhu/gods-eye-view" target="_blank" rel="noopener">God\'s Eye View</a> (MIT) projesinden esinlenilmiştir.',
+    collapse:'Paneli daralt', expand:'Paneli genişlet' },
+  en:{ title:'Culture Globe', subtitle:'7 regions, 7 schools, 49 recipes and an international bridge — on the globe',
+    back:'← Home', layerRegions:'7 Regions', layerTrip:'Bilecik Field Trip', layerIntl:'International Bridge', home:'Back to Türkiye',
+    loading:'Loading globe…', fallback:'Your browser cannot display the 3D globe (WebGL may be disabled).', fallbackLink:'Open the regional map',
+    introKicker:'7 Regions 7 Schools', introTitle:"Anatolia's heritage on a single globe",
+    introText:"Seven schools are exploring Türkiye's seven geographical regions over four years. Tap a region to see the province studied, the school and the seven recipes in the book.",
+    introIntl:'Blue arcs show the cultural bridge to our partners in Germany and Bosnia and Herzegovina.',
+    regionsHead:'Regions', regionKicker:'Region', province:'Province studied', school:'School', schoolLink:'School page →',
+    themes:'Four-year themes', recipes:'7 recipes in the book', sciTitle:'ZipTide regional mean (0–100)',
+    gut:'Gut support', sus:'Sustainability',
+    sciNote:'Scores are an exploratory framework, not medical advice. A regional mean describes recipes; it says nothing about the health of people living there.',
+    dashboard:'Open the dashboard', all:'← All regions',
+    tripKicker:'Field work', tripTitle:'Bilecik Field Trip',
+    tripText:'The field trip to Gölpazarı and Pazaryeri in Bilecik on 17–18 May 2026 became the documentary "Zamanın Serenadı" (Serenade of Time). Local recipes such as zırz, linga dessert and quail kebab entered the book from this area.',
+    intlKicker:'International bridge', intlText:'7 Regions 7 Schools is growing from a national cultural journey into an international meeting point. Partners from this country have joined the project.',
+    city:'City', hubKicker:'Coordinating school', hubText:'The project is coordinated from Göztepe İhsan Kurşunoğlu Anatolian High School. Red arcs run from the coordination hub to the seven provinces studied.',
+    credit:'Map data © OpenStreetMap contributors, © CARTO · 3D engine: CesiumJS · Design inspired by <a href="https://github.com/bilawalsidhu/gods-eye-view" target="_blank" rel="noopener">God\'s Eye View</a> (MIT).',
+    collapse:'Collapse panel', expand:'Expand panel' }
+};
+var lang = 'tr';
+try { lang = localStorage.getItem('site_lang') === 'en' ? 'en' : 'tr'; } catch(e){}
+function t(k){ return T[lang][k]; }
+function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+
+/* ---------- Panel ---------- */
+var pKicker=document.getElementById('pKicker'), pTitle=document.getElementById('pTitle'), pBody=document.getElementById('pBody');
+var panel=document.getElementById('panel'), current={type:'intro'};
+
+function regionName(r){ return lang==='en' ? r.en : r.tr; }
+
+function renderIntro(){
+  pKicker.textContent=t('introKicker'); pTitle.textContent=t('introTitle');
+  var h='<p>'+esc(t('introText'))+'</p><h3 class="sub">'+esc(t('regionsHead'))+'</h3><ul class="reg-list">';
+  REGIONS.forEach(function(r){
+    h+='<li><button data-go="'+r.id+'"><span class="dot" style="background:'+r.color+'"></span>'+esc(regionName(r))+'<small>'+esc(r.province)+'</small></button></li>';
+  });
+  h+='</ul><p>'+esc(t('introIntl'))+'</p>';
+  pBody.innerHTML=h;
+}
+function bar(label,v){
+  return '<div class="bar"><span>'+esc(label)+'</span><span class="track"><span class="fill" style="width:'+v+'%"></span></span><b>'+v.toFixed(1)+'</b></div>';
+}
+function renderRegion(r){
+  pKicker.textContent=t('regionKicker'); pTitle.textContent=regionName(r);
+  var h='<dl class="meta"><dt>'+esc(t('province'))+'</dt><dd>'+esc(r.province)+'</dd>'+
+        '<dt>'+esc(t('school'))+'</dt><dd>'+esc(r.school)+'<br><a href="'+r.url+'">'+esc(t('schoolLink'))+'</a></dd></dl>';
+  h+='<h3 class="sub">'+esc(t('themes'))+'</h3><div class="themes">';
+  THEMES.forEach(function(x){ h+='<span>'+esc(x[lang])+'</span>'; });
+  h+='</div><h3 class="sub">'+esc(t('recipes'))+'</h3><ul class="recipes">';
+  r.recipes.forEach(function(x){ h+='<li><span>'+esc(x[0])+'</span><span>'+esc(lang==='en'?(KIND_EN[x[1]]||x[1]):x[1])+'</span></li>'; });
+  h+='</ul><div class="sci"><h4>'+esc(t('sciTitle'))+'</h4>'+bar(t('gut'),r.g)+bar(t('sus'),r.s)+
+     '<p class="note">'+esc(t('sciNote'))+'</p><a class="btn sci-btn" href="../ziptide/dashboard.html?v=2" target="_blank" rel="noopener">'+esc(t('dashboard'))+'</a></div>';
+  h+='<p style="margin-top:14px"><a href="#" data-go="intro" style="color:var(--primary);font-weight:600;text-decoration:none">'+esc(t('all'))+'</a></p>';
+  pBody.innerHTML=h;
+}
+function renderTrip(){
+  pKicker.textContent=t('tripKicker'); pTitle.textContent=t('tripTitle');
+  pBody.innerHTML='<p>'+esc(t('tripText'))+'</p><p><a href="#" data-go="marmara" class="btn">'+esc(regionName(REGIONS[0]))+'</a></p>'+
+    '<p><a href="#" data-go="intro" style="color:var(--primary);font-weight:600;text-decoration:none">'+esc(t('all'))+'</a></p>';
+}
+function renderIntl(c){
+  pKicker.textContent=t('intlKicker'); pTitle.textContent=(lang==='en'?c.en:c.tr);
+  pBody.innerHTML='<p>'+esc(t('intlText'))+'</p><dl class="meta"><dt>'+esc(t('city'))+'</dt><dd>'+esc(c.city)+'</dd></dl>'+
+    '<p><a href="../index.html#international" class="btn">International Bridge</a></p>'+
+    '<p><a href="#" data-go="intro" style="color:var(--primary);font-weight:600;text-decoration:none">'+esc(t('all'))+'</a></p>';
+}
+function renderHub(){
+  pKicker.textContent=t('hubKicker'); pTitle.textContent='GİKAL';
+  pBody.innerHTML='<p>'+esc(t('hubText'))+'</p><p><a href="#" data-go="intro" style="color:var(--primary);font-weight:600;text-decoration:none">'+esc(t('all'))+'</a></p>';
+}
+function render(){
+  if(current.type==='region') renderRegion(current.ref);
+  else if(current.type==='trip') renderTrip();
+  else if(current.type==='intl') renderIntl(current.ref);
+  else if(current.type==='hub') renderHub();
+  else renderIntro();
+  pBody.scrollTop=0;
+}
+function applyStatic(){
+  document.documentElement.lang=lang;
+  document.title=t('title')+(lang==='en'?' — 7 Regions 7 Schools':' — 7 Bölge 7 Okul');
+  document.querySelectorAll('[data-i18n]').forEach(function(el){ el.textContent=t(el.getAttribute('data-i18n')); });
+  document.getElementById('credit').innerHTML=t('credit');
+  document.getElementById('lang').textContent = lang==='en' ? 'TR' : 'EN';
+  render();
+}
+document.getElementById('lang').addEventListener('click',function(){
+  lang = lang==='en' ? 'tr' : 'en';
+  try { localStorage.setItem('site_lang',lang); } catch(e){}
+  applyStatic(); refreshLabels();
+});
+document.getElementById('pToggle').addEventListener('click',function(){
+  var c=panel.classList.toggle('collapsed'); this.textContent=c?'+':'–'; this.setAttribute('aria-label',t(c?'expand':'collapse'));
+});
+applyStatic();
+
+/* ---------- Küre ---------- */
+if(typeof Cesium==='undefined'){ showFallback(); return; }
+function showFallback(){ document.getElementById('loading').style.display='none'; document.getElementById('fallback').style.display='flex'; }
+
+var viewer;
+try{
+  viewer = new Cesium.Viewer('globe',{
+    baseLayer: new Cesium.ImageryLayer(new Cesium.UrlTemplateImageryProvider({
+      url:'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png',
+      subdomains:['a','b','c','d'], maximumLevel:18,
+      credit:new Cesium.Credit('© OpenStreetMap contributors © CARTO')
+    })),
+    baseLayerPicker:false, geocoder:false, homeButton:false, sceneModePicker:false, navigationHelpButton:false,
+    animation:false, timeline:false, fullscreenButton:false, infoBox:false, selectionIndicator:false,
+    terrainProvider:new Cesium.EllipsoidTerrainProvider(), requestRenderMode:false
+  });
+}catch(e){ showFallback(); return; }
+document.getElementById('loading').style.display='none';
+
+var scene=viewer.scene;
+scene.globe.enableLighting=false;
+scene.skyAtmosphere.show=true;
+scene.globe.showGroundAtmosphere=true;
+scene.screenSpaceCameraController.minimumZoomDistance=40000;
+scene.screenSpaceCameraController.maximumZoomDistance=40000000;
+
+var C=Cesium, layers={ regions:[], trip:[], intl:[] };
+function isDesk(){ return window.innerWidth>760; }
+function cart(lat,lon,h){ return C.Cartesian3.fromDegrees(lon,lat,h||0); }
+
+function arcPositions(a,b,steps){
+  var g=new C.EllipsoidGeodesic(C.Cartographic.fromDegrees(a.lon,a.lat),C.Cartographic.fromDegrees(b.lon,b.lat));
+  var hMax=Math.min(g.surfaceDistance*0.18, 450000), pts=[];
+  for(var i=0;i<=steps;i++){
+    var f=i/steps, c=g.interpolateUsingFraction(f);
+    pts.push(C.Cartesian3.fromRadians(c.longitude,c.latitude,Math.sin(Math.PI*f)*hMax));
+  }
+  return pts;
+}
+function addArc(group,a,b,color,speed){
+  var pts=arcPositions(a,b,72);
+  layers[group].push(viewer.entities.add({
+    polyline:{ positions:pts, width:3, arcType:C.ArcType.NONE,
+      material:new C.PolylineGlowMaterialProperty({ glowPower:0.22, color:C.Color.fromCssColorString(color).withAlpha(0.9) }) }
+  }));
+  var offset=Math.random();
+  layers[group].push(viewer.entities.add({
+    position:new C.CallbackProperty(function(){
+      var f=((performance.now()/1000*speed)+offset)%1, idx=f*(pts.length-1), i=Math.floor(idx), r=idx-i;
+      return C.Cartesian3.lerp(pts[i],pts[Math.min(i+1,pts.length-1)],r,new C.Cartesian3());
+    },false),
+    point:{ pixelSize:6, color:C.Color.WHITE, outlineColor:C.Color.fromCssColorString(color), outlineWidth:2 }
+  }));
+}
+function addPin(group,o){
+  var e=viewer.entities.add({
+    position:cart(o.lat,o.lon),
+    point:{ pixelSize:o.size||13, color:C.Color.fromCssColorString(o.color), outlineColor:C.Color.WHITE, outlineWidth:2,
+            disableDepthTestDistance:Number.POSITIVE_INFINITY },
+    label:{ text:o.label, font:'600 13px Poppins, sans-serif', fillColor:C.Color.WHITE,
+            outlineColor:C.Color.fromCssColorString('#0b1320'), outlineWidth:4, style:C.LabelStyle.FILL_AND_OUTLINE,
+            pixelOffset:new C.Cartesian2(0,-20), verticalOrigin:C.VerticalOrigin.BOTTOM,
+            disableDepthTestDistance:Number.POSITIVE_INFINITY,
+            distanceDisplayCondition:new C.DistanceDisplayCondition(0,o.labelFar||9000000) }
+  });
+  e._go=o.go; e._labelFn=o.labelFn;
+  layers[group].push(e);
+  return e;
+}
+
+// Koordinatör okul
+addPin('regions',{lat:HUB.lat,lon:HUB.lon,color:'#ffffff',size:9,label:'GİKAL',labelFar:1500000,go:{type:'hub'},labelFn:function(){return 'GİKAL';}});
+// Bölgeler
+REGIONS.forEach(function(r){
+  addArc('regions',HUB,r,r.color,0.18);
+  var rl=function(){return isDesk()? r.province+' · '+regionName(r) : r.province;};
+  addPin('regions',{lat:r.lat,lon:r.lon,color:r.color,label:rl(),go:{type:'region',ref:r},labelFn:rl});
+});
+// Bilecik gezisi
+addPin('trip',{lat:TRIP.lat,lon:TRIP.lon,color:'#d4a574',size:11,label:'Gölpazarı',labelFar:700000,go:{type:'trip'},labelFn:function(){return 'Gölpazarı';}});
+addPin('trip',{lat:TRIP2.lat,lon:TRIP2.lon,color:'#d4a574',size:11,label:'Pazaryeri',labelFar:700000,go:{type:'trip'},labelFn:function(){return 'Pazaryeri';}});
+// Uluslararası
+INTL.forEach(function(c){
+  addArc('intl',HUB,c,'#5b8def',0.12);
+  var il=function(){return isDesk()? c.city+' · '+(lang==='en'?c.en:c.tr) : c.city;};
+  addPin('intl',{lat:c.lat,lon:c.lon,color:'#5b8def',label:il(),labelFar:20000000,go:{type:'intl',ref:c},labelFn:il});
+});
+
+function refreshLabels(){
+  Object.keys(layers).forEach(function(k){ layers[k].forEach(function(e){ if(e._labelFn && e.label) e.label.text=e._labelFn(); }); });
+}
+
+/* Seçim — hedefi panelin kapatmadığı alana ortala */
+function flyFocus(lat,lon,range,dur){
+  var dE=0,dN=0;
+  if(isDesk()) dE=range*0.24;
+  else dN=-range*(panel.classList.contains('collapsed')?0.10:0.30);
+  var la=lat+dN/110540, lo=lon+dE/(111320*Math.cos(C.Math.toRadians(lat)));
+  viewer.camera.flyToBoundingSphere(new C.BoundingSphere(cart(la,lo),1),{
+    offset:new C.HeadingPitchRange(0,C.Math.toRadians(-66),range), duration:dur==null?1.6:dur });
+}
+function go(target){
+  if(!target) return;
+  current=target; render();
+  panel.classList.remove('collapsed'); document.getElementById('pToggle').textContent='–';
+  if(target.type==='region') flyFocus(target.ref.lat,target.ref.lon,1100000);
+  else if(target.type==='trip') flyFocus(40.14,30.11,320000);
+  else if(target.type==='intl') flyFocus(target.ref.lat,target.ref.lon,2400000);
+  else if(target.type==='hub') flyFocus(HUB.lat,HUB.lon,450000);
+  else home();
+}
+function home(dur){ flyFocus(39.0,35.0,isDesk()?2300000:3600000,dur==null?1.8:dur); }
+window.addEventListener('resize',function(){ refreshLabels(); });
+
+var handler=new C.ScreenSpaceEventHandler(scene.canvas);
+handler.setInputAction(function(m){
+  var picked=scene.pick(m.position);
+  if(C.defined(picked) && picked.id && picked.id._go) go(picked.id._go);
+},C.ScreenSpaceEventType.LEFT_CLICK);
+handler.setInputAction(function(m){
+  var picked=scene.pick(m.endPosition);
+  scene.canvas.style.cursor=(C.defined(picked)&&picked.id&&picked.id._go)?'pointer':'';
+},C.ScreenSpaceEventType.MOUSE_MOVE);
+
+pBody.addEventListener('click',function(ev){
+  var a=ev.target.closest('[data-go]'); if(!a) return;
+  ev.preventDefault();
+  var id=a.getAttribute('data-go');
+  if(id==='intro'){ current={type:'intro'}; render(); home(); return; }
+  var r=REGIONS.filter(function(x){return x.id===id;})[0];
+  if(r) go({type:'region',ref:r});
+});
+document.getElementById('homeBtn').addEventListener('click',function(){ current={type:'intro'}; render(); home(); });
+
+document.querySelectorAll('.chip[data-layer]').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var on=btn.getAttribute('aria-pressed')!=='true';
+    btn.setAttribute('aria-pressed',on?'true':'false');
+    layers[btn.getAttribute('data-layer')].forEach(function(e){ e.show=on; });
+  });
+});
+
+/* Açılış: uzaydan Türkiye'ye */
+if(!isDesk()){ panel.classList.add('collapsed'); document.getElementById('pToggle').textContent='+'; }
+viewer.camera.setView({ destination:cart(30,20,22000000) });
+setTimeout(function(){ home(3.2); },400);
+})();
+</script>
+</body>
+</html>
