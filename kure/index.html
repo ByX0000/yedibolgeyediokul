@@ -199,7 +199,7 @@ var T = {
     tripText:'17–18 Mayıs 2026\'da Bilecik\'in Gölpazarı ve Pazaryeri ilçelerine yapılan saha gezisi, "Zamanın Serenadı" belgeseline dönüştü. Zırz, linga tatlısı ve bıldırcın kebabı gibi yöresel tarifler bu bölgeden kitaba girdi.',
     intlKicker:'Uluslararası köprü', intlText:'7 Bölge 7 Okul, ulusal bir kültür yolculuğundan uluslararası bir buluşmaya dönüşüyor. Bu ülkeden ortaklarımız projeye katıldı.',
     city:'Şehir', hubKicker:'Koordinatör okul', hubText:'Projenin koordinasyonu Göztepe İhsan Kurşunoğlu Anadolu Lisesi\'nden yürütülüyor. Kırmızı yaylar koordinasyon merkezinden araştırılan yedi ile uzanır.',
-    credit:'Harita verisi © OpenStreetMap katkıcıları, © CARTO · 3B motor: CesiumJS · Tasarım fikri: <a href="https://github.com/bilawalsidhu/gods-eye-view" target="_blank" rel="noopener">God\'s Eye View</a> (MIT) projesinden esinlenilmiştir.',
+    credit:'Harita verisi © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> katkıcıları · 3B motor: CesiumJS · Tasarım fikri: <a href="https://github.com/bilawalsidhu/gods-eye-view" target="_blank" rel="noopener">God\'s Eye View</a> (MIT) projesinden esinlenilmiştir.',
     collapse:'Paneli daralt', expand:'Paneli genişlet' },
   en:{ title:'Culture Globe', subtitle:'7 regions, 7 schools, 49 recipes and an international bridge — on the globe',
     back:'← Home', layerRegions:'7 Regions', layerTrip:'Bilecik Field Trip', layerIntl:'International Bridge', home:'Back to Türkiye',
@@ -216,7 +216,7 @@ var T = {
     tripText:'The field trip to Gölpazarı and Pazaryeri in Bilecik on 17–18 May 2026 became the documentary "Zamanın Serenadı" (Serenade of Time). Local recipes such as zırz, linga dessert and quail kebab entered the book from this area.',
     intlKicker:'International bridge', intlText:'7 Regions 7 Schools is growing from a national cultural journey into an international meeting point. Partners from this country have joined the project.',
     city:'City', hubKicker:'Coordinating school', hubText:'The project is coordinated from Göztepe İhsan Kurşunoğlu Anatolian High School. Red arcs run from the coordination hub to the seven provinces studied.',
-    credit:'Map data © OpenStreetMap contributors, © CARTO · 3D engine: CesiumJS · Design inspired by <a href="https://github.com/bilawalsidhu/gods-eye-view" target="_blank" rel="noopener">God\'s Eye View</a> (MIT).',
+    credit:'Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors · 3D engine: CesiumJS · Design inspired by <a href="https://github.com/bilawalsidhu/gods-eye-view" target="_blank" rel="noopener">God\'s Eye View</a> (MIT).',
     collapse:'Collapse panel', expand:'Expand panel' }
 };
 var lang = 'tr';
@@ -303,11 +303,7 @@ function showFallback(){ document.getElementById('loading').style.display='none'
 var viewer;
 try{
   viewer = new Cesium.Viewer('globe',{
-    baseLayer: new Cesium.ImageryLayer(new Cesium.UrlTemplateImageryProvider({
-      url:'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png',
-      subdomains:['a','b','c','d'], maximumLevel:18,
-      credit:new Cesium.Credit('© OpenStreetMap contributors © CARTO')
-    })),
+    baseLayer: new Cesium.ImageryLayer(new Cesium.OpenStreetMapImageryProvider({ url:'https://tile.openstreetmap.org/', maximumLevel:19 })),
     baseLayerPicker:false, geocoder:false, homeButton:false, sceneModePicker:false, navigationHelpButton:false,
     animation:false, timeline:false, fullscreenButton:false, infoBox:false, selectionIndicator:false,
     terrainProvider:new Cesium.EllipsoidTerrainProvider(), requestRenderMode:false

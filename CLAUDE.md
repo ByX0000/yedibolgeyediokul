@@ -206,7 +206,7 @@ MutationObserver var). Kurallar:
   (GİKAL'den yaylar), Bilecik saha gezisi (Gölpazarı, Pazaryeri), uluslararası köprü (Aachen, Žepče).
   Bölge panelinde 4 yıllık temalar, kitaptaki 7 tarif ve ZipTide bölge ortalaması (§6 disclaimer'ıyla, yeşil bilim katmanı).
   Veriler `index.html` yol haritasından ve `ziptide/dashboard.html`'den alındı; değişirse sayfadaki `REGIONS` dizisini güncelle.
-- Harita: CARTO Voyager (OSM). API anahtarı yok. Sayfa kendi içinde TR/EN; `site_lang` localStorage anahtarını paylaşır.
+- Harita: OpenStreetMap standart karoları (CARTO site üzerinden anahtar istediği için kullanılmadı). API anahtarı yok. Sayfa kendi içinde TR/EN; `site_lang` localStorage anahtarını paylaşır.
 - `#international` altına tam genişlikte "3B Kültür Küresi" bandı eklendi (scoped CSS). `i18n.js`'e 3 çift eklendi, `i18n.js?v=2`.
 - Tasarım fikri: God's Eye View (MIT) projesinden esinlenildi; kod sıfırdan yazıldı.
 
