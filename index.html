@@ -853,6 +853,7 @@
                 <li><a href="#leagues">Ligler</a></li>
                 <li><a href="#ziptide">iGEM &amp; ZipTide</a></li>
                 <li><a href="#araclar">ZipTide Araçları</a></li>
+                <li><a href="#fermuar">Fermuar</a></li>
                 <li><a href="#" id="lang-toggle" class="lang-toggle" title="Switch to English">EN</a></li>
             </ul>
             <div class="hamburger">
@@ -1753,6 +1754,119 @@
         </div>
     </section>
 
+    <!-- ===== Fermuar: ZipTide'ın mobil uygulaması (20.10.2026) ===== -->
+    <style>
+        #fermuar .zt-subtitle{max-width:800px;margin:1rem auto 0;color:var(--text-light);font-size:1.05rem;line-height:1.65;text-align:center}
+        #fermuar .fm-status{max-width:820px;margin:1.6rem auto 0;padding:1rem 1.25rem;border-left:3px solid #1d9e75;background:rgba(29,158,117,.07);border-radius:6px;color:var(--text-dark);font-size:.98rem;line-height:1.6}
+        #fermuar .zt-fig{max-width:1000px;margin:2.5rem auto 0;border-radius:12px;overflow:hidden;box-shadow:var(--shadow-lg)}
+        #fermuar .zt-fig img{width:100%;height:auto;display:block}
+        #fermuar .zt-fig figcaption{padding:.8rem 1rem;color:var(--text-light);font-size:.9rem;text-align:center;background:var(--white)}
+        #fermuar h3.fm-h{text-align:center;color:#0f6e56;margin:3rem 0 0;font-size:1.5rem}
+        #fermuar .fm-lead{max-width:780px;margin:.8rem auto 0;text-align:center;color:var(--text-light);line-height:1.65}
+        #fermuar .fm-result{max-width:780px;margin:1.8rem auto 0;text-align:center;font-size:1.1rem;color:#0f6e56;font-weight:600;line-height:1.6}
+        #fermuar .zt-disclaimer{max-width:820px;margin:2rem auto 0;padding:1rem 1.25rem;border-left:3px solid var(--accent-color);background:rgba(212,165,116,.08);border-radius:6px;color:var(--text-light);font-size:.95rem;line-height:1.6}
+        #fermuar .zt-links{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:2rem}
+        #fermuar .zt-note{text-align:center;margin-top:1.6rem;color:var(--accent-color);font-size:.9rem;letter-spacing:.5px}
+        #fermuar .fm-four{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+        #fermuar .card-icon{background:linear-gradient(135deg,#1d9e75,#0f6e56)}
+        #fermuar .underline{background:linear-gradient(90deg,#1d9e75,var(--accent-color))}
+        #fermuar .project-card h3{color:#0f6e56}
+        #fermuar .btn-primary{color:#0f6e56}
+        #fermuar .btn-primary:hover{background:#1d9e75;color:var(--white)}
+    </style>
+    <section id="fermuar" class="project-overview">
+        <div class="container">
+            <div class="section-header">
+                <h2>Fermuar — ZipTide'ın Mobil Uygulaması</h2>
+                <div class="underline"></div>
+                <p class="zt-subtitle">Fermuar, bağırsak bariyerini sofra diliyle anlatan bir mobil uygulama ve GİKAL iGEM 2026 takımının ZipTide projesinin halka dönük yüzü. 7 Bölge 7 Okul kitabındaki 49 tarif, uygulamanın Sofra bölümünde yaşıyor.</p>
+            </div>
+
+            <div class="fm-status">Uygulama bitmek üzere. Önümüzdeki günlerde Google Play (Android) ve App Store (iOS) üzerinden yayımlanacak. Uygulama verileri iGEM değerlendirme (judging) döneminde paylaşılacak.</div>
+
+            <figure class="zt-fig">
+                <img src="./ziptide/fermuar/kapak-tr.webp" data-src-tr="./ziptide/fermuar/kapak-tr.webp" data-src-en="./ziptide/fermuar/kapak-en.webp" alt="Fermuar uygulamasının kapak görseli ve üç ekranı" width="1600" height="900" loading="lazy">
+                <figcaption>Fermuar tanı koymaz, tedavi önermez; insanlara bağırsak bariyeri hakkında anlaşılır bir kelime dağarcığı verir.</figcaption>
+            </figure>
+
+            <h3 class="fm-h">Uygulamanın dört bölümü</h3>
+            <div class="project-grid fm-four">
+                <div class="project-card">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M16.2 7.8l-2 6.4-6.4 2 2-6.4z"></path></svg>
+                    </div>
+                    <h3>Keşfet</h3>
+                    <p>Parmakla sürüklenen "günün fermuarı", puansız "günün sorusu" ve üç kısa öğrenme modülü: altyazılı video, dokununca açılan sözlük, dokunarak keşfedilen şemalar ve puan tutmayan bir sınav.</p>
+                </div>
+                <div class="project-card">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"></path><path d="M7 2v20"></path><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"></path></svg>
+                    </div>
+                    <h3>Sofra</h3>
+                    <p>7 Bölge 7 Okul kitabındaki 49 tarif, bariyer gözüyle. Her etiketin notu PubMed'de doğrulanmış bir kaynağa dayanır; puanların hesabı açıktır. Etiket Oku, bir paketin içindekiler listesini sözlükle eşler; Sofra Nehri birikimi hedef koymadan gösterir.</p>
+                </div>
+                <div class="project-card">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                    </div>
+                    <h3>Ben</h3>
+                    <p>Fermuar koleksiyonu ve kişisel defter. Defter yalnız telefonda kalır; hiçbir sunucuya gönderilmez.</p>
+                </div>
+                <div class="project-card">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    </div>
+                    <h3>Topluluk</h3>
+                    <p>Bu durumu yaşayanların deneyim paylaştığı alan: takma ad, 18 yaş sınırı, KVKK açık rızası, bildirme, engelleme ve moderasyon. iGEM takımlarının buluştuğu bir takım alanı da var.</p>
+                </div>
+            </div>
+
+            <h3 class="fm-h">Fikir nereden çıktı?</h3>
+            <p class="fm-lead">Uygulamanın fikri, birbirinden bağımsız üç paydaşın aynı boşluğu göstermesinden doğdu.</p>
+            <div class="project-grid">
+                <div class="project-card">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                    </div>
+                    <h3>Gölpazarı halk anketi</h3>
+                    <p>21 Haziran 2026, 10 kişi. Farkındalık yüksek, kelime dağarcığı düşüktü; katılımcılar ZipTide'ı probiyotikle karıştırıyordu.</p>
+                </div>
+                <div class="project-card">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    </div>
+                    <h3>Diyetisyen görüşmesi</h3>
+                    <p>Diyetisyen Göç: hastalarının 6-7/10'u bağırsak şikâyetiyle geliyor, ancak yalnız 3/10'u doğru bilgiye sahip.</p>
+                </div>
+                <div class="project-card">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    </div>
+                    <h3>Gıda mühendisi görüşmesi</h3>
+                    <p>Gıda mühendisi Uçar: "eğitimli bilinçsizler" ve sosyal medyadaki bilgi kirliliği.</p>
+                </div>
+            </div>
+            <p class="fm-result">Üç kaynağın vardığı sonuç aynıydı: sorun ilgisizlik değil, dil. Fermuar bu yüzden bir tavsiye aracı olarak değil, bir kelime dağarcığı aracı olarak tasarlandı.</p>
+
+            <h3 class="fm-h">Neye dayanarak hazırlandı?</h3>
+            <p class="fm-lead">Uygulamadaki her özellik bir saha dönütüne dayanıyor. Keşfet, Sofra ve Ben bölümleri Eylül 2026'daki 36 halk anketi ve 6 danışma görüşmesinden; Topluluk bölümü çölyak derneği aracılığıyla yapılan 20 kişilik anketten; fermuar metaforu takımın "ZipTide ve Altın Fermuar" masalından geliyor. Veri setleri birbirinden ayrı tutuldu.</p>
+
+            <figure class="zt-fig">
+                <img src="./ziptide/fermuar/ekranlar-tr.webp" data-src-tr="./ziptide/fermuar/ekranlar-tr.webp" data-src-en="./ziptide/fermuar/ekranlar-en.webp" alt="Fermuar uygulamasından on ekran" width="1700" height="1790" loading="lazy">
+                <figcaption>Ekran görüntüleri uygulamanın kendi derlemesinden, telefon ölçüsünde alındı. Takma ad, defter ve topluluk kayıtları örnek veridir.</figcaption>
+            </figure>
+
+            <div class="zt-disclaimer">
+                Fermuar tanı koymaz, tedavi ya da beslenme tavsiyesi vermez. Uygulama "şunu ye" demez; bir besinin bariyerle ilişkisini yalnız literatürde ilişkilendirildiği ölçüde ve kaynağıyla anlatır.
+            </div>
+            <div class="zt-links">
+                <a href="https://2026.igem.wiki/gikal/human-practices#hp-fermuar" target="_blank" rel="noopener" class="btn btn-primary">iGEM Wiki'de Fermuar</a>
+                <a href="./ziptide/fermuar/ekranlar-tr.webp" data-href-tr="./ziptide/fermuar/ekranlar-tr.webp" data-href-en="./ziptide/fermuar/ekranlar-en.webp" target="_blank" rel="noopener" class="btn btn-primary">Ekranları Büyüt</a>
+            </div>
+            <p class="zt-note">GİKAL · iGEM 2026 · Team #6490 · ZipTide × 7 Bölge 7 Okul · Fermuar</p>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
@@ -1771,6 +1885,7 @@
                         <li><a href="#international">International Bridge</a></li>
                         <li><a href="#ziptide">iGEM &amp; ZipTide</a></li>
                         <li><a href="#araclar">ZipTide Araçları</a></li>
+                        <li><a href="#fermuar">Fermuar</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -1788,7 +1903,7 @@
     </footer>
 
     <script src="script.js"></script>
-    <script src="i18n.js?v=2"></script>
+    <script src="i18n.js?v=3"></script>
     <script>
         // Logo Tıklama Efekti
         document.addEventListener('DOMContentLoaded', function() {

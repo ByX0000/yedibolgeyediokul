@@ -49,6 +49,7 @@ her link bir bölüme (`#id`) kaydırır. Bölümler (sıra önemli — nav sır
 | `leagues` | Ligler | Okullar-arası lig |
 | `ziptide` | iGEM & ZipTide | **Bilimsel dönüşüm (§6 kurallarına tabi)** |
 | `araclar` | ZipTide Araçları | Dashboard + harita (§6 kurallarına tabi) |
+| `fermuar` | Fermuar | ZipTide'ın mobil uygulaması: durum, 4 bölüm, fikrin çıkışı, ekranlar (§6 kurallarına tabi) |
 
 Nav'ın en sonunda **EN/TR dil düğmesi** (`#lang-toggle`) durur — bölüm linki değildir.
 **Kaldırılan bölümler:** `forum` (arka uç `forum_handler.php` + DB duruyor, yalnız sayfadan çıkarıldı)
@@ -200,6 +201,14 @@ MutationObserver var). Kurallar:
 ---
 
 ## 11. Değişiklik günlüğü
+
+**20.10.2026 — Fermuar sekmesi:**
+- Nav'a ve footer'a `Fermuar` eklendi (`#araclar`'dan sonra); yeni bölüm `#fermuar` yeşil bilim katmanında (scoped CSS).
+- İçerik: yayın durumu (Google Play + App Store yakında, veriler iGEM judging döneminde), uygulamanın 4 bölümü,
+  fikrin çıktığı üç kaynak (Gölpazarı anketi, diyetisyen ve gıda mühendisi görüşmeleri), dayanak veri setleri, disclaimer.
+- Görseller `ziptide/fermuar/` (WebP, TR/EN; `data-src-tr/en` ile dil düğmesine bağlı). Kaynakları Fermuar reposunda
+  `docs/tanitim/`. `uploads/` değil, çünkü deploy `uploads/`'ı göndermez.
+- `i18n.js`'e 32 çift eklendi, `i18n.js?v=3`.
 
 **16.10.2026 — 3B Kültür Küresi:**
 - Yeni sayfa `kure/index.html`: CesiumJS (CDN, 1.146.0) ile 3B dünya. Katmanlar: 7 bölge + araştırılan il + okul
